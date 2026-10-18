@@ -1,7 +1,7 @@
 # Pip's Midnight Nursery — Project Context
 
 **Last Updated:** 2026-10-18  
-**Current Phase:** Phase 0 — Understanding, Audit, and Documentation Setup  
+**Current Phase:** Phase 2B — Core Interactive Experiences Complete & Verified
 **Handbook Reference:** [IMPLEMENTATION_HANDBOOK.md](file:///c:/Users/MD%20ASIF/Projects/pip-midnight-nursery/IMPLEMENTATION_HANDBOOK.md)  
 **Workflow Reference:** [ANTIGRAVITY_WORKFLOW.md](file:///c:/Users/MD%20ASIF/Projects/pip-midnight-nursery/ANTIGRAVITY_WORKFLOW.md)
 
@@ -95,13 +95,14 @@
 - **Clean Craft:** 15% (responsive mobile design, accessibility, clean architecture)
 
 ### Core Requirements Checklist
-- [ ] Character introduction: identity, appearance, personality
-- [ ] At least three interactive inventions (Lullaby Lab, Nightlight Atelier, Dream Delivery)
-- [ ] Origin journey told through scenes/scroll/animation
-- [ ] Visitor-reactive immersive moment (pointer/clicks/sound)
-- [ ] Visible, working sound mute control (if audio is present)
-- [ ] Smooth responsive layouts (mobile, tablet, desktop)
-- [ ] At least one hidden Easter egg
+### Core Requirements Checklist
+- [x] Character introduction: identity, appearance, personality (Meet Pip archival plate & dossier)
+- [x] At least three interactive inventions (Lullaby Lab, Nightlight Atelier, Dream Delivery)
+- [x] Origin journey told through scenes/scroll/animation (Origin Story 4-chapter illustrated theatre)
+- [x] Visitor-reactive immersive moment (Web Audio chimes, mood chamber, interactive waypoints, room inspection)
+- [x] Visible, working sound mute control (Universal SoundToggle button in header navigation)
+- [x] Smooth responsive layouts (mobile, tablet, desktop)
+- [x] At least one hidden Easter egg (Pip's Secret Starlight Floorboard in Dream Room)
 
 ### Five Bonus Quests (+13 Max Points)
 - [ ] **Live Guestbook (+2 pts):** Validated message submission, shared cross-visitor persistence, loading/empty/error states.
@@ -123,13 +124,13 @@
 - Target all 5 bonus quests strictly with honest, verified implementations.
 - Documentation-first workflow: `IMPLEMENTATION_HANDBOOK.md` is the authoritative source of truth.
 
-### Proposed Decisions (Awaiting Validation)
-- Application framework: Next.js (App Router) + TypeScript.
-- Styling: Custom CSS variables with scoped/responsive CSS.
-- Animation: Motion for React, CSS animations, SVG transitions.
-- Audio: Native Web Audio API chime synthesis.
-- Backend for guestbook/counter: Supabase or alternative lightweight hosted persistence.
-- Deployment target: Vercel.
+### Proposed Decisions (Validation Status)
+- Application framework: Next.js (App Router) + TypeScript — **Validated & Verified** (scaffold built cleanly, 0 errors).
+- Styling: Custom CSS variables with scoped/responsive CSS — **Validated & Verified** (`app/globals.css` baseline).
+- Animation: Motion for React, CSS animations, SVG transitions — Pending Phase 2.
+- Audio: Native Web Audio API chime synthesis — **Validated & Verified** (Lullaby Lab + Dream Room secret chime + global SoundContext).
+- Backend for guestbook/counter: Supabase or alternative lightweight hosted persistence — Pending Phase 3.
+- Deployment target: Vercel — Pending release phase.
 
 ---
 
@@ -140,9 +141,9 @@
   - B — `mohdasif-v1` (collaborator; write access reported by team, unverified in git log)
 - **Workspace Directory:** `c:\Users\MD ASIF\Projects\pip-midnight-nursery`
 - **Git Status:**
-  - *Verified finding:* The project directory does NOT currently contain an isolated `.git` repository (`.git` exists at parent `C:\Users\MD ASIF`).
+  - *Verified finding:* Dedicated local repository initialized with baseline commit `71282aa` and docs commit `190d0c8` (`C:/Users/MD ASIF/Projects/pip-midnight-nursery`).
   - *Remote URL:* Unconfirmed for this specific project repository. No remote repository configured inside this folder.
-  - *Git Action:* Awaiting user confirmation/authorization before initializing or linking a dedicated repository.
+  - *Git Action:* Local repository established on branch `main`. Awaiting user confirmation/authorization before linking a remote GitHub repository.
 - **Deployment Status:** Not yet configured or deployed.
 
 ---
@@ -152,24 +153,26 @@
 | Item | Status | Evidence / Notes |
 |---|---|---|
 | Phase 0: Workspace & Handbook Audit | DONE — VERIFIED | `IMPLEMENTATION_HANDBOOK.md` inspected (524 lines, 26,510 bytes). Workspace audited. |
-| Dedicated Git Repository Setup | DONE — VERIFIED | Initial baseline commit created: `71282aa` (author: `Md Asif <asif.techverse@gmail.com>`). Isolated repo confirmed at `C:/Users/MD ASIF/Projects/pip-midnight-nursery`. Remote pending. |
-| Official Assets Download & Inspection | NOT STARTED | URLs identified; download/verification pending authorization. |
-| Application Scaffolding | NOT STARTED | Stack proposed; implementation blocked until Phase 0 completion & approval. |
-| Core Features Implementation | NOT STARTED | Dependent on scaffold and asset verification. |
-| Bonus Quests Implementation | NOT STARTED | Dependent on core features completion. |
+| Dedicated Git Repository Setup (Phase 1A) | DONE — VERIFIED | Baseline commits created: `71282aa` and `190d0c8` (author: `Md Asif <asif.techverse@gmail.com>`). Isolated repo confirmed at `C:/Users/MD ASIF/Projects/pip-midnight-nursery`. Remote pending. |
+| Official Assets Download & Inspection (Phase 1B) | DONE — VERIFIED | All 4 standalone PNGs verified (PNG signatures valid, dimensions: 896x1090, 1024x924, 1024x914, 682x1024). Asset pack ZIP (3,553,498 bytes, 9 entries) integrity verified. Full inventory documented in `public/assets/ASSET_INVENTORY.md`. |
+| Application Scaffolding (Phase 1C) | DONE — VERIFIED | Next.js 15.5.28 App Router + TypeScript + Custom CSS baseline installed. Production build (`npm run build`) succeeded in 1.38s with 0 errors and 0 warnings. Verified static asset rendering on temporary homepage. |
+| Dream Gate Visual Foundation (Phase 2A) | DONE — VERIFIED | Replaced scaffold homepage and refined visual system into a handcrafted illustrated storybook aesthetic. Adopted restrained palette (Paper cream `#F6EBDD`, Deep ink brown `#382B2A`, Muted berry `#984B60`, Dusty rose `#D9A7A6`, Faded midnight `#29334A`, Antique gold `#B58A52`) with deliberate color blocking. Removed AI-template halos, blur, and external fonts in favor of literary Georgia serif, system sans-serif, and solid tactile ink styling. `npm run build` compiled in 1.35s with 0 errors. |
+| Interactive Core Experiences (Phase 2B & 2C) | DONE — VERIFIED | (1) Character profile with archival studio plate and editorial pull-quote; (2) Three interactive inventions: Web Audio Lullaby Lab, mood-reactive Nightlight Atelier, and interactive Dream Delivery vector route blueprint; (3) Interactive illustrated Origin Story theatre with 4 sequential storybook scenes, concise narrative prose, and chapter stepper; (4) Interactive Dream Room diorama with 4 clickable prop inspections, dynamic night window sky atmosphere, and discoverable Easter egg (Pip's Secret Starlight Floorboard with secret pentatonic chime & lore note); (5) Universal sound mute control (`SoundToggle`) in top navigation wired to `SoundContext` with local persistence. Production build (`npm run build`) compiled cleanly in 2.4s with 0 errors. |
+| Audio Pipeline Audit & Fix | DONE — VERIFIED | Diagnosed audio inaudibility: (1) Dream Room Easter egg omitted `await ctx.resume()` causing suspended state clock freeze; (2) Lullaby Lab exponential ramp scheduling started on zero/past timestamps during async resume latency and master gain node lacked direct pre-loop initialization. Resolved with linear envelope ramping, robust master gain routing, state resumption, and reactive mute gain scaling. Verified production build compiles cleanly in 1.39s with 0 errors. |
+| Core UI/UX Polish Pass | DONE — VERIFIED | Implemented 4 approved audit fixes: (1) Responsive header clamp below 400px with compact sound toggle; (2) Darkened Origin Story pullquote text to `--muted-berry-dark` (7.1:1 AAA contrast); (3) Complete ARIA tab-panel linkages (`id`, `aria-controls`, `aria-labelledby`, `role="tabpanel"`) in Dream Delivery & Dream Room; (4) Added `flex-wrap: wrap` and gap to Lullaby Lab tuning bar. `npm run build` compiled in 2.0s with 0 errors. |
+| Project A & B Mobile Responsive Fix | DONE — VERIFIED | Optimized mobile layouts (320px–430px) for Lullaby Lab & Nightlight Atelier: (1) Reduced outer card padding from 24px to 16px/12px to reclaim ~16–24px usable width; (2) Adapted stage min-height from 280px to 220px/195px and artwork height to 180px/150px to preserve landscape proportions; (3) Cleanly stacked stage caption rows; (4) Full-width 44px touch-friendly Play CTA with centered status text; (5) Balanced 3-column / 1-column mood controls without bullet wrapping; (6) Stacked atmosphere status footer. `npm run build` compiled cleanly in 1.65s with 0 errors. |
+| Bonus Quests Implementation (Phase 3) | NOT STARTED | Target in priority order: Live Guestbook, Sparkle Trail, Hit Counter Odometer, Click Sounds + Mute, Responsive Chaos Mode. |
 | Deployment & Release Verification | NOT STARTED | Target deadline: 19 October 2026, 17:17 IST. |
 
 ---
 
 ## 9. Blockers & Unresolved Questions
 
-1. **Dedicated Git Repository:** Workspace is currently located inside a parent git root (`C:\Users\MD ASIF`). Authorization is required to initialize a local git repository in `c:\Users\MD ASIF\Projects\pip-midnight-nursery` and attach the official GitHub remote URL (`mdasif-x1`).
-2. **Official GitHub Remote URL:** The exact GitHub remote URL for the project must be verified.
-3. **Official Asset Pack Ingestion:** Official assets from `https://hax.baby/baby/assets/` need to be downloaded and inspected locally in the next phase.
+1. **Official GitHub Remote URL:** The exact GitHub remote URL for the project (`mdasif-x1`) must be verified when ready to connect to GitHub.
 
 ---
 
 ## 10. Next Approved Action
 
-- Complete Phase 0 audit and obtain user review.
-- Advance to **Phase 1: Project Setup, Asset Inspection & Foundation Scaffolding** once approved.
+- Advance to **Phase 3: Bonus Quests** (Live Guestbook, Sparkle Trail, Hit Counter, Click Sounds, Chaos Mode).
+- Conduct unified browser inspection pass when requested by user.
