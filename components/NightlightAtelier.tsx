@@ -25,9 +25,9 @@ const MOODS: Mood[] = [
     glowClass: "mood-stage-amber",
     badgeText: "Hearth Amber · 2200K",
     surroundingsNote: "Illumination: Soft amber star-oil flame warming the chamber.",
-    lightPoolColor: "rgba(232, 155, 72, 0.22)",
-    starColor: "#F8B868",
-    alcoveStroke: "rgba(181, 138, 82, 0.4)",
+    lightPoolColor: "rgba(233, 159, 79, 0.22)",
+    starColor: "#ddb686ff",
+    alcoveStroke: "rgba(121, 103, 86, 0.4)",
   },
   {
     key: "rose",
