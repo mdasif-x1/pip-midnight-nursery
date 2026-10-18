@@ -152,7 +152,7 @@
 | Item | Status | Evidence / Notes |
 |---|---|---|
 | Phase 0: Workspace & Handbook Audit | DONE — VERIFIED | `IMPLEMENTATION_HANDBOOK.md` inspected (524 lines, 26,510 bytes). Workspace audited. |
-| Dedicated Git Repository Setup | BLOCKED / PENDING | Folder lacks isolated `.git`. Awaiting user authorization to initialize/configure. |
+| Dedicated Git Repository Setup | DONE — VERIFIED | Initial baseline commit created: `71282aa` (author: `Md Asif <asif.techverse@gmail.com>`). Isolated repo confirmed at `C:/Users/MD ASIF/Projects/pip-midnight-nursery`. Remote pending. |
 | Official Assets Download & Inspection | NOT STARTED | URLs identified; download/verification pending authorization. |
 | Application Scaffolding | NOT STARTED | Stack proposed; implementation blocked until Phase 0 completion & approval. |
 | Core Features Implementation | NOT STARTED | Dependent on scaffold and asset verification. |
