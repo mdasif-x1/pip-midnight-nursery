@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { useSound } from "@/lib/SoundContext";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 interface MelodyNote {
   note: string;
@@ -258,7 +259,7 @@ export default function LullabyLab() {
     <div className="workshop-bay-lab">
       {/* Illustrated Music Workbench Stage */}
       <div className="bay-visual-stage">
-        <div className="workbench-stage-frame">
+        <div className={`workbench-stage-frame ${visualStyles.workbenchStageDepth}`}>
           {/* Subtle warm light pool behind music box */}
           <div className="workbench-light-pool" aria-hidden="true" />
 
@@ -309,10 +310,12 @@ export default function LullabyLab() {
             {/* Floating Musical Notes when Playing */}
             {isPlaying && (
               <div className="music-box-floating-notes" aria-hidden="true">
-                <span className="floating-note note-1">{activeNote || "♩"}</span>
-                <span className="floating-note note-2">✦</span>
-                <span className="floating-note note-3">♪</span>
-                <span className="floating-note note-4">✧</span>
+                <span className={`floating-note note-1 ${visualStyles.harmonicParticle}`}>
+                  {activeNote || "♩"}
+                </span>
+                <span className={`floating-note note-2 ${visualStyles.harmonicParticle}`}>✦</span>
+                <span className={`floating-note note-3 ${visualStyles.harmonicParticle}`}>♪</span>
+                <span className={`floating-note note-4 ${visualStyles.harmonicParticle}`}>✧</span>
               </div>
             )}
           </div>

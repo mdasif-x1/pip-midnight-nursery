@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useSound } from "@/lib/SoundContext";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 type MoodKey = "amber" | "rose" | "moonlit";
 
@@ -78,7 +79,13 @@ export default function NightlightAtelier() {
   };
 
   return (
-    <div className={`workshop-bay-atelier ${current.glowClass} glow-level-${glowIntensity}`}>
+    <div
+      className={`workshop-bay-atelier ${current.glowClass} glow-level-${glowIntensity} ${visualStyles.atelierAmbientContainer}`}
+      style={{
+        boxShadow: `0 14px 40px ${current.lightPoolColor.replace('0.3', (0.14 * intensityMultiplier).toFixed(2))}, 0 2px 8px rgba(56, 43, 42, 0.06)`,
+        borderColor: current.alcoveStroke,
+      }}
+    >
       {/* Miniature Lighting Chamber Stage */}
       <div className="bay-visual-stage">
         <div className={`lighting-chamber-stage ${current.glowClass}-chamber`}>

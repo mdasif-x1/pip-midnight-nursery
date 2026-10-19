@@ -1,0 +1,198 @@
+/* ==========================================================================
+   Dream Visuals — Cinematic & Storybook Section Enhancements (CSS Module)
+   Art Direction: 70% Cinematic Atmosphere + 30% Illustrated Storybook Charm
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Field Journal: Tangible Book Depth & Warm Portrait Illumination
+   -------------------------------------------------------------------------- */
+.journalSpreadDepth {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  box-shadow:
+    0 16px 36px rgba(56, 43, 42, 0.1),
+    3px 3px 0px var(--ink-brown, #382B2A),
+    inset 0 1px 3px rgba(255, 255, 255, 0.8) !important;
+}
+
+.portraitAmberWash {
+  position: relative;
+}
+
+.portraitAmberWash::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(circle, rgba(215, 169, 91, 0.3) 0%, rgba(242, 200, 121, 0.12) 45%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: var(--radius-md, 12px);
+}
+
+/* --------------------------------------------------------------------------
+   2. Lullaby Lab: Tactile Workbench Depth & Floating Harmonic Particles
+   -------------------------------------------------------------------------- */
+.workbenchStageDepth {
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.workbenchStageDepth:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(119, 56, 77, 0.12);
+}
+
+@keyframes harmonicParticleDrift {
+  0% {
+    opacity: 0;
+    transform: translateY(0px) scale(0.6) rotate(0deg);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateY(-14px) scale(1.1) rotate(10deg);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(-30px) scale(1) rotate(-8deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-46px) scale(0.7) rotate(15deg);
+  }
+}
+
+.harmonicParticle {
+  position: absolute;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.15rem;
+  color: var(--gold-starlight, #D7A95B);
+  pointer-events: none;
+  z-index: 6;
+  text-shadow: 0 0 10px rgba(215, 169, 91, 0.7);
+  animation: harmonicParticleDrift 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --------------------------------------------------------------------------
+   3. Nightlight Atelier: Environmental Ambient Lighting Reflection
+   -------------------------------------------------------------------------- */
+.atelierAmbientContainer {
+  transition: box-shadow 0.6s ease, border-color 0.6s ease, background 0.6s ease !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Dream Delivery: Atmospheric Cloud Layer & Tactile Docket Card
+   -------------------------------------------------------------------------- */
+.deliveryDocketTactile {
+  box-shadow:
+    0 8px 24px rgba(56, 43, 42, 0.08),
+    2px 2px 0px var(--ink-brown, #382B2A) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.deliveryDocketTactile:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(56, 43, 42, 0.12),
+    3px 3px 0px var(--ink-brown, #382B2A) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Origin Journey: Tasteful Storybook Page-Turn Transition
+   -------------------------------------------------------------------------- */
+@keyframes pageTurnLeaf {
+  0% {
+    opacity: 0.2;
+    transform: perspective(900px) rotateY(-4deg) translateX(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0deg) translateX(0);
+  }
+}
+
+.pageTurnActive {
+  animation: pageTurnLeaf 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-style: preserve-3d;
+}
+
+/* --------------------------------------------------------------------------
+   6. Invention Workshop: Bilateral Flanking & Central Corridor Alignment
+   -------------------------------------------------------------------------- */
+.workshopBilateralStage {
+  display: grid;
+  grid-template-columns: 1fr clamp(44px, 5.5vw, 72px) 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.atelierLeftFlank {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  position: relative;
+}
+
+.lullabyRightFlank {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  position: relative;
+}
+
+.corridorCenterFlank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.deliveryCentralBay {
+  position: relative;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .workshopBilateralStage {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .corridorCenterFlank {
+    display: flex;
+    margin: 0.5rem 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility & Reduced Motion Overrides
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .workbenchStageDepth,
+  .deliveryDocketTactile {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .harmonicParticle,
+  .pageTurnActive {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .workbenchStageDepth:hover,
+  .deliveryDocketTactile:hover {
+    transform: none !important;
+  }
+}

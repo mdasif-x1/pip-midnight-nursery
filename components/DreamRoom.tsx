@@ -1,7 +1,8 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { useSound } from "@/lib/SoundContext";
+import styles from "./DreamRoom.module.css";
 
 interface RoomHotspot {
   id: string;
@@ -53,10 +54,33 @@ export default function DreamRoom() {
   const [windowSkyMode, setWindowSkyMode] = useState<"stars" | "meteors" | "clouds">("stars");
   const [easterEggFound, setEasterEggFound] = useState<boolean>(false);
   const [showingEasterEgg, setShowingEasterEgg] = useState<boolean>(false);
+  const [tiltStyle, setTiltStyle] = useState<React.CSSProperties>({});
+  const [hasArrived, setHasArrived] = useState<boolean>(false);
 
+  const frameRef = useRef<HTMLDivElement | null>(null);
   const audioCtxRef = useRef<AudioContext | null>(null);
 
   const activeHotspot = HOTSPOTS.find((h) => h.id === selectedHotspot) || HOTSPOTS[0];
+
+  // Listen for Pip's arrival from cloud voyage
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    let pulseTimer: NodeJS.Timeout | null = null;
+    const handleVoyageLand = () => {
+      setHasArrived(true);
+      if (pulseTimer) clearTimeout(pulseTimer);
+      pulseTimer = setTimeout(() => {
+        setHasArrived(false);
+      }, 2400);
+    };
+
+    window.addEventListener("pip-voyage-land", handleVoyageLand);
+    return () => {
+      if (pulseTimer) clearTimeout(pulseTimer);
+      window.removeEventListener("pip-voyage-land", handleVoyageLand);
+    };
+  }, []);
 
   // Cleanup audio context on unmount
   useEffect(() => {
@@ -65,6 +89,38 @@ export default function DreamRoom() {
         audioCtxRef.current.close().catch(() => {});
       }
     };
+  }, []);
+
+  // Subtle interactive 3D perspective tilt on desktop (disabled on touch & reduced motion)
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (typeof window === "undefined") return;
+    if (
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(pointer: coarse)").matches
+    ) {
+      return;
+    }
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xPct = (x / rect.width - 0.5) * 2; // -1 to 1
+    const yPct = (y / rect.height - 0.5) * 2; // -1 to 1
+
+    const pitch = -yPct * 3.5; // -3.5 to 3.5 deg
+    const yaw = xPct * 4; // -4 to 4 deg
+
+    setTiltStyle({
+      transform: `rotateX(${pitch.toFixed(2)}deg) rotateY(${yaw.toFixed(2)}deg)`,
+      transition: "transform 0.1s ease-out",
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setTiltStyle({
+      transform: "rotateX(0deg) rotateY(0deg)",
+      transition: "transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
+    });
   }, []);
 
   const handleSelectHotspot = (id: string) => {
@@ -156,255 +212,345 @@ export default function DreamRoom() {
   };
 
   return (
-    <div className="dream-room-exhibit">
-      {/* Diorama Framing */}
+    <div className={`dream-room-exhibit ${styles.dioramaContainer}`}>
+      {/* Pop-Up Miniature Nursery Shadowbox */}
       <div className="room-stage-container">
-        <div className="room-diorama-frame">
-          <svg
-            className="room-interactive-svg"
-            viewBox="0 0 700 400"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            aria-label="Interactive Dream Room Diorama: Click objects to inspect or find hidden secrets"
-          >
-            {/* Soft Warm Pastel Nursery Room Wall */}
-            <rect width="700" height="400" fill="#F4EBE6" />
+        <div
+          ref={frameRef}
+          className={`${styles.shadowboxFrame} ${hasArrived ? styles.arrivalPulse : ""}`}
+          style={tiltStyle}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className={styles.shadowboxInner}>
+            {/* Environmental Sky Ambient Wash Layer (Tied to Window Sky state) */}
+            <div
+              className={`${styles.ambientWashLayer} ${
+                windowSkyMode === "stars"
+                  ? styles.skyModeStars
+                  : windowSkyMode === "meteors"
+                  ? styles.skyModeMeteors
+                  : styles.skyModeClouds
+              }`}
+              aria-hidden="true"
+            />
 
-            {/* Subtle Vertical Storybook Wallpaper Stripes */}
-            <defs>
-              <pattern id="wallpaper-stripes" width="40" height="400" patternUnits="userSpaceOnUse">
-                <rect x="0" y="0" width="20" height="400" fill="#EFE2DC" />
-                <rect x="20" y="0" width="20" height="400" fill="#F4EBE6" />
-                <line x1="20" y1="0" x2="20" y2="400" stroke="rgba(221, 166, 176, 0.18)" strokeWidth="1" />
-              </pattern>
-            </defs>
-            <rect width="700" height="320" fill="url(#wallpaper-stripes)" />
+            {/* Warm Lantern Light Spill (Active when lantern or workbench is inspected) */}
+            {(selectedHotspot === "lantern" || selectedHotspot === "workbench") && (
+              <div className={styles.lanternSpillLight} aria-hidden="true" />
+            )}
 
-            {/* Warm Chestnut Ceiling Timbers */}
-            <path d="M 0 0 L 700 0 L 620 45 L 80 45 Z" fill="#6A4D3E" stroke="#382B2A" strokeWidth="1.5" />
-            <line x1="200" y1="0" x2="190" y2="45" stroke="rgba(215, 169, 91, 0.4)" strokeWidth="1.5" />
-            <line x1="350" y1="0" x2="350" y2="45" stroke="rgba(215, 169, 91, 0.4)" strokeWidth="1.5" />
-            <line x1="500" y1="0" x2="510" y2="45" stroke="rgba(215, 169, 91, 0.4)" strokeWidth="1.5" />
+            {/* Dimensional Shadowbox Edge Vignette */}
+            <div className={styles.roomVignette} aria-hidden="true" />
 
-            {/* Warm Honey Timber Flooring */}
-            <polygon points="0,320 700,320 700,400 0,400" fill="#D6C2AB" stroke="#382B2A" strokeWidth="1.5" />
-            <line x1="0" y1="345" x2="700" y2="345" stroke="rgba(89, 64, 50, 0.22)" strokeWidth="1" />
-            <line x1="0" y1="375" x2="700" y2="375" stroke="rgba(89, 64, 50, 0.22)" strokeWidth="1" />
-            <line x1="220" y1="320" x2="190" y2="400" stroke="rgba(89, 64, 50, 0.18)" strokeWidth="1" />
-            <line x1="480" y1="320" x2="520" y2="400" stroke="rgba(89, 64, 50, 0.18)" strokeWidth="1" />
-
-            {/* =================================================================
-                OBJECT 1: THE MOONLIT NURSERY WINDOW (INTERACTIVE HOTSPOT)
-                ================================================================= */}
-            <g
-              className={`room-hotspot-group ${selectedHotspot === "window" && !showingEasterEgg ? "hotspot-selected" : ""}`}
-              onClick={() => handleSelectHotspot("window")}
-              tabIndex={0}
-              role="button"
-              aria-label="Inspect Moonlit Observatory Window"
-              aria-pressed={selectedHotspot === "window" && !showingEasterEgg}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  if (e.key === " ") e.preventDefault();
-                  handleSelectHotspot("window");
-                }
-              }}
+            {/* Layered Pop-Up Diorama SVG */}
+            <svg
+              className={`${styles.interactiveSvg} room-interactive-svg`}
+              viewBox="0 0 700 400"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label="Interactive Dream Room Diorama: Click objects to inspect or find hidden secrets"
             >
-              {/* Window Frame Casing in Warm Walnut */}
-              <rect x="246" y="56" width="208" height="198" rx="104 104 6 6" fill="#543C31" stroke="#382B2A" strokeWidth="2" />
-              <rect x="250" y="60" width="200" height="190" rx="100 100 4 4" fill="#1C1224" stroke="#D7A95B" strokeWidth="2" />
+              <defs>
+                {/* Wallpaper Stripes Pattern */}
+                <pattern id="wallpaper-stripes" width="40" height="400" patternUnits="userSpaceOnUse">
+                  <rect x="0" y="0" width="20" height="400" fill="#EFE2DC" />
+                  <rect x="20" y="0" width="20" height="400" fill="#F4EBE6" />
+                  <line x1="20" y1="0" x2="20" y2="400" stroke="rgba(221, 166, 176, 0.22)" strokeWidth="1" />
+                </pattern>
 
-              {/* Sky Background based on windowSkyMode (Contained in window) */}
-              {windowSkyMode === "stars" && (
-                <>
-                  <circle cx="295" cy="115" r="16" fill="#FFF8F1" />
-                  <circle cx="302" cy="112" r="14" fill="#1C1224" />
-                  <text x="360" y="100" fill="#D7A95B" fontSize="12">✦</text>
-                  <text x="390" y="140" fill="#DDA6B0" fontSize="10">✧</text>
-                  <text x="290" y="170" fill="#D7A95B" fontSize="11">✦</text>
-                  <text x="350" y="180" fill="#FFF8F1" fontSize="9">✧</text>
-                </>
-              )}
-              {windowSkyMode === "meteors" && (
-                <>
-                  <line x1="380" y1="80" x2="310" y2="150" stroke="#D7A95B" strokeWidth="2.5" strokeDasharray="8 4" />
-                  <circle cx="308" cy="152" r="3.5" fill="#FFF8F1" />
-                  <line x1="410" y1="120" x2="360" y2="170" stroke="#DDA6B0" strokeWidth="2" strokeDasharray="6 3" />
-                  <circle cx="358" cy="172" r="3" fill="#FFF8F1" />
-                </>
-              )}
-              {windowSkyMode === "clouds" && (
-                <>
-                  <circle cx="310" cy="140" r="28" fill="rgba(233, 217, 232, 0.45)" />
-                  <circle cx="350" cy="130" r="34" fill="rgba(255, 248, 241, 0.55)" />
-                  <circle cx="390" cy="145" r="26" fill="rgba(221, 166, 176, 0.4)" />
-                </>
-              )}
+                {/* Ambient Wall Wash Gradient */}
+                <linearGradient id="wall-gradient" x1="0" y1="0" x2="0" y2="320" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#F9F2EE" />
+                  <stop offset="60%" stopColor="#F3E9E3" />
+                  <stop offset="100%" stopColor="#EADED7" />
+                </linearGradient>
 
-              {/* Window Crossbars in Gold/Timber */}
-              <line x1="350" y1="60" x2="350" y2="250" stroke="#D7A95B" strokeWidth="2.5" />
-              <line x1="250" y1="150" x2="450" y2="150" stroke="#D7A95B" strokeWidth="2.5" />
-              <rect x="235" y="248" width="230" height="14" rx="2" fill="#543C31" stroke="#382B2A" strokeWidth="1.5" />
+                {/* Timber Floorboard Perspective Gradient */}
+                <linearGradient id="floor-gradient" x1="0" y1="320" x2="0" y2="400" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stopColor="#DECABB" />
+                  <stop offset="100%" stopColor="#C9B39F" />
+                </linearGradient>
 
-              {/* Organic Glowing Star Hotspot Badge */}
-              <circle cx="350" cy="150" r="14" fill="#FFF8F1" stroke="#77384D" strokeWidth="2" />
-              <circle cx="350" cy="150" r="10" fill="#77384D" />
-              <text x="350" y="154" fill="#FFF8F1" fontSize="11" textAnchor="middle" fontWeight="bold">✦</text>
-            </g>
+                {/* Lantern Glow Filter */}
+                <radialGradient id="lamp-glow-pool" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#FFF4D0" stopOpacity="0.9" />
+                  <stop offset="35%" stopColor="#D7A95B" stopOpacity="0.65" />
+                  <stop offset="70%" stopColor="#D7A95B" stopOpacity="0.2" />
+                  <stop offset="100%" stopColor="#D7A95B" stopOpacity="0" />
+                </radialGradient>
+              </defs>
 
-            {/* =================================================================
-                OBJECT 2: STAR-OIL LAMP / NIGHTSTAND (INTERACTIVE HOTSPOT)
-                ================================================================= */}
-            <g
-              className={`room-hotspot-group ${selectedHotspot === "lantern" && !showingEasterEgg ? "hotspot-selected" : ""}`}
-              onClick={() => handleSelectHotspot("lantern")}
-              tabIndex={0}
-              role="button"
-              aria-label="Inspect Star-Oil Lantern"
-              aria-pressed={selectedHotspot === "lantern" && !showingEasterEgg}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  if (e.key === " ") e.preventDefault();
-                  handleSelectHotspot("lantern");
-                }
-              }}
-            >
-              {/* Stand Table in Warm Chestnut */}
-              <rect x="520" y="260" width="70" height="75" rx="3" fill="#6A4D3E" stroke="#382B2A" strokeWidth="1.5" />
-              <rect x="515" y="255" width="80" height="8" rx="2" fill="#7D5C4B" stroke="#382B2A" strokeWidth="1" />
+              {/* Rear Wall Surface with Storybook Wallpaper Stripes */}
+              <rect width="700" height="320" fill="url(#wall-gradient)" />
+              <rect width="700" height="320" fill="url(#wallpaper-stripes)" />
 
-              {/* Brass Lantern on Table */}
-              <rect x="540" y="220" width="30" height="35" rx="3" fill="#382B2A" stroke="#D7A95B" strokeWidth="2" />
-              <circle cx="555" cy="237" r="10" fill="#D7A95B" />
-              <circle cx="555" cy="237" r="20" fill="rgba(215, 169, 91, 0.4)" filter="blur(6px)" />
-              <path d="M 548 220 L 548 210 Q 555 205 562 210 L 562 220" stroke="#D7A95B" strokeWidth="2" fill="none" />
+              {/* Overhead Walnut Ceiling Timbers & Ambient Cast Shadows */}
+              <path d="M 0 0 L 700 0 L 620 45 L 80 45 Z" fill="#5A3E31" stroke="#382B2A" strokeWidth="1.5" />
+              <path d="M 0 45 L 700 45 L 700 52 L 0 52 Z" fill="rgba(56, 43, 42, 0.12)" />
+              <line x1="200" y1="0" x2="190" y2="45" stroke="rgba(215, 169, 91, 0.4)" strokeWidth="1.5" />
+              <line x1="350" y1="0" x2="350" y2="45" stroke="rgba(215, 169, 91, 0.4)" strokeWidth="1.5" />
+              <line x1="500" y1="0" x2="510" y2="45" stroke="rgba(215, 169, 91, 0.4)" strokeWidth="1.5" />
 
-              {/* Organic Glowing Star Hotspot Badge */}
-              <circle cx="555" cy="237" r="12" fill="#FFF8F1" stroke="#77384D" strokeWidth="2" />
-              <circle cx="555" cy="237" r="8" fill="#77384D" />
-              <text x="555" y="241" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
-            </g>
+              {/* Warm Honey Timber Flooring with Perspective Depth */}
+              <polygon points="0,320 700,320 700,400 0,400" fill="url(#floor-gradient)" stroke="#382B2A" strokeWidth="1.5" />
+              {/* Floorboard Seams & Grain */}
+              <line x1="0" y1="345" x2="700" y2="345" stroke="rgba(89, 64, 50, 0.24)" strokeWidth="1.5" />
+              <line x1="0" y1="375" x2="700" y2="375" stroke="rgba(89, 64, 50, 0.24)" strokeWidth="1.5" />
+              <line x1="220" y1="320" x2="190" y2="400" stroke="rgba(89, 64, 50, 0.2)" strokeWidth="1" />
+              <line x1="480" y1="320" x2="520" y2="400" stroke="rgba(89, 64, 50, 0.2)" strokeWidth="1" />
+              <line x1="360" y1="345" x2="340" y2="375" stroke="rgba(89, 64, 50, 0.2)" strokeWidth="1" />
 
-            {/* =================================================================
-                OBJECT 3: SUSPENDED CLOUD HAMMOCK / CRADLE
-                ================================================================= */}
-            <g
-              className={`room-hotspot-group ${selectedHotspot === "cloudbed" && !showingEasterEgg ? "hotspot-selected" : ""}`}
-              onClick={() => handleSelectHotspot("cloudbed")}
-              tabIndex={0}
-              role="button"
-              aria-label="Inspect Cloud Cradle Hammock"
-              aria-pressed={selectedHotspot === "cloudbed" && !showingEasterEgg}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  if (e.key === " ") e.preventDefault();
-                  handleSelectHotspot("cloudbed");
-                }
-              }}
-            >
-              {/* Braided Golden Suspension Ropes */}
-              <line x1="80" y1="45" x2="110" y2="210" stroke="#D7A95B" strokeWidth="2" strokeDasharray="3 3" />
-              <line x1="220" y1="45" x2="190" y2="210" stroke="#D7A95B" strokeWidth="2" strokeDasharray="3 3" />
+              {/* Brass Floorboard Nail Accents */}
+              <circle cx="195" cy="342" r="1.5" fill="#D7A95B" opacity="0.75" />
+              <circle cx="475" cy="342" r="1.5" fill="#D7A95B" opacity="0.75" />
+              <circle cx="185" cy="372" r="1.5" fill="#D7A95B" opacity="0.75" />
+              <circle cx="515" cy="372" r="1.5" fill="#D7A95B" opacity="0.75" />
 
-              {/* Cloud Bed Cotton Pod in Soft Whimsical Cream */}
-              <path
-                d="M 80 230 C 80 190 120 180 150 185 C 180 180 220 190 220 230 C 220 260 180 270 150 268 C 120 270 80 260 80 230 Z"
-                fill="#FFF8F1"
-                stroke="#DDA6B0"
-                strokeWidth="2"
-              />
-              {/* Inner Sleepy Rose Fluff Pillow */}
-              <ellipse cx="130" cy="225" rx="25" ry="15" fill="#DDA6B0" opacity="0.8" />
-              <text x="175" y="235" fill="#D7A95B" fontSize="12">✦</text>
-
-              {/* Organic Glowing Star Hotspot Badge */}
-              <circle cx="150" cy="225" r="12" fill="#FFF8F1" stroke="#77384D" strokeWidth="2" />
-              <circle cx="150" cy="225" r="8" fill="#77384D" />
-              <text x="150" y="229" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
-            </g>
-
-            {/* =================================================================
-                OBJECT 4: DRAFTING WORKBENCH TABLE
-                ================================================================= */}
-            <g
-              className={`room-hotspot-group ${selectedHotspot === "workbench" && !showingEasterEgg ? "hotspot-selected" : ""}`}
-              onClick={() => handleSelectHotspot("workbench")}
-              tabIndex={0}
-              role="button"
-              aria-label="Inspect Dream Drafting Workbench"
-              aria-pressed={selectedHotspot === "workbench" && !showingEasterEgg}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  if (e.key === " ") e.preventDefault();
-                  handleSelectHotspot("workbench");
-                }
-              }}
-            >
-              {/* Desk Surface in Warm Pine */}
-              <polygon points="50,290 230,290 250,335 30,335" fill="#C5A482" stroke="#382B2A" strokeWidth="1.5" />
-              {/* Desk Legs */}
-              <rect x="40" y="335" width="10" height="40" fill="#6A4D3E" stroke="#382B2A" strokeWidth="1" />
-              <rect x="235" y="335" width="10" height="40" fill="#6A4D3E" stroke="#382B2A" strokeWidth="1" />
-
-              {/* Light Parchment Blueprint Paper Sheet */}
-              <polygon points="70,298 160,298 175,325 85,325" fill="#FAF4EB" stroke="#77384D" strokeWidth="1.2" />
-              <line x1="85" y1="306" x2="150" y2="306" stroke="rgba(119, 56, 77, 0.4)" strokeWidth="1" />
-              <line x1="90" y1="314" x2="155" y2="314" stroke="rgba(119, 56, 77, 0.4)" strokeWidth="1" />
-
-              {/* Brass Calipers / Golden Key */}
-              <circle cx="195" cy="312" r="5" stroke="#D7A95B" strokeWidth="1.5" fill="none" />
-              <line x1="195" y1="317" x2="195" y2="328" stroke="#D7A95B" strokeWidth="2" />
-
-              {/* Organic Glowing Star Hotspot Badge */}
-              <circle cx="130" cy="312" r="12" fill="#FFF8F1" stroke="#77384D" strokeWidth="2" />
-              <circle cx="130" cy="312" r="8" fill="#77384D" />
-              <text x="130" y="316" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
-            </g>
-
-            {/* =================================================================
-                OBJECT 5: HIDDEN EASTER EGG (LOOSE BRASS FLOOR TILE)
-                ================================================================= */}
-            <g
-              className={`room-easter-egg-tile ${easterEggFound ? "egg-tile-discovered" : "egg-tile-hidden"}`}
-              onClick={handleEasterEggClick}
-              tabIndex={0}
-              role="button"
-              aria-label={
-                easterEggFound
-                  ? "Secret Starlight Stash (Discovered - Click to inspect)"
-                  : "A curiously loose wooden floorboard with a tiny brass star"
-              }
-              aria-pressed={showingEasterEgg}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  if (e.key === " ") e.preventDefault();
-                  handleEasterEggClick();
-                }
-              }}
-            >
-              <rect
-                x="330"
-                y="352"
-                width="48"
-                height="22"
-                rx="2"
-                fill={easterEggFound ? "#D7A95B" : "#BFAF9D"}
-                stroke="#77384D"
-                strokeWidth={easterEggFound ? "2" : "1.2"}
-                strokeDasharray={easterEggFound ? "none" : "2 2"}
-              />
-              <text
-                x="354"
-                y="367"
-                fill={easterEggFound ? "#382B2A" : "#77384D"}
-                fontSize="12"
-                textAnchor="middle"
-                fontWeight="bold"
+              {/* =================================================================
+                  OBJECT 1: THE MOONLIT NURSERY WINDOW (INTERACTIVE HOTSPOT)
+                  ================================================================= */}
+              <g
+                className={`room-hotspot-group ${styles.hotspotBadge} ${
+                  selectedHotspot === "window" && !showingEasterEgg ? `${styles.hotspotSelected} hotspot-selected` : ""
+                }`}
+                onClick={() => handleSelectHotspot("window")}
+                tabIndex={0}
+                role="button"
+                aria-label="Inspect Moonlit Observatory Window"
+                aria-pressed={selectedHotspot === "window" && !showingEasterEgg}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (e.key === " ") e.preventDefault();
+                    handleSelectHotspot("window");
+                  }
+                }}
               >
-                ✦
-              </text>
-            </g>
-          </svg>
+                {/* Window Outer Arch Molding with Inset Shadow */}
+                <rect x="244" y="54" width="212" height="202" rx="106 106 8 8" fill="#422D23" stroke="#251827" strokeWidth="2.5" />
+                <rect x="250" y="60" width="200" height="190" rx="100 100 4 4" fill="#140B1A" stroke="#D7A95B" strokeWidth="2" />
+
+                {/* Celestial Sky Views */}
+                {windowSkyMode === "stars" && (
+                  <g className={styles.windowMoon}>
+                    <circle cx="295" cy="115" r="17" fill="#FFF8F1" />
+                    <circle cx="303" cy="112" r="15" fill="#140B1A" />
+                    <text x="360" y="100" fill="#D7A95B" fontSize="12">✦</text>
+                    <text x="390" y="140" fill="#DDA6B0" fontSize="10">✧</text>
+                    <text x="290" y="170" fill="#D7A95B" fontSize="11">✦</text>
+                    <text x="350" y="180" fill="#FFF8F1" fontSize="9">✧</text>
+                    <text x="415" y="105" fill="#F2C879" fontSize="8">⋆</text>
+                  </g>
+                )}
+                {windowSkyMode === "meteors" && (
+                  <g>
+                    <line x1="380" y1="80" x2="305" y2="155" stroke="#D7A95B" strokeWidth="2.5" strokeDasharray="8 4" />
+                    <circle cx="305" cy="155" r="3.5" fill="#FFF8F1" />
+                    <line x1="415" y1="115" x2="355" y2="175" stroke="#DDA6B0" strokeWidth="2" strokeDasharray="6 3" />
+                    <circle cx="355" cy="175" r="3" fill="#FFF8F1" />
+                    <circle cx="285" cy="110" r="12" fill="#F2C879" opacity="0.85" />
+                  </g>
+                )}
+                {windowSkyMode === "clouds" && (
+                  <g>
+                    <circle cx="305" cy="140" r="30" fill="rgba(233, 217, 232, 0.5)" />
+                    <circle cx="350" cy="125" r="36" fill="rgba(255, 248, 241, 0.65)" />
+                    <circle cx="395" cy="145" r="28" fill="rgba(221, 166, 176, 0.45)" />
+                    <circle cx="330" cy="98" r="10" fill="#D7A95B" opacity="0.9" />
+                  </g>
+                )}
+
+                {/* Window Mullions & Lintel in Starlight Gold & Walnut */}
+                <line x1="350" y1="60" x2="350" y2="250" stroke="#D7A95B" strokeWidth="2.5" />
+                <line x1="250" y1="150" x2="450" y2="150" stroke="#D7A95B" strokeWidth="2.5" />
+                <rect x="235" y="248" width="230" height="14" rx="3" fill="#543C31" stroke="#382B2A" strokeWidth="1.5" />
+
+                {/* Tactile Hotspot Star Badge */}
+                <circle cx="350" cy="150" r="14" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
+                <circle cx="350" cy="150" r="10" fill="#77384D" />
+                <text x="350" y="154" fill="#FFF8F1" fontSize="11" textAnchor="middle" fontWeight="bold">✦</text>
+              </g>
+
+              {/* =================================================================
+                  OBJECT 2: STAR-OIL LAMP / NIGHTSTAND (INTERACTIVE HOTSPOT)
+                  ================================================================= */}
+              <g
+                className={`room-hotspot-group ${styles.hotspotBadge} ${
+                  selectedHotspot === "lantern" && !showingEasterEgg ? `${styles.hotspotSelected} hotspot-selected` : ""
+                }`}
+                onClick={() => handleSelectHotspot("lantern")}
+                tabIndex={0}
+                role="button"
+                aria-label="Inspect Star-Oil Lantern"
+                aria-pressed={selectedHotspot === "lantern" && !showingEasterEgg}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (e.key === " ") e.preventDefault();
+                    handleSelectHotspot("lantern");
+                  }
+                }}
+              >
+                {/* Nightstand Table in Warm Walnut */}
+                <rect x="520" y="260" width="70" height="75" rx="4" fill="#5A3E31" stroke="#382B2A" strokeWidth="1.5" />
+                <rect x="515" y="255" width="80" height="8" rx="2" fill="#6E4D3E" stroke="#382B2A" strokeWidth="1" />
+                <circle cx="555" cy="295" r="2.5" fill="#D7A95B" />
+
+                {/* Ambient Hearthlight Glow Behind Lamp */}
+                <circle cx="555" cy="237" r="42" fill="url(#lamp-glow-pool)" />
+
+                {/* Brass Star-Oil Lantern Housing */}
+                <rect x="540" y="220" width="30" height="35" rx="3" fill="#382B2A" stroke="#D7A95B" strokeWidth="2" />
+                <path d="M 548 220 L 548 208 Q 555 202 562 208 L 562 220" stroke="#D7A95B" strokeWidth="2" fill="none" />
+
+                {/* Animated Hearth Flame */}
+                <g className={styles.lanternFlame}>
+                  <circle cx="555" cy="237" r="10" fill="#D7A95B" />
+                  <circle cx="555" cy="237" r="5" fill="#FFF9EE" />
+                </g>
+
+                {/* Tactile Hotspot Star Badge */}
+                <circle cx="555" cy="237" r="13" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
+                <circle cx="555" cy="237" r="9" fill="#77384D" />
+                <text x="555" y="241" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
+              </g>
+
+              {/* =================================================================
+                  OBJECT 3: SUSPENDED CLOUD HAMMOCK / CRADLE + PIP CAMEO
+                  ================================================================= */}
+              <g
+                className={`room-hotspot-group ${styles.hotspotBadge} ${styles.cradleGroup} ${
+                  selectedHotspot === "cloudbed" && !showingEasterEgg ? `${styles.hotspotSelected} hotspot-selected` : ""
+                }`}
+                onClick={() => handleSelectHotspot("cloudbed")}
+                tabIndex={0}
+                role="button"
+                aria-label="Inspect Cloud Cradle Hammock"
+                aria-pressed={selectedHotspot === "cloudbed" && !showingEasterEgg}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (e.key === " ") e.preventDefault();
+                    handleSelectHotspot("cloudbed");
+                  }
+                }}
+              >
+                {/* Braided Golden Suspension Ropes from Ceiling Beams */}
+                <line x1="80" y1="45" x2="108" y2="210" stroke="#D7A95B" strokeWidth="2" strokeDasharray="3 3" />
+                <line x1="220" y1="45" x2="192" y2="210" stroke="#D7A95B" strokeWidth="2" strokeDasharray="3 3" />
+
+                {/* Soft Fluffy Cloud Cradle Pod in Nursery Paper */}
+                <path
+                  d="M 80 230 C 80 188 120 178 150 184 C 180 178 220 188 220 230 C 220 262 180 272 150 270 C 120 272 80 262 80 230 Z"
+                  fill="#FFF8F1"
+                  stroke="#DDA6B0"
+                  strokeWidth="2.5"
+                />
+                {/* Cozy Sleepy Rose Cotton Fluff Bedding */}
+                <ellipse cx="130" cy="225" rx="25" ry="15" fill="#DDA6B0" opacity="0.85" />
+                <text x="175" y="235" fill="#D7A95B" fontSize="12">✦</text>
+
+                {/* Official Pip Miniature Sleeping Cameo inside Nursery Cradle */}
+                <image
+                  href="/assets/pip_avatar_cloud.png"
+                  x="98"
+                  y="180"
+                  width="104"
+                  height="126"
+                  style={{ pointerEvents: "none", opacity: 0.95 }}
+                />
+
+                {/* Tactile Hotspot Star Badge */}
+                <circle cx="150" cy="225" r="13" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
+                <circle cx="150" cy="225" r="9" fill="#77384D" />
+                <text x="150" y="229" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
+              </g>
+
+              {/* =================================================================
+                  OBJECT 4: DRAFTING WORKBENCH TABLE
+                  ================================================================= */}
+              <g
+                className={`room-hotspot-group ${styles.hotspotBadge} ${
+                  selectedHotspot === "workbench" && !showingEasterEgg ? `${styles.hotspotSelected} hotspot-selected` : ""
+                }`}
+                onClick={() => handleSelectHotspot("workbench")}
+                tabIndex={0}
+                role="button"
+                aria-label="Inspect Dream Drafting Workbench"
+                aria-pressed={selectedHotspot === "workbench" && !showingEasterEgg}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (e.key === " ") e.preventDefault();
+                    handleSelectHotspot("workbench");
+                  }
+                }}
+              >
+                {/* Drafting Desk Surface in Warm Pine */}
+                <polygon points="50,290 230,290 250,335 30,335" fill="#BA9776" stroke="#382B2A" strokeWidth="1.5" />
+                {/* Desk Legs with Shadow Base */}
+                <rect x="40" y="335" width="10" height="40" fill="#5A3E31" stroke="#382B2A" strokeWidth="1" />
+                <rect x="235" y="335" width="10" height="40" fill="#5A3E31" stroke="#382B2A" strokeWidth="1" />
+
+                {/* Light Parchment Blueprint Paper Sheet */}
+                <polygon points="70,298 160,298 175,325 85,325" fill="#FAF4EB" stroke="#77384D" strokeWidth="1.2" />
+                <line x1="85" y1="306" x2="150" y2="306" stroke="rgba(119, 56, 77, 0.45)" strokeWidth="1" />
+                <line x1="90" y1="314" x2="155" y2="314" stroke="rgba(119, 56, 77, 0.45)" strokeWidth="1" />
+
+                {/* Golden Winding Key & Calipers on Desk */}
+                <circle cx="195" cy="312" r="5" stroke="#D7A95B" strokeWidth="1.5" fill="none" />
+                <line x1="195" y1="317" x2="195" y2="328" stroke="#D7A95B" strokeWidth="2" />
+
+                {/* Tactile Hotspot Star Badge */}
+                <circle cx="130" cy="312" r="13" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
+                <circle cx="130" cy="312" r="9" fill="#77384D" />
+                <text x="130" y="316" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
+              </g>
+
+              {/* =================================================================
+                  OBJECT 5: HIDDEN EASTER EGG (LOOSE BRASS FLOOR TILE)
+                  ================================================================= */}
+              <g
+                className={`room-easter-egg-tile ${styles.easterEggTile} ${
+                  easterEggFound ? "egg-tile-discovered" : "egg-tile-hidden"
+                }`}
+                onClick={handleEasterEggClick}
+                tabIndex={0}
+                role="button"
+                aria-label={
+                  easterEggFound
+                    ? "Secret Starlight Stash (Discovered - Click to inspect)"
+                    : "A curiously loose wooden floorboard with a tiny brass star"
+                }
+                aria-pressed={showingEasterEgg}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    if (e.key === " ") e.preventDefault();
+                    handleEasterEggClick();
+                  }
+                }}
+              >
+                <rect
+                  x="330"
+                  y="352"
+                  width="48"
+                  height="22"
+                  rx="3"
+                  fill={easterEggFound ? "#D7A95B" : "#BFAF9D"}
+                  stroke="#77384D"
+                  strokeWidth={easterEggFound ? "2" : "1.2"}
+                  strokeDasharray={easterEggFound ? "none" : "2 2"}
+                />
+                <text
+                  x="354"
+                  y="367"
+                  fill={easterEggFound ? "#382B2A" : "#77384D"}
+                  fontSize="12"
+                  textAnchor="middle"
+                  fontWeight="bold"
+                >
+                  ✦
+                </text>
+              </g>
+            </svg>
+          </div>
         </div>
 
         {/* Room Instruction Bar */}

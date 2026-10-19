@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSound } from "@/lib/SoundContext";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 interface Waypoint {
   id: string;
@@ -107,6 +108,12 @@ export default function DreamDelivery() {
             <path
               d="M 210 90 C 230 75 260 75 280 90 C 300 70 340 70 360 90 C 380 75 400 80 410 95 L 410 130 L 210 130 Z"
               fill="rgba(198, 217, 232, 0.18)"
+            />
+
+            {/* Soft Ambient Flight Mist Layer */}
+            <path
+              d="M 0 175 Q 80 152 160 170 T 320 162 T 400 175 L 400 200 L 0 200 Z"
+              fill="rgba(233, 217, 232, 0.14)"
             />
 
             {/* Village Back Layer: Distant Gables */}
@@ -298,7 +305,7 @@ export default function DreamDelivery() {
           id={`waypoint-panel-${active.id}`}
           role="tabpanel"
           aria-labelledby={`waypoint-tab-${active.id}`}
-          className="dispatch-docket-card"
+          className={`dispatch-docket-card ${visualStyles.deliveryDocketTactile}`}
         >
           <div className="docket-header-line">
             <span className="docket-coords">{active.coordinates}</span>

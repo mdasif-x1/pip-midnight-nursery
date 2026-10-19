@@ -1,0 +1,58 @@
+/* ==========================================================================
+   Hero Gateway Actions — Cinematic Entrance Launch (CSS Module)
+   ========================================================================== */
+
+.heroActionsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm, 0.75rem);
+  margin-top: var(--space-xs, 0.5rem);
+  position: relative;
+  z-index: 10;
+}
+
+.gatewayBtn {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease;
+}
+
+.gatewayBtn:hover {
+  transform: translateY(-2px);
+}
+
+.gatewayBtn:active {
+  transform: translateY(0);
+}
+
+/* Starlight Glint Sweep on Hover */
+.btnGlint {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: left 0.65s ease;
+  pointer-events: none;
+}
+
+.gatewayBtn:hover .btnGlint {
+  left: 140%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gatewayBtn:hover {
+    transform: none !important;
+  }
+  .btnGlint {
+    display: none !important;
+  }
+}

@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Cloud Gateway Divider — Interactive Cloud Passage (CSS Module)
+   ========================================================================== */
+
+.cloudDividerWrap {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  overflow: hidden;
+  line-height: 0;
+  pointer-events: none;
+  z-index: 4;
+  transform-origin: bottom center;
+  transition: transform 0.4s ease, filter 0.4s ease;
+}
+
+@keyframes cloudDiveSurge {
+  0% {
+    transform: scaleY(1);
+    filter: brightness(1);
+  }
+  40% {
+    transform: scaleY(1.35) translateY(-6px);
+    filter: brightness(1.06) drop-shadow(0 -8px 24px rgba(233, 217, 232, 0.6));
+  }
+  100% {
+    transform: scaleY(1);
+    filter: brightness(1);
+  }
+}
+
+.cloudDiving {
+  animation: cloudDiveSurge 1.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.cloudSvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.portalLabel {
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 11px;
+  font-weight: 600;
+  fill: var(--gold-starlight, #D7A95B);
+  letter-spacing: 0.08em;
+  user-select: none;
+}
+
+@media (max-width: 640px) {
+  .portalLabel {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloudDiving {
+    animation: none !important;
+    transform: none !important;
+  }
+}

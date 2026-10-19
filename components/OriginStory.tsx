@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSound } from "@/lib/SoundContext";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 interface StoryScene {
   id: number;
@@ -328,9 +329,10 @@ export default function OriginStory() {
       {/* Main Illustrated Scene Stage */}
       <div
         id="origin-scene-panel"
+        key={current.id}
         role="tabpanel"
         aria-labelledby={`origin-chapter-tab-${current.id}`}
-        className="story-scene-display"
+        className={`story-scene-display ${visualStyles.pageTurnActive}`}
         aria-live="polite"
       >
         <div className="story-illustration-frame">
