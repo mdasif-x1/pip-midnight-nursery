@@ -691,7 +691,7 @@ export default function DreamRoom() {
                 role="tab"
                 aria-selected={isSelected}
                 aria-controls={`room-hotspot-panel-${h.id}`}
-                className={`hotspot-tab-pill ${isSelected ? "hotspot-tab-active" : ""}`}
+                className={`hotspot-tab-pill ${styles.roomTabPill} ${isSelected ? `hotspot-tab-active ${styles.roomTabActive}` : ""}`}
                 onClick={() => handleSelectHotspot(h.id)}
                 onKeyDown={(e) => handleTabKeyDown(e, idx)}
               >
@@ -707,7 +707,7 @@ export default function DreamRoom() {
               role="tab"
               aria-selected={showingEasterEgg}
               aria-controls="room-easter-egg-panel"
-              className={`hotspot-tab-pill ${showingEasterEgg ? "hotspot-tab-active" : ""}`}
+              className={`hotspot-tab-pill ${styles.roomTabPill} ${showingEasterEgg ? `hotspot-tab-active ${styles.roomTabActive}` : ""}`}
               onClick={() => setShowingEasterEgg(true)}
               onKeyDown={(e) => handleTabKeyDown(e, HOTSPOTS.length)}
             >
