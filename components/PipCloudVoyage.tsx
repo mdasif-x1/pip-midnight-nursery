@@ -24,6 +24,8 @@ export default function PipCloudVoyage() {
   const rafIdRef = useRef<number | null>(null);
   const sparkIdRef = useRef<number>(0);
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
+  // Ref-tracked burst guard so the RAF loop doesn't depend on React state
+  const landingBurstFiredRef = useRef<boolean>(false);
 
   const cleanup = useCallback(() => {
     if (rafIdRef.current) {
@@ -62,6 +64,7 @@ export default function PipCloudVoyage() {
       }
 
       isVoyagingRef.current = true;
+      landingBurstFiredRef.current = false;
       setIsActive(true);
       setShowLandingBurst(false);
       setSpeech("All aboard the dream cloud! ☁️✦");
@@ -210,7 +213,8 @@ export default function PipCloudVoyage() {
           window.scrollTo(0, targetScrollY);
 
           // Trigger landing stardust and Dream Room welcoming pulse at 90%
-          if (progress > 0.9 && !showLandingBurst) {
+          if (progress > 0.9 && !landingBurstFiredRef.current) {
+            landingBurstFiredRef.current = true;
             setShowLandingBurst(true);
             setSpeech("We've arrived! Welcome to the Dream Room... ✦");
             playChimePlink(880);
@@ -254,7 +258,7 @@ export default function PipCloudVoyage() {
       window.removeEventListener("keydown", handleKeyDown);
       cleanup();
     };
-  }, [cleanup, playChimePlink, showLandingBurst]);
+  }, [cleanup, playChimePlink]);
 
   if (!isActive) return null;
 
