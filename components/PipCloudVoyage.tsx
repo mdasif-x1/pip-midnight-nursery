@@ -26,6 +26,10 @@ export default function PipCloudVoyage() {
   const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
   // Ref-tracked burst guard so the RAF loop doesn't depend on React state
   const landingBurstFiredRef = useRef<boolean>(false);
+  // Stable ref for playChimePlink so the event listener effect doesn't re-run
+  // when SoundContext re-renders (e.g. on mute toggle) and kill an active voyage
+  const playChimeRef = useRef(playChimePlink);
+  useEffect(() => { playChimeRef.current = playChimePlink; }, [playChimePlink]);
 
   const cleanup = useCallback(() => {
     if (rafIdRef.current) {
@@ -70,9 +74,9 @@ export default function PipCloudVoyage() {
       setSpeech("All aboard the dream cloud! ☁️✦");
 
       // Play sweet departure chime chord (C5 -> E5 -> A5)
-      playChimePlink(523.25);
-      const t1 = setTimeout(() => playChimePlink(659.25), 140);
-      const t2 = setTimeout(() => playChimePlink(880.0), 300);
+      playChimeRef.current(523.25);
+      const t1 = setTimeout(() => playChimeRef.current(659.25), 140);
+      const t2 = setTimeout(() => playChimeRef.current(880.0), 300);
       timeoutsRef.current.push(t1, t2);
 
       // Tell hero Pip to depart and cloud divider to swell into cloud cover
@@ -217,7 +221,7 @@ export default function PipCloudVoyage() {
             landingBurstFiredRef.current = true;
             setShowLandingBurst(true);
             setSpeech("We've arrived! Welcome to the Dream Room... ✦");
-            playChimePlink(880);
+            playChimeRef.current(880);
             window.dispatchEvent(new CustomEvent("pip-voyage-land"));
             window.dispatchEvent(
               new CustomEvent("pip-voyage-step", { detail: { landmarkId: "dream-room" } })
@@ -258,7 +262,9 @@ export default function PipCloudVoyage() {
       window.removeEventListener("keydown", handleKeyDown);
       cleanup();
     };
-  }, [cleanup, playChimePlink]);
+  // Only depends on cleanup (stable via useCallback([])) — playChimePlink
+  // is accessed via ref to prevent SoundContext re-renders from killing the voyage
+  }, [cleanup]);
 
   if (!isActive) return null;
 

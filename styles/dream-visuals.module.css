@@ -201,14 +201,22 @@
    7. Navigation Bar: No-Wrap & Compact Responsive Spacing
    -------------------------------------------------------------------------- */
 .navLinksRefined {
-  display: flex !important;
   align-items: center !important;
   gap: clamp(0.25rem, 0.9vw, 0.75rem) !important;
   flex-wrap: nowrap !important;
   margin: 0 !important;
   padding: 0 !important;
   list-style: none !important;
+  overflow-x: auto;
+  /* Do NOT force display:flex here — globals.css hides links below 860px */
 }
+
+@media (min-width: 860px) {
+  .navLinksRefined {
+    display: flex !important;
+  }
+}
+
 
 .navItemLinkRefined {
   white-space: nowrap !important;
