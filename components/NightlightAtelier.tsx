@@ -80,208 +80,177 @@ export default function NightlightAtelier() {
 
   return (
     <div
-      className={`workshop-bay-atelier ${current.glowClass} glow-level-${glowIntensity} ${visualStyles.atelierAmbientContainer}`}
+      className={`workshop-bay-atelier ${current.glowClass} glow-level-${glowIntensity} ${visualStyles.exhibitCard} ${visualStyles.atelierAmbientContainer}`}
       style={{
         boxShadow: `0 14px 40px ${current.lightPoolColor.replace('0.3', (0.14 * intensityMultiplier).toFixed(2))}, 0 2px 8px rgba(56, 43, 42, 0.06)`,
         borderColor: current.alcoveStroke,
       }}
     >
-      {/* Miniature Lighting Chamber Stage */}
-      <div className="bay-visual-stage">
-        <div className={`lighting-chamber-stage ${current.glowClass}-chamber`}>
-          {/* Reactive Ambient Light Pool */}
-          <div
-            className="chamber-light-pool"
-            style={{
-              background: `radial-gradient(circle at 50% 50%, ${current.lightPoolColor} 0%, transparent ${Math.round(72 * intensityMultiplier)}%)`,
-              opacity: intensityMultiplier,
-            }}
-            aria-hidden="true"
-          />
+      {/* 1, 2, 3: Small exhibit badge, elegant title, and clear description */}
+      <div className={visualStyles.exhibitHeader}>
+        <span className={visualStyles.exhibitBadge}>✦ Exhibit 02 · Bedtime Luminescence</span>
+        <h3 className={visualStyles.exhibitTitle}>Nightlight Atelier</h3>
+        <p className={visualStyles.exhibitDescription}>
+          A crescent dream lantern tuned to cast calming bedtime radiance, adjustable from gentle candle embers to soft dusk blush or peaceful lunar starlight.
+        </p>
+      </div>
 
-          {/* Architectural Alcove & Celestial Backdrop */}
-          <div className="chamber-celestial-backdrop" aria-hidden="true">
-            <svg
-              className="chamber-svg"
-              viewBox="0 0 500 320"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Bounded Night Window Alcove Interior (Contained night sky only) */}
-              <path
-                d="M 30 320 L 30 140 C 30 50 150 20 250 20 C 350 20 470 50 470 140 L 470 320 Z"
-                fill="rgba(37, 24, 39, 0.45)"
-              />
+      {/* 4: The existing artwork, framed as the main artifact */}
+      <div className={`lighting-chamber-stage ${current.glowClass}-chamber`}>
+        {/* Reactive Ambient Light Pool */}
+        <div
+          className="chamber-light-pool"
+          style={{
+            background: `radial-gradient(circle at 50% 50%, ${current.lightPoolColor} 0%, transparent ${Math.round(72 * intensityMultiplier)}%)`,
+            opacity: intensityMultiplier,
+          }}
+          aria-hidden="true"
+        />
 
-              {/* Illustrated Arched Alcove Framing */}
-              <path
-                d="M 30 320 L 30 140 C 30 50 150 20 250 20 C 350 20 470 50 470 140 L 470 320"
-                stroke={current.alcoveStroke}
-                strokeWidth="2"
-                strokeDasharray="4 4"
-              />
-
-              {/* Distant Crescent Moon Line-art */}
-              <path
-                d="M 90 60 A 24 24 0 0 0 114 84 A 20 20 0 0 1 90 60 Z"
-                fill={current.starColor}
-                opacity="0.85"
-              />
-
-              {/* Delicate Constellation Stars */}
-              <text x="80" y="110" fill={current.starColor} fontSize="12" opacity="0.85">✦</text>
-              <text x="140" y="45" fill={current.starColor} fontSize="10" opacity="0.65">✧</text>
-              <text x="360" y="55" fill={current.starColor} fontSize="14" opacity="0.85">✦</text>
-              <text x="415" y="105" fill={current.starColor} fontSize="10" opacity="0.7">✧</text>
-              <text x="390" y="160" fill={current.starColor} fontSize="8" opacity="0.55">✦</text>
-              <text x="110" y="170" fill={current.starColor} fontSize="9" opacity="0.55">✧</text>
-
-              {/* Windowsill Shelf Line */}
-              <line
-                x1="20"
-                y1="310"
-                x2="480"
-                y2="310"
-                stroke="rgba(119, 56, 77, 0.3)"
-                strokeWidth="2"
-              />
-            </svg>
-          </div>
-
-          {/* Official Centerpiece Lantern Artwork */}
-          <div className="chamber-artwork-wrapper">
-            <Image
-              src="/assets/pip_dream_lantern.png"
-              alt="Luminous crescent moon lantern giving off gentle ambient bedtime light"
-              width={480}
-              height={428}
-              className="chamber-artwork"
-              priority={false}
+        {/* Architectural Alcove & Celestial Backdrop */}
+        <div className="chamber-celestial-backdrop" aria-hidden="true">
+          <svg
+            className="chamber-svg"
+            viewBox="0 0 500 320"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Bounded Night Window Alcove Interior (Contained night sky only) */}
+            <path
+              d="M 30 320 L 30 140 C 30 50 150 20 250 20 C 350 20 470 50 470 140 L 470 320 Z"
+              fill="rgba(37, 24, 39, 0.45)"
             />
-          </div>
 
-          {/* Windowsill Base Plank */}
-          <div className="chamber-windowsill-plank">
-            <span className="windowsill-grain">Nursery Bedchamber Sill · Sector 7</span>
-          </div>
+            {/* Illustrated Arched Alcove Framing */}
+            <path
+              d="M 30 320 L 30 140 C 30 50 150 20 250 20 C 350 20 470 50 470 140 L 470 320"
+              stroke={current.alcoveStroke}
+              strokeWidth="2"
+              strokeDasharray="4 4"
+            />
+
+            {/* Distant Crescent Moon Line-art */}
+            <path
+              d="M 90 60 A 24 24 0 0 0 114 84 A 20 20 0 0 1 90 60 Z"
+              fill={current.starColor}
+              opacity="0.85"
+            />
+
+            {/* Delicate Constellation Stars */}
+            <text x="80" y="110" fill={current.starColor} fontSize="12" opacity="0.85">✦</text>
+            <text x="140" y="45" fill={current.starColor} fontSize="10" opacity="0.65">✧</text>
+            <text x="360" y="55" fill={current.starColor} fontSize="14" opacity="0.85">✦</text>
+            <text x="415" y="105" fill={current.starColor} fontSize="10" opacity="0.7">✧</text>
+            <text x="390" y="160" fill={current.starColor} fontSize="8" opacity="0.55">✦</text>
+            <text x="110" y="170" fill={current.starColor} fontSize="9" opacity="0.55">✧</text>
+
+            {/* Windowsill Shelf Line */}
+            <line
+              x1="20"
+              y1="310"
+              x2="480"
+              y2="310"
+              stroke="rgba(119, 56, 77, 0.3)"
+              strokeWidth="2"
+            />
+          </svg>
         </div>
 
-        {/* Dedicated Caption Row Below Frame */}
-        <div className="bay-stage-caption-row">
-          <p className="bay-asset-caption">
-            Plate II · Luminous Crescent Dream Lantern
-          </p>
-          <div className="lantern-atmosphere-plaque">
-            <span className="plaque-dot" style={{ backgroundColor: current.starColor }} />
-            <span>{current.badgeText}</span>
-          </div>
+        {/* Official Centerpiece Lantern Artwork */}
+        <div className="chamber-artwork-wrapper">
+          <Image
+            src="/assets/pip_dream_lantern.png"
+            alt="Luminous crescent moon lantern giving off gentle ambient bedtime light"
+            width={480}
+            height={428}
+            className="chamber-artwork"
+            priority={false}
+          />
+        </div>
+
+        {/* Windowsill Base Plank */}
+        <div className="chamber-windowsill-plank">
+          <span className="windowsill-grain">Nursery Bedchamber Sill · Sector 7</span>
         </div>
       </div>
 
-      <div className="bay-controls-dossier">
-        <div className="bay-header-row">
-          <span className="bay-ticket-tag">Project B · Ambient Atmosphere</span>
-          <h3 className="bay-title">Nightlight Atelier</h3>
+      {/* 5: Interactive controls, grouped into one coherent control area */}
+      <div className={visualStyles.exhibitControlsGroup}>
+        <span className={visualStyles.controlsSectionLabel}>Select Chamber Atmosphere:</span>
+        <div
+          className={visualStyles.exhibitMoodGrid}
+          role="radiogroup"
+          aria-label="Nightlight Atmosphere Moods"
+        >
+          {MOODS.map((m, idx) => {
+            const isSelected = m.key === selectedMood;
+            return (
+              <button
+                key={m.key}
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                className={`${visualStyles.moodButton} ${
+                  isSelected ? visualStyles.moodButtonActive : ""
+                }`}
+                onClick={() => {
+                  playTick();
+                  setSelectedMood(m.key);
+                }}
+                onKeyDown={(e) => handleChipKeyDown(e, idx)}
+              >
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: m.starColor,
+                    boxShadow: isSelected ? `0 0 8px ${m.starColor}` : "none",
+                  }}
+                  aria-hidden="true"
+                />
+                <span>{m.label}</span>
+              </button>
+            );
+          })}
         </div>
 
-        <p className="bay-description">
-          How much moonlight shall we keep? Adjust Pip&apos;s crescent dream lantern to tune bedtime
-          luminescence from warm amber candlelight to sleepy rose dusk or tranquil starlight.
+        {/* Lantern Dimmer Level Switch */}
+        <div className={visualStyles.dimmerSwitchRow}>
+          <span className={visualStyles.controlsSectionLabel} style={{ margin: 0 }}>Dimmer:</span>
+          <div className={visualStyles.dimmerButtons} role="group" aria-label="Lantern Dimmer Level">
+            {(["soft", "medium", "luminous"] as const).map((lvl) => (
+              <button
+                key={lvl}
+                type="button"
+                className={`${visualStyles.dimmerButton} ${glowIntensity === lvl ? visualStyles.dimmerButtonActive : ""}`}
+                onClick={() => {
+                  playTick();
+                  setGlowIntensity(lvl);
+                }}
+                aria-pressed={glowIntensity === lvl}
+              >
+                <span>{lvl === "soft" ? "Soft (40%)" : lvl === "medium" ? "Bedtime (75%)" : "Luminous (100%)"}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Mood Quote / Tagline */}
+        <p className={visualStyles.selectedMelodyQuote}>
+          &ldquo;{current.tagline}&rdquo;
         </p>
 
-        {/* Mood Selection Controls */}
-        <div className="mood-selector-group">
-          <span className="selector-label">Select Room Lighting Mood:</span>
-          <div
-            className="mood-chips"
-            role="radiogroup"
-            aria-label="Nightlight Atmosphere Moods"
-          >
-            {MOODS.map((m, idx) => {
-              const isSelected = m.key === selectedMood;
-              return (
-                <button
-                  key={m.key}
-                  type="button"
-                  role="radio"
-                  aria-checked={isSelected}
-                  className={`mood-chip mood-chip-${m.key} ${
-                    isSelected ? "mood-chip-active" : ""
-                  }`}
-                  onClick={() => {
-                    playTick();
-                    setSelectedMood(m.key);
-                  }}
-                  onKeyDown={(e) => handleChipKeyDown(e, idx)}
-                >
-                  <span
-                    className="mood-swatch-dot"
-                    style={{
-                      backgroundColor: m.starColor,
-                      boxShadow: isSelected ? `0 0 10px ${m.starColor}` : "none",
-                    }}
-                    aria-hidden="true"
-                  />
-                  <span>{m.label}</span>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Lantern Dimmer Level Switch */}
-          <div className="lantern-dimmer-row">
-            <span className="dimmer-label">Lantern Dimmer:</span>
-            <div className="dimmer-buttons" role="group" aria-label="Lantern Dimmer Level">
-              {(["soft", "medium", "luminous"] as const).map((lvl) => (
-                <button
-                  key={lvl}
-                  type="button"
-                  className={`dimmer-btn ${glowIntensity === lvl ? "dimmer-btn-active" : ""}`}
-                  onClick={() => {
-                    playTick();
-                    setGlowIntensity(lvl);
-                  }}
-                  aria-pressed={glowIntensity === lvl}
-                >
-                  <span>{lvl === "soft" ? "Soft (40%)" : lvl === "medium" ? "Bedtime (75%)" : "Luminous (100%)"}</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="mood-description-box">
-            <p className="mood-tagline">&ldquo;{current.tagline}&rdquo;</p>
-            <p className="mood-surroundings-note">{current.surroundingsNote}</p>
-          </div>
+        {/* Active Chamber Status Feedback */}
+        <div className={visualStyles.activeFeedbackNote}>
+          <strong>Active Chamber:</strong> {current.label} ({current.badgeText}) · {glowIntensity === "soft" ? "Soft Glow (40%)" : glowIntensity === "medium" ? "Bedtime Radiant (75%)" : "Full Starlight (100%)"}
         </div>
+      </div>
 
-        <div className="atelier-status-footer">
-          <span className="status-label">Active Chamber Atmosphere:</span>
-          <strong className="status-value">
-            {current.label} Luminescence · {glowIntensity === "soft" ? "Soft Glow" : glowIntensity === "medium" ? "Bedtime Radiant" : "Full Starlight"}
-          </strong>
-        </div>
-
-        {/* Compact Build Notes & Artifact Details Panel */}
-        <div className={visualStyles.artifactSpecStrip} aria-label="Project B Build Details">
-          <span className={visualStyles.artifactSpecLabel}>Artifact Specs:</span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Asset:</span>
-            <code className={visualStyles.specFilename}>pip_dream_lantern.png</code>
-          </span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Atmosphere:</span>
-            <strong>2200K Warm Hearthlight</strong>
-          </span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Dimmer:</span>
-            <strong>3 Responsive Levels</strong>
-          </span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Motion:</span>
-            <strong>Reduced-Motion Safe</strong>
-          </span>
-        </div>
+      {/* 6: Compact, understated technical specimen note at the bottom */}
+      <div className={visualStyles.specimenFooter}>
+        <strong>Specimen Note:</strong> Handcrafted brass lantern (<code>pip_dream_lantern.png</code>) · 2200K–6500K Ambient Engine · 3 Responsive dimmer levels · Reduced-motion safe
       </div>
     </div>
   );

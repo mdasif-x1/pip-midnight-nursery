@@ -329,11 +329,11 @@ export default function HomePage() {
             </header>
 
             <div className="workshop-showcase-grid">
-              {/* Bilateral Flanking Workshop: Left (Nightlight Alcove) | Center (Corridor Spine) | Right (Lullaby Workbench) */}
+              {/* Bilateral Flanking Workshop: Left (Exhibit 01 · Lullaby Workbench) | Center (Corridor Spine) | Right (Exhibit 02 · Nightlight Alcove) */}
               <div className={visualStyles.workshopBilateralStage}>
-                {/* Left Flank: Project B — Interactive Lighting Mood Nightlight Atelier */}
-                <div id="atelier" className={`station-anchor-wrap ${visualStyles.atelierLeftFlank}`}>
-                  <NightlightAtelier />
+                {/* Left Flank: Project A — Interactive Web Audio Lullaby Lab */}
+                <div id="lab" className={`station-anchor-wrap ${visualStyles.lullabyRightFlank}`}>
+                  <LullabyLab />
                 </div>
 
                 {/* Center Flank: Persistent Starlight Flight Corridor Axis */}
@@ -341,9 +341,9 @@ export default function HomePage() {
                   <WorkshopFlightCorridor />
                 </div>
 
-                {/* Right Flank: Project A — Interactive Web Audio Lullaby Lab */}
-                <div id="lab" className={`station-anchor-wrap ${visualStyles.lullabyRightFlank}`}>
-                  <LullabyLab />
+                {/* Right Flank: Project B — Interactive Lighting Mood Nightlight Atelier */}
+                <div id="atelier" className={`station-anchor-wrap ${visualStyles.atelierLeftFlank}`}>
+                  <NightlightAtelier />
                 </div>
               </div>
 

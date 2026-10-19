@@ -256,158 +256,148 @@ export default function LullabyLab() {
   };
 
   return (
-    <div className="workshop-bay-lab">
-      {/* Illustrated Music Workbench Stage */}
-      <div className="bay-visual-stage">
-        <div className={`workbench-stage-frame ${visualStyles.workbenchStageDepth}`}>
-          {/* Subtle warm light pool behind music box */}
-          <div className="workbench-light-pool" aria-hidden="true" />
+    <div className={`workshop-bay-lab ${visualStyles.exhibitCard}`}>
+      {/* 1, 2, 3: Small exhibit badge, elegant title, and clear description */}
+      <div className={visualStyles.exhibitHeader}>
+        <span className={visualStyles.exhibitBadge}>✦ Exhibit 01 · Sound Mechanism</span>
+        <h3 className={visualStyles.exhibitTitle}>Lullaby Lab</h3>
+        <p className={visualStyles.exhibitDescription}>
+          A restorative music box powered by the native Web Audio API, hand-cranking gentle pentatonic lullabies to soothe restless dreamers into deep slumber.
+        </p>
+      </div>
 
-          {/* Background Sheet Music / Staff Linework */}
-          <div className="workbench-staff-backdrop" aria-hidden="true">
-            <svg
-              className="staff-svg"
-              viewBox="0 0 500 120"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Musical Staff 5 lines */}
-              <line x1="20" y1="30" x2="480" y2="30" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
-              <line x1="20" y1="45" x2="480" y2="45" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
-              <line x1="20" y1="60" x2="480" y2="60" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
-              <line x1="20" y1="75" x2="480" y2="75" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
-              <line x1="20" y1="90" x2="480" y2="90" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+      {/* 4: The existing artwork, framed as the main artifact */}
+      <div className={`workbench-stage-frame ${visualStyles.workbenchStageDepth}`}>
+        {/* Subtle warm light pool behind music box */}
+        <div className="workbench-light-pool" aria-hidden="true" />
 
-              {/* Decorative Clef & Notes */}
-              <text x="35" y="80" fill="rgba(119, 56, 77, 0.32)" fontSize="48" fontFamily="Georgia, serif">𝄞</text>
-              <text x="110" y="58" fill="rgba(221, 166, 176, 0.6)" fontSize="20" fontFamily="Georgia, serif">♩</text>
-              <text x="170" y="44" fill="rgba(215, 169, 91, 0.55)" fontSize="20" fontFamily="Georgia, serif">♪</text>
-              <text x="370" y="58" fill="rgba(221, 166, 176, 0.6)" fontSize="20" fontFamily="Georgia, serif">♫</text>
-              <text x="430" y="44" fill="rgba(215, 169, 91, 0.55)" fontSize="20" fontFamily="Georgia, serif">♬</text>
-            </svg>
-          </div>
+        {/* Background Sheet Music / Staff Linework */}
+        <div className="workbench-staff-backdrop" aria-hidden="true">
+          <svg
+            className="staff-svg"
+            viewBox="0 0 500 120"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            {/* Musical Staff 5 lines */}
+            <line x1="20" y1="30" x2="480" y2="30" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+            <line x1="20" y1="45" x2="480" y2="45" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+            <line x1="20" y1="60" x2="480" y2="60" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+            <line x1="20" y1="75" x2="480" y2="75" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+            <line x1="20" y1="90" x2="480" y2="90" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
 
-          {/* Top Workbench Tuning Bar */}
-          <div className="workbench-top-bar">
-            <span className="workbench-tuning-mark">✦ Key: C Pentatonic</span>
-            <div className={`chime-state-pill ${isPlaying ? "chime-state-active" : ""}`} aria-live="polite">
-              <span className="chime-dot" />
-              <span>{isPlaying ? `Chiming: ${activeNote} (${activeFreq} Hz)` : "Idle · Ready"}</span>
-            </div>
-          </div>
+            {/* Decorative Clef & Notes */}
+            <text x="35" y="80" fill="rgba(119, 56, 77, 0.32)" fontSize="48" fontFamily="Georgia, serif">𝄞</text>
+            <text x="110" y="58" fill="rgba(221, 166, 176, 0.6)" fontSize="20" fontFamily="Georgia, serif">♩</text>
+            <text x="170" y="44" fill="rgba(215, 169, 91, 0.55)" fontSize="20" fontFamily="Georgia, serif">♪</text>
+            <text x="370" y="58" fill="rgba(221, 166, 176, 0.6)" fontSize="20" fontFamily="Georgia, serif">♫</text>
+            <text x="430" y="44" fill="rgba(215, 169, 91, 0.55)" fontSize="20" fontFamily="Georgia, serif">♬</text>
+          </svg>
+        </div>
 
-          {/* Official Centerpiece Artwork */}
-          <div className="workbench-artwork-wrapper">
-            <Image
-              src="/assets/pip_lullaby_box.png"
-              alt="Handcrafted wooden music box with golden winding key and floating star chimes"
-              width={480}
-              height={433}
-              className={`workbench-artwork ${isPlaying ? "artwork-playing" : ""}`}
-              priority={false}
-            />
-
-            {/* Floating Musical Notes when Playing */}
-            {isPlaying && (
-              <div className="music-box-floating-notes" aria-hidden="true">
-                <span className={`floating-note note-1 ${visualStyles.harmonicParticle}`}>
-                  {activeNote || "♩"}
-                </span>
-                <span className={`floating-note note-2 ${visualStyles.harmonicParticle}`}>✦</span>
-                <span className={`floating-note note-3 ${visualStyles.harmonicParticle}`}>♪</span>
-                <span className={`floating-note note-4 ${visualStyles.harmonicParticle}`}>✧</span>
-              </div>
-            )}
-          </div>
-
-          {/* Mechanical Winding Status Pill */}
-          <div className={`music-box-crank-indicator ${isPlaying ? "crank-active" : ""}`} aria-hidden="true">
-            <span className="crank-key">⚙</span>
-            <span className="crank-label">{isPlaying ? "Brass Spring Unwinding..." : "Spring Wound · Ready"}</span>
-          </div>
-
-          {/* Bottom Oscillating Soundwave Ribbon */}
-          <div className="workbench-bottom-ribbon" aria-hidden="true">
-            <svg
-              className={`soundwave-svg ${isPlaying ? "soundwave-playing" : ""}`}
-              viewBox="0 0 400 32"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M 10 16 Q 40 16 70 16 T 130 16 T 190 16 T 250 16 T 310 16 T 370 16 T 390 16"
-                className="wave-base-line"
-                stroke="rgba(119, 56, 77, 0.2)"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-              />
-              {isPlaying && (
-                <path
-                  d="M 10 16 Q 40 4 70 28 T 130 6 T 190 26 T 250 8 T 310 24 T 370 10 T 390 16"
-                  className="wave-active-line"
-                  stroke="var(--berry-dusky)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                />
-              )}
-            </svg>
+        {/* Top Workbench Tuning Bar */}
+        <div className="workbench-top-bar">
+          <span className="workbench-tuning-mark">✦ Key: C Pentatonic</span>
+          <div className={`chime-state-pill ${isPlaying ? "chime-state-active" : ""}`} aria-live="polite">
+            <span className="chime-dot" />
+            <span>{isPlaying ? `Chiming: ${activeNote} (${activeFreq} Hz)` : "Idle · Ready"}</span>
           </div>
         </div>
 
-        {/* Dedicated Caption Row Below Frame */}
-        <div className="bay-stage-caption-row">
-          <p className="bay-asset-caption">
-            Plate I · Handcrafted Music Box &amp; Winding Key
-          </p>
-          <span className="bay-spec-label">Web Audio Pentatonic Synth</span>
+        {/* Official Centerpiece Artwork */}
+        <div className="workbench-artwork-wrapper">
+          <Image
+            src="/assets/pip_lullaby_box.png"
+            alt="Handcrafted wooden music box with golden winding key and floating star chimes"
+            width={480}
+            height={433}
+            className={`workbench-artwork ${isPlaying ? "artwork-playing" : ""}`}
+            priority={false}
+          />
+
+          {/* Floating Musical Notes when Playing */}
+          {isPlaying && (
+            <div className="music-box-floating-notes" aria-hidden="true">
+              <span className={`floating-note note-1 ${visualStyles.harmonicParticle}`}>
+                {activeNote || "♩"}
+              </span>
+              <span className={`floating-note note-2 ${visualStyles.harmonicParticle}`}>✦</span>
+              <span className={`floating-note note-3 ${visualStyles.harmonicParticle}`}>♪</span>
+              <span className={`floating-note note-4 ${visualStyles.harmonicParticle}`}>✧</span>
+            </div>
+          )}
+        </div>
+
+        {/* Mechanical Winding Status Pill */}
+        <div className={`music-box-crank-indicator ${isPlaying ? "crank-active" : ""}`} aria-hidden="true">
+          <span className="crank-key">⚙</span>
+          <span className="crank-label">{isPlaying ? "Brass Spring Unwinding..." : "Spring Wound · Ready"}</span>
+        </div>
+
+        {/* Bottom Oscillating Soundwave Ribbon */}
+        <div className="workbench-bottom-ribbon" aria-hidden="true">
+          <svg
+            className={`soundwave-svg ${isPlaying ? "soundwave-playing" : ""}`}
+            viewBox="0 0 400 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M 10 16 Q 40 16 70 16 T 130 16 T 190 16 T 250 16 T 310 16 T 370 16 T 390 16"
+              className="wave-base-line"
+              stroke="rgba(119, 56, 77, 0.2)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+            />
+            {isPlaying && (
+              <path
+                d="M 10 16 Q 40 4 70 28 T 130 6 T 190 26 T 250 8 T 310 24 T 370 10 T 390 16"
+                className="wave-active-line"
+                stroke="var(--berry-dusky)"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            )}
+          </svg>
         </div>
       </div>
 
-      <div className="bay-controls-dossier">
-        <div className="bay-header-row">
-          <span className="bay-ticket-tag">Project A · Audio Synthesis</span>
-          <h3 className="bay-title">Lullaby Lab</h3>
+      {/* 5: Interactive controls, grouped into one coherent control area */}
+      <div className={visualStyles.exhibitControlsGroup}>
+        <span className={visualStyles.controlsSectionLabel}>Select Music-Box Cylinder:</span>
+        <div className={visualStyles.exhibitCylinderGrid} role="radiogroup" aria-label="Lullaby Cylinders">
+          {MELODIES.map((m, idx) => {
+            const isSelected = m.id === selectedMelodyId;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                role="radio"
+                aria-checked={isSelected}
+                className={`${visualStyles.cylinderCard} ${isSelected ? visualStyles.cylinderCardActive : ""}`}
+                onClick={() => {
+                  playTick();
+                  if (isPlaying) stopLullaby();
+                  setSelectedMelodyId(m.id);
+                }}
+                onKeyDown={(e) => handleMelodyKeyDown(e, idx)}
+              >
+                <span className={visualStyles.cylinderNum}>
+                  Cylinder {["I", "II", "III"][idx] || idx + 1}
+                </span>
+                <strong className={visualStyles.cylinderName}>{m.name}</strong>
+                <span className={visualStyles.cylinderTagline}>{m.tagline}</span>
+              </button>
+            );
+          })}
         </div>
 
-        <p className="bay-description">
-          A little music for the almost-asleep. Powered by the native Web Audio API, Pip&apos;s music-box
-          hand-cranks restorative sleep melodies and gentle pentatonic lullabies on demand.
+        <p className={visualStyles.selectedMelodyQuote}>
+          &ldquo;{currentMelody.description}&rdquo;
         </p>
 
-        {/* Melody Selector Chips */}
-        <div className="melody-selector-group">
-          <span className="selector-label">Choose Melody:</span>
-          <div className="melody-chips" role="radiogroup" aria-label="Lullaby Melodies">
-            {MELODIES.map((m, idx) => {
-              const isSelected = m.id === selectedMelodyId;
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  role="radio"
-                  aria-checked={isSelected}
-                  className={`melody-chip ${isSelected ? "melody-chip-active" : ""}`}
-                  onClick={() => {
-                    playTick();
-                    if (isPlaying) stopLullaby();
-                    setSelectedMelodyId(m.id);
-                  }}
-                  onKeyDown={(e) => handleMelodyKeyDown(e, idx)}
-                >
-                  <span className="melody-chip-num">
-                    Cylinder {["I", "II", "III"][idx] || idx + 1} · {["120 BPM", "92 BPM", "108 BPM"][idx] || "Pentatonic"}
-                  </span>
-                  <strong className="melody-chip-name">{m.name}</strong>
-                  <span className="melody-chip-tagline">{m.tagline}</span>
-                </button>
-              );
-            })}
-          </div>
-          <p className="melody-note-summary">{currentMelody.description}</p>
-        </div>
-
         {/* Main Action Play / Stop Control */}
-        <div className="bay-action-row">
+        <div className={visualStyles.exhibitActionRow}>
           <button
             type="button"
             className={`btn ${isPlaying ? "btn-secondary" : "btn-primary"}`}
@@ -418,7 +408,7 @@ export default function LullabyLab() {
             <span>{isPlaying ? "Stop Music Box" : `Crank & Play ${currentMelody.name} ✦`}</span>
           </button>
 
-          <span className="playback-status-note">
+          <span className={visualStyles.playbackStatusNote}>
             {isMuted
               ? "Chimes Muted via Header Sound Switch"
               : isPlaying
@@ -426,27 +416,11 @@ export default function LullabyLab() {
               : "Ready to crank (No autoplay)"}
           </span>
         </div>
+      </div>
 
-        {/* Compact Build Notes & Artifact Details Panel */}
-        <div className={visualStyles.artifactSpecStrip} aria-label="Project A Build Details">
-          <span className={visualStyles.artifactSpecLabel}>Artifact Specs:</span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Asset:</span>
-            <code className={visualStyles.specFilename}>pip_lullaby_box.png</code>
-          </span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Engine:</span>
-            <strong>Web Audio Synth</strong>
-          </span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Tuning:</span>
-            <strong>C Pentatonic</strong>
-          </span>
-          <span className={visualStyles.artifactSpecPill}>
-            <span>Playback:</span>
-            <strong>Non-Autoplay Safe</strong>
-          </span>
-        </div>
+      {/* 6: Compact, understated technical specimen note at the bottom */}
+      <div className={visualStyles.specimenFooter}>
+        <strong>Specimen Note:</strong> Handcrafted oak music box (<code>pip_lullaby_box.png</code>) · Native Web Audio C-Pentatonic synth · Verified safe non-autoplay
       </div>
     </div>
   );
