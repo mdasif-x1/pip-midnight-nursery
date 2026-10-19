@@ -7,6 +7,7 @@ import OriginStory from "@/components/OriginStory";
 import DreamRoom from "@/components/DreamRoom";
 import SoundToggle from "@/components/SoundToggle";
 import SparkleTrail from "@/components/SparkleTrail";
+import DreamGuestbook from "@/components/DreamGuestbook";
 
 export default function HomePage() {
   return (
@@ -505,6 +506,11 @@ export default function HomePage() {
             </svg>
           </div>
         </section>
+
+        {/* =================================================================
+            6. BEDTIME WISH GUESTBOOK & DREAM REGISTRY (GUESTBOOK)
+            ================================================================= */}
+        <DreamGuestbook />
       </main>
 
       {/* =================================================================
@@ -546,6 +552,7 @@ export default function HomePage() {
                 <li><a href="#delivery">Dream Delivery (Route Dispatch)</a></li>
                 <li><a href="#origin-story">Origin Journey (4 Story Chapters)</a></li>
                 <li><a href="#dream-room">The Dream Room (Interactive Diorama)</a></li>
+                <li><a href="#dream-guestbook">Bedtime Guestbook (Dream Registry)</a></li>
               </ul>
             </div>
 
