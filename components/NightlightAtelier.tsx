@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { useSound } from "@/lib/SoundContext";
 
 type MoodKey = "amber" | "rose" | "moonlit";
 
@@ -25,9 +26,9 @@ const MOODS: Mood[] = [
     glowClass: "mood-stage-amber",
     badgeText: "Hearth Amber · 2200K",
     surroundingsNote: "Illumination: Soft amber star-oil flame warming the chamber.",
-    lightPoolColor: "rgba(233, 159, 79, 0.22)",
-    starColor: "#DDB686",
-    alcoveStroke: "rgba(121, 103, 86, 0.4)",
+    lightPoolColor: "rgba(215, 169, 91, 0.3)",
+    starColor: "#D7A95B",
+    alcoveStroke: "rgba(215, 169, 91, 0.5)",
   },
   {
     key: "rose",
@@ -36,9 +37,9 @@ const MOODS: Mood[] = [
     glowClass: "mood-stage-rose",
     badgeText: "Velvet Blush · Twilight",
     surroundingsNote: "Illumination: Spun rose-petal dusk light for gentle dreaming.",
-    lightPoolColor: "rgba(217, 167, 166, 0.22)",
-    starColor: "#D9A7A6",
-    alcoveStroke: "rgba(217, 167, 166, 0.4)",
+    lightPoolColor: "rgba(221, 166, 176, 0.3)",
+    starColor: "#DDA6B0",
+    alcoveStroke: "rgba(221, 166, 176, 0.5)",
   },
   {
     key: "moonlit",
@@ -47,13 +48,14 @@ const MOODS: Mood[] = [
     glowClass: "mood-stage-moonlit",
     badgeText: "Lunar Belfry · 6500K",
     surroundingsNote: "Illumination: Filtered cloud-moon radiance for deep, deep sleep.",
-    lightPoolColor: "rgba(126, 143, 168, 0.22)",
-    starColor: "#C4D0E5",
-    alcoveStroke: "rgba(126, 143, 168, 0.4)",
+    lightPoolColor: "rgba(155, 187, 212, 0.3)",
+    starColor: "#9BBBD4",
+    alcoveStroke: "rgba(155, 187, 212, 0.5)",
   },
 ];
 
 export default function NightlightAtelier() {
+  const { playTick } = useSound();
   const [selectedMood, setSelectedMood] = useState<MoodKey>("amber");
   const [glowIntensity, setGlowIntensity] = useState<"soft" | "medium" | "luminous">("medium");
 
@@ -65,10 +67,12 @@ export default function NightlightAtelier() {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       e.preventDefault();
       const nextIdx = (index + 1) % MOODS.length;
+      playTick();
       setSelectedMood(MOODS[nextIdx].key);
     } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
       e.preventDefault();
       const prevIdx = (index - 1 + MOODS.length) % MOODS.length;
+      playTick();
       setSelectedMood(MOODS[prevIdx].key);
     }
   };
@@ -96,11 +100,17 @@ export default function NightlightAtelier() {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
+              {/* Bounded Night Window Alcove Interior (Contained night sky only) */}
+              <path
+                d="M 30 320 L 30 140 C 30 50 150 20 250 20 C 350 20 470 50 470 140 L 470 320 Z"
+                fill="rgba(37, 24, 39, 0.45)"
+              />
+
               {/* Illustrated Arched Alcove Framing */}
               <path
                 d="M 30 320 L 30 140 C 30 50 150 20 250 20 C 350 20 470 50 470 140 L 470 320"
                 stroke={current.alcoveStroke}
-                strokeWidth="1.5"
+                strokeWidth="2"
                 strokeDasharray="4 4"
               />
 
@@ -108,16 +118,16 @@ export default function NightlightAtelier() {
               <path
                 d="M 90 60 A 24 24 0 0 0 114 84 A 20 20 0 0 1 90 60 Z"
                 fill={current.starColor}
-                opacity="0.6"
+                opacity="0.85"
               />
 
               {/* Delicate Constellation Stars */}
-              <text x="80" y="110" fill={current.starColor} fontSize="12" opacity="0.75">✦</text>
-              <text x="140" y="45" fill={current.starColor} fontSize="10" opacity="0.55">✧</text>
-              <text x="360" y="55" fill={current.starColor} fontSize="14" opacity="0.75">✦</text>
-              <text x="415" y="105" fill={current.starColor} fontSize="10" opacity="0.6">✧</text>
-              <text x="390" y="160" fill={current.starColor} fontSize="8" opacity="0.45">✦</text>
-              <text x="110" y="170" fill={current.starColor} fontSize="9" opacity="0.45">✧</text>
+              <text x="80" y="110" fill={current.starColor} fontSize="12" opacity="0.85">✦</text>
+              <text x="140" y="45" fill={current.starColor} fontSize="10" opacity="0.65">✧</text>
+              <text x="360" y="55" fill={current.starColor} fontSize="14" opacity="0.85">✦</text>
+              <text x="415" y="105" fill={current.starColor} fontSize="10" opacity="0.7">✧</text>
+              <text x="390" y="160" fill={current.starColor} fontSize="8" opacity="0.55">✦</text>
+              <text x="110" y="170" fill={current.starColor} fontSize="9" opacity="0.55">✧</text>
 
               {/* Windowsill Shelf Line */}
               <line
@@ -125,7 +135,7 @@ export default function NightlightAtelier() {
                 y1="310"
                 x2="480"
                 y2="310"
-                stroke="rgba(181, 138, 82, 0.45)"
+                stroke="rgba(119, 56, 77, 0.3)"
                 strokeWidth="2"
               />
             </svg>
@@ -168,8 +178,8 @@ export default function NightlightAtelier() {
         </div>
 
         <p className="bay-description">
-          An ambient lighting workshop featuring the dream lantern. Choose cozy nightlight
-          moods to transform the workbench illumination from warm amber starlight to sleepy rose or cool indigo.
+          How much moonlight shall we keep? Adjust Pip&apos;s crescent dream lantern to tune bedtime
+          luminescence from warm amber candlelight to sleepy rose dusk or tranquil starlight.
         </p>
 
         {/* Mood Selection Controls */}
@@ -191,7 +201,10 @@ export default function NightlightAtelier() {
                   className={`mood-chip mood-chip-${m.key} ${
                     isSelected ? "mood-chip-active" : ""
                   }`}
-                  onClick={() => setSelectedMood(m.key)}
+                  onClick={() => {
+                    playTick();
+                    setSelectedMood(m.key);
+                  }}
                   onKeyDown={(e) => handleChipKeyDown(e, idx)}
                 >
                   <span
@@ -217,7 +230,10 @@ export default function NightlightAtelier() {
                   key={lvl}
                   type="button"
                   className={`dimmer-btn ${glowIntensity === lvl ? "dimmer-btn-active" : ""}`}
-                  onClick={() => setGlowIntensity(lvl)}
+                  onClick={() => {
+                    playTick();
+                    setGlowIntensity(lvl);
+                  }}
                   aria-pressed={glowIntensity === lvl}
                 >
                   <span>{lvl === "soft" ? "Soft (40%)" : lvl === "medium" ? "Bedtime (75%)" : "Luminous (100%)"}</span>

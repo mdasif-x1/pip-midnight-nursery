@@ -51,3 +51,11 @@ These four official studio renders were downloaded directly and verified against
   2. The archive `track1-pip-asset-pack.zip` is preserved intact as the official distribution package.
   3. `README.txt` was extracted to `public/assets/OFFICIAL_ASSET_README.txt` to ensure licensing and usage permissions remain permanently documented in source control.
   4. Full extraction of redundant duplicate PNGs was declined to keep the repository lightweight. JPEG versions remain accessible inside the archive for performance optimization if needed during later mobile audits.
+
+---
+
+## 4. Environmental Background Assets (`public/assets/`)
+
+| Filename | Format | Dimensions | File Size | Description & Attribution |
+|---|:---:|:---:|---:|---|
+| [`hero_cinematic_sky.jpg`](file:///c:/Users/MD%20ASIF/Projects/pip-midnight-nursery/public/assets/hero_cinematic_sky.jpg) | JPEG | **1920 × 1080** (16:9) | 688,448 bytes (~672 KB) | **Hero (Dream Gate) Cinematic Scenery:** Clean original environmental artwork of a fairytale cloudscape at golden hour with distant castle spires and crescent moon. Contains 0 characters/text, serving as the atmospheric dreamscape canvas for official `pip_avatar_cloud.png`. |

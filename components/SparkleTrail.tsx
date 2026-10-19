@@ -21,10 +21,11 @@ export default function SparkleTrail() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    // Respect reduced-motion preferences
+    // Respect reduced-motion preferences or coarse pointer devices (e.g. mobile touch)
     if (
       typeof window === "undefined" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(pointer: coarse)").matches
     ) {
       return;
     }

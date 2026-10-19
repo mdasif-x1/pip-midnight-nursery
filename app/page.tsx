@@ -1,4 +1,5 @@
 import Image from "next/image";
+import InteractivePip from "@/components/InteractivePip";
 import LullabyLab from "@/components/LullabyLab";
 import NightlightAtelier from "@/components/NightlightAtelier";
 import DreamDelivery from "@/components/DreamDelivery";
@@ -62,17 +63,17 @@ export default function HomePage() {
       {/* Main Content Area */}
       <main id="main-content">
         {/* =================================================================
-            1. THE DREAM GATE — CELESTIAL ENTRANCE & TACTILE ADVENTURE WAYMARKS
+            1. THE DREAM GATE — PASTEL ENTRANCE TO PIP'S NURSERY
             ================================================================= */}
         <section
           id="dream-gate"
           className="hero-section"
           aria-labelledby="hero-title"
         >
-          {/* Subtle Twinkling Starfield Layer */}
-          <div className="hero-constellation-bg" aria-hidden="true" />
+          {/* Soft Pastel Horizon Glow & Gentle Constellations */}
+          <div className="hero-atmosphere-backdrop" aria-hidden="true" />
 
-          {/* Radiant Glowing Crescent Moon in Upper Sky */}
+          {/* Gentle Glowing Crescent Moon in Soft Twilight Mist */}
           <div className="hero-crescent-moon" aria-hidden="true">
             <svg
               className="moon-svg"
@@ -82,17 +83,17 @@ export default function HomePage() {
             >
               <defs>
                 <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stopColor="#FFF3DF" />
-                  <stop offset="65%" stopColor="#FFD166" />
-                  <stop offset="100%" stopColor="#D5AE72" />
+                  <stop offset="0%" stopColor="#FFF9EE" />
+                  <stop offset="70%" stopColor="#F2C879" />
+                  <stop offset="100%" stopColor="#D7A95B" />
                 </radialGradient>
               </defs>
               <path
                 d="M 66 18 A 38 38 0 0 0 66 82 A 32 32 0 0 1 66 18 Z"
                 fill="url(#moonGlow)"
               />
-              <circle cx="82" cy="22" r="3" fill="#FFF3DF" opacity="0.9" />
-              <circle cx="28" cy="74" r="2.5" fill="#FFD166" opacity="0.85" />
+              <circle cx="82" cy="22" r="3" fill="#FFF8F1" opacity="0.9" />
+              <circle cx="28" cy="74" r="2.5" fill="#D7A95B" opacity="0.8" />
             </svg>
           </div>
 
@@ -102,15 +103,14 @@ export default function HomePage() {
               <div className="hero-content">
                 <div className="hero-eyebrow-wrapper">
                   <span className="hero-eyebrow-pill">
-                    <span aria-hidden="true">✦</span> Junior Dream Engineer · Cloud Sector 7 <span aria-hidden="true">✦</span>
+                    <span aria-hidden="true">✦</span> Junior Dream Engineer · Cloud Sector 7
                   </span>
                 </div>
 
                 <div className="hero-storybook-plate">
                   <h1 id="hero-title" className="hero-title">
                     <span className="hero-welcome-script">Welcome to</span>
-                    <span className="hero-title-highlight">Pip&apos;s Midnight</span>
-                    <span className="hero-title-sub">Nursery</span>
+                    <span className="hero-title-main">Pip&apos;s Midnight Nursery</span>
                   </h1>
 
                   <div className="hero-story-group">
@@ -118,13 +118,14 @@ export default function HomePage() {
                       &ldquo;I build the dreams you fall asleep inside.&rdquo;
                     </p>
                     <p className="hero-supporting">
+                      A magical world of gentle inventions, soft lights and sleepy dreams.
                       A quiet storybook workshop above the chimney tops where restorative lullabies are tuned,
-                      dream lanterns are filled with amber glow, and every restless creature finds peaceful sleep.
+                      nightlight jars are filled with warm ember glow, and every restless creature finds gentle sleep.
                     </p>
                   </div>
                 </div>
 
-                {/* Primary Action Buttons */}
+                {/* The Primary Actions */}
                 <div className="hero-actions">
                   <a href="#inventions" className="btn btn-primary">
                     <span>Explore Pip&apos;s Inventions</span>
@@ -140,163 +141,72 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Character Focal Diorama with Handcrafted Marginalia Callouts */}
-              <div className="character-hero-diorama">
-                <div className="character-ambient-halo" aria-hidden="true" />
-                <div className="character-float">
-                  <Image
-                    src="/assets/pip_avatar_cloud.png"
-                    alt="Pip the friendly Skull Baby floating comfortably on a fluffy dream cloud, wearing a starry nightcap and pink bow, waving hello"
-                    width={448}
-                    height={545}
-                    priority
-                    className="character-image"
-                    sizes="(max-width: 640px) 280px, (max-width: 1024px) 380px, 448px"
-                  />
-                </div>
-
-                {/* Handcrafted Marginalia Callouts */}
-                <div className="character-callout callout-nightcap" aria-hidden="true">
-                  <span className="callout-spark">✦</span>
-                  <span className="callout-text">Starry nightcap &amp; pink bow</span>
-                </div>
-                <div className="character-callout callout-eyes" aria-hidden="true">
-                  <span className="callout-text">Warm amber eyes (2200K)</span>
-                  <span className="callout-spark">✦</span>
-                </div>
-                <div className="character-callout callout-cloud" aria-hidden="true">
-                  <span className="callout-spark">☁</span>
-                  <span className="callout-text">Cumulus dream-fluff bed</span>
-                </div>
-
-                <div className="character-badge-tag">
-                  <span aria-hidden="true">✦</span>
-                  <span>Canon Skull Baby · 0% Scary · 100% Cozy</span>
-                </div>
-              </div>
+              {/* Character Focal Diorama — Interactive Bedtime Pip */}
+              <InteractivePip />
             </div>
 
-            {/* The 6 Tactile Adventure Waymark Signposts */}
-            <div className="hero-portals-wrapper">
-              <p className="hero-portals-heading">
-                <span aria-hidden="true">✦</span>
-                <span>Nursery Adventure Waymarks · Choose a Destination</span>
-                <span aria-hidden="true">✦</span>
-              </p>
-              <div
-                className="hero-waymarks-grid"
-                role="region"
-                aria-label="Nursery Adventure Waymarks"
-              >
-                <a href="#meet-pip" className="waymark-tag">
-                  <span className="tag-eyelet" aria-hidden="true">○</span>
-                  <span className="waymark-icon" aria-hidden="true">📖</span>
-                  <div className="waymark-info">
-                    <strong className="waymark-title">Field Journal</strong>
-                    <span className="waymark-sub">Meet Pip &amp; credentials</span>
-                  </div>
-                  <span className="waymark-arrow" aria-hidden="true">→</span>
-                </a>
-                <a href="#lab" className="waymark-tag">
-                  <span className="tag-eyelet" aria-hidden="true">○</span>
-                  <span className="waymark-icon" aria-hidden="true">🎵</span>
-                  <div className="waymark-info">
-                    <strong className="waymark-title">Lullaby Lab</strong>
-                    <span className="waymark-sub">Web Audio music box</span>
-                  </div>
-                  <span className="waymark-arrow" aria-hidden="true">→</span>
-                </a>
-                <a href="#atelier" className="waymark-tag">
-                  <span className="tag-eyelet" aria-hidden="true">○</span>
-                  <span className="waymark-icon" aria-hidden="true">✨</span>
-                  <div className="waymark-info">
-                    <strong className="waymark-title">Nightlight Atelier</strong>
-                    <span className="waymark-sub">Bedside lighting moods</span>
-                  </div>
-                  <span className="waymark-arrow" aria-hidden="true">→</span>
-                </a>
-                <a href="#delivery" className="waymark-tag">
-                  <span className="tag-eyelet" aria-hidden="true">○</span>
-                  <span className="waymark-icon" aria-hidden="true">📮</span>
-                  <div className="waymark-info">
-                    <strong className="waymark-title">Postal Flight</strong>
-                    <span className="waymark-sub">Delivery route docket</span>
-                  </div>
-                  <span className="waymark-arrow" aria-hidden="true">→</span>
-                </a>
-                <a href="#origin-story" className="waymark-tag">
-                  <span className="tag-eyelet" aria-hidden="true">○</span>
-                  <span className="waymark-icon" aria-hidden="true">📜</span>
-                  <div className="waymark-info">
-                    <strong className="waymark-title">Origin Journey</strong>
-                    <span className="waymark-sub">4 bedtime chapters</span>
-                  </div>
-                  <span className="waymark-arrow" aria-hidden="true">→</span>
-                </a>
-                <a href="#dream-room" className="waymark-tag">
-                  <span className="tag-eyelet" aria-hidden="true">○</span>
-                  <span className="waymark-icon" aria-hidden="true">🕯️</span>
-                  <div className="waymark-info">
-                    <strong className="waymark-title">Pip&apos;s Bedchamber</strong>
-                    <span className="waymark-sub">Diorama &amp; secret stash</span>
-                  </div>
-                  <span className="waymark-arrow" aria-hidden="true">→</span>
-                </a>
-              </div>
+            {/* Subtle Storybook Scroll Invitation */}
+            <div className="hero-scroll-cue" aria-hidden="true">
+              <span className="scroll-cue-flourish">☾ · · ·</span>
+              <span className="scroll-cue-text">Turn the page to explore Pip&apos;s world</span>
+              <span className="scroll-cue-flourish">· · · ☽</span>
             </div>
           </div>
 
-          {/* Organic Wavy Cloud Section Divider */}
+          {/* Organic Layered Cloud Section Transition (Hero -> Meet Pip) */}
           <div className="cloud-transition-divider" aria-hidden="true">
             <svg
               className="cloud-transition-svg"
-              viewBox="0 0 1440 60"
+              viewBox="0 0 1440 70"
               fill="none"
               preserveAspectRatio="none"
               xmlns="http://www.w3.org/2000/svg"
             >
+              {/* Back Misty Lavender/Blue Cloud Layer */}
               <path
-                d="M 0 60 L 0 35 Q 180 5 360 30 T 720 20 T 1080 30 T 1440 15 L 1440 60 Z"
-                fill="var(--paper-cream)"
+                d="M 0 70 L 0 38 Q 140 12 280 34 T 580 18 T 900 36 T 1200 16 T 1440 32 L 1440 70 Z"
+                fill="rgba(233, 217, 232, 0.55)"
+              />
+              {/* Front Warm Parchment Cloud Crests Flowing into Meet Pip */}
+              <path
+                d="M 0 70 L 0 46 C 160 18 320 54 480 28 C 640 8 800 48 960 24 C 1120 8 1280 44 1440 22 L 1440 70 Z"
+                fill="var(--parchment-warm)"
               />
             </svg>
           </div>
         </section>
 
         {/* =================================================================
-            2. MEET PIP — THE INVENTOR'S TWO-PAGE FIELD NOTEBOOK SPREAD
+            2. MEET PIP — THE INVENTOR'S EDITORIAL FIELD JOURNAL
             ================================================================= */}
         <section
           id="meet-pip"
-          className="section-shell-cream"
+          className="section-shell-parchment"
           aria-labelledby="meet-title"
         >
           <div className="site-container">
-            <header className="section-header-ink">
-              <div className="section-divider-ink" aria-hidden="true">
-                <span className="section-divider-line-ink" />
+            <header className="section-header-editorial">
+              <div className="section-divider-story" aria-hidden="true">
+                <span className="section-divider-line" />
                 <span>☾ · ✦ · ☽</span>
-                <span className="section-divider-line-ink" />
+                <span className="section-divider-line" />
               </div>
-              <p className="section-kicker-ink">The Inventor&apos;s Notebook</p>
-              <h2 id="meet-title" className="section-title-ink">
+              <p className="section-kicker">The Inventor&apos;s Field Journal</p>
+              <h2 id="meet-title" className="section-title">
                 Field Journal: Pip the Skull Baby
               </h2>
-              <p className="section-subtitle-ink">
-                Gentle, sleepy, and wonderfully curious. Pip crafts custom dreams for every
-                restless creature in the Midnight Nursery.
+              <p className="section-subtitle">
+                Gentle, sleepy, and wonderfully curious. Pip designs custom dreams for every
+                restless creature across Cloud Sector 7.
               </p>
             </header>
 
-            {/* The Two-Page Open Notebook Spread */}
-            <div className="field-notebook-spread">
-              <div className="notebook-spine-shadow" aria-hidden="true" />
+            {/* The Two-Page Open Journal Spread */}
+            <div className="field-journal-spread">
+              <div className="journal-spine-shadow" aria-hidden="true" />
 
-              {/* Left Page: Archival Portrait Plate with Washi-Tape Corners */}
-              <div className="notebook-page notebook-page-left">
-                <div className="washi-tape washi-tape-tl" aria-hidden="true" />
-                <div className="washi-tape washi-tape-br" aria-hidden="true" />
-
+              {/* Left Page: Official Portrait Plate with Room to Breathe */}
+              <div className="journal-page journal-page-left">
                 <div className="portrait-plate-frame">
                   <Image
                     src="/assets/pip_portrait.png"
@@ -304,76 +214,94 @@ export default function HomePage() {
                     width={380}
                     height={570}
                     style={{ width: "100%", height: "auto", display: "block" }}
+                    className="portrait-plate-img"
                   />
                   <div className="portrait-caption-box">
-                    <span className="plate-number">Plate II · Official Studio Portrait</span>
-                    <span className="plate-canon-tag">haX.baby Track 1 Canon · 100% Gentle</span>
+                    <span className="plate-caption-title">Plate II · Official Studio Portrait</span>
+                    <span className="plate-caption-sub">Track 1 Canon · 100% Gentle · 0% Spooky</span>
                   </div>
                 </div>
 
-                <div className="notebook-handwritten-note">
-                  <span className="note-star" aria-hidden="true">✦</span>
+                <div className="journal-handwritten-annotation">
+                  <span className="annotation-star" aria-hidden="true">✦</span>
                   <p>
-                    <em>Field Note:</em> Pip never removes the starry nightcap during bedtime shifts.
-                    Those warm amber eye pinpoints glow brighter whenever a little dreamer falls asleep.
+                    <em>Field Note:</em> Pip never takes off the starry nightcap during bedtime shifts.
+                    Those warm amber eye pinpoints (2200K) glow brighter whenever a little dreamer falls asleep.
                   </p>
                 </div>
               </div>
 
-              {/* Right Page: The Character Dossier & Credentials */}
-              <div className="notebook-page notebook-page-right">
-                {/* Pull-quote Treatment */}
-                <div className="pullquote-container">
-                  <span className="pullquote-mark" aria-hidden="true">&ldquo;</span>
-                  <blockquote className="dossier-pullquote-text">
+              {/* Right Page: The Storybook Editorial Dossier */}
+              <div className="journal-page journal-page-right">
+                <div className="journal-pullquote">
+                  <span className="pullquote-glyph" aria-hidden="true">&ldquo;</span>
+                  <blockquote className="pullquote-text">
                     I never begin a night shift without my starry nightcap and a fresh
                     jar of warm amber starlight. Silence is nice, but lullaby music is much better.
                   </blockquote>
-                  <p className="pullquote-attribution">— Pip, Junior Dream Engineer</p>
+                  <p className="pullquote-author">— Pip, Junior Dream Engineer</p>
                 </div>
 
-                <p className="dossier-story-paragraph">
-                  Pip isn&apos;t scary at all. Behind those soft, round eye sockets live two
-                  cozy pinpricks of warm amber light that glow brighter whenever someone
-                  finally drifts into a peaceful sleep. With a tiny crooked smile and a pink bow,
-                  Pip works through the quiet midnight hours to make bedtime magical.
-                </p>
+                <div className="journal-narrative-prose">
+                  <p>
+                    Pip isn&apos;t scary at all. Behind those soft, round eye sockets live two
+                    cozy pinpricks of warm amber hearthlight that glow brighter whenever someone
+                    finally drifts into peaceful slumber. With a tiny crooked smile and a pink bow,
+                    Pip works through the quiet midnight hours to make bedtime welcoming.
+                  </p>
+                </div>
 
-                {/* 5-Point Character Profile Grid */}
-                <div className="character-sheet-grid" aria-label="Official Nursery Dossier">
-                  <div className="sheet-cell">
-                    <span className="sheet-label">Identity:</span>
-                    <strong className="sheet-val">Pip · Skull Baby (0% Spooky)</strong>
+                {/* 3 Focused In-World Anchors (Clean, Non-Crowded) */}
+                <div className="journal-anchors-row" aria-label="Essential Character Anchors">
+                  <div className="journal-anchor-item">
+                    <span className="anchor-label">Character Nature</span>
+                    <strong className="anchor-value">100% Gentle · 0% Scary</strong>
                   </div>
-                  <div className="sheet-cell">
-                    <span className="sheet-label">Profession:</span>
-                    <strong className="sheet-val">Junior Dream Engineer (Cloud 7)</strong>
+                  <div className="journal-anchor-item">
+                    <span className="anchor-label">Nursery Duty</span>
+                    <strong className="anchor-value">Cloud Sector 7 Shift</strong>
                   </div>
-                  <div className="sheet-cell">
-                    <span className="sheet-label">Sleepiness Index:</span>
-                    <strong className="sheet-val">Steady 94% Drowsy</strong>
-                  </div>
-                  <div className="sheet-cell">
-                    <span className="sheet-label">Bedtime Tools:</span>
-                    <strong className="sheet-val">Golden Music Key &amp; Star Jar</strong>
-                  </div>
-                  <div className="sheet-cell sheet-cell-wide">
-                    <span className="sheet-label">Bedtime Motto:</span>
-                    <strong className="sheet-val">&ldquo;Small dreams. Big adventures.&rdquo;</strong>
+                  <div className="journal-anchor-item">
+                    <span className="anchor-label">Bedtime Tools</span>
+                    <strong className="anchor-value">Star Jar &amp; Music Key</strong>
                   </div>
                 </div>
 
-                <div className="notebook-seal-row">
+                {/* Single Handcrafted Commissary Seal Sign-Off */}
+                <div className="journal-seal-signoff">
                   <div className="wax-seal-badge" aria-hidden="true">
                     <span>✦</span>
                     <span className="seal-text">NURSERY SEAL</span>
                   </div>
                   <span className="seal-text-note">
-                    Midnight Nursery Commissary · Certified 0% Scary, 100% Cozy
+                    Midnight Nursery Commissary · Certified Cozy
                   </span>
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Storybook Deckle Edge Transition (Meet Pip -> Inventions) */}
+          <div className="transition-deckle-divider" aria-hidden="true">
+            <svg
+              className="transition-deckle-svg"
+              viewBox="0 0 1440 38"
+              fill="none"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Organic Deckle Tears into the Nursery Workshop Paper */}
+              <path
+                d="M 0 0 L 1440 0 L 1440 10 Q 1380 28 1320 12 T 1200 14 T 1080 26 T 960 12 T 840 24 T 720 10 T 600 24 T 480 12 T 360 24 T 240 10 T 120 24 T 0 8 Z"
+                fill="var(--parchment-warm)"
+              />
+              <path
+                d="M 0 8 Q 120 24 240 10 T 360 24 T 480 12 T 600 24 T 720 10 T 840 24 T 960 12 T 1080 26 T 1200 14 T 1320 12 T 1440 10"
+                stroke="var(--ink-border)"
+                strokeWidth="1.2"
+                strokeDasharray="4 6"
+              />
+            </svg>
           </div>
         </section>
 
@@ -382,21 +310,21 @@ export default function HomePage() {
             ================================================================= */}
         <section
           id="inventions"
-          className="section-shell-midnight"
+          className="section-shell-workshop"
           aria-labelledby="inventions-title"
         >
           <div className="site-container">
-            <header className="section-header-gold">
-              <div className="section-divider-gold" aria-hidden="true">
-                <span className="section-divider-line-gold" />
+            <header className="section-header-editorial">
+              <div className="section-divider-story" aria-hidden="true">
+                <span className="section-divider-line" />
                 <span>✦ · · · ☾ · · · ✦</span>
-                <span className="section-divider-line-gold" />
+                <span className="section-divider-line" />
               </div>
-              <p className="section-kicker-gold">The Workshop</p>
-              <h2 id="inventions-title" className="section-title-gold">
+              <p className="section-kicker">The Workshop</p>
+              <h2 id="inventions-title" className="section-title">
                 Three Dream Inventions
               </h2>
-              <p className="section-subtitle-gold">
+              <p className="section-subtitle">
                 Each gadget is handcrafted in the nursery to soothe restless minds and
                 guide dreamers safely into slumber.
               </p>
@@ -416,11 +344,54 @@ export default function HomePage() {
                 </div>
               </div>
 
+              {/* Subtle Environmental Continuity: Twilight Skyline Leading to Flight Route */}
+              <div className="transition-skyline-divider" aria-hidden="true">
+                <svg
+                  className="transition-skyline-svg"
+                  viewBox="0 0 1200 44"
+                  fill="none"
+                  preserveAspectRatio="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  {/* Distant chimney silhouettes and sleeping gables */}
+                  <path
+                    d="M 0 44 L 0 32 L 60 20 L 120 32 L 180 24 L 240 36 L 320 16 L 400 38 L 500 22 L 600 36 L 700 18 L 780 34 L 880 20 L 980 36 L 1080 18 L 1150 32 L 1200 26 L 1200 44 Z"
+                    fill="rgba(119, 56, 77, 0.08)"
+                  />
+                  <line x1="0" y1="43" x2="1200" y2="43" stroke="var(--ink-border)" strokeWidth="1" strokeDasharray="6 6" />
+                </svg>
+              </div>
+
               {/* Bottom Row: Full-width Interactive Flight Route Blueprint */}
               <div id="delivery" className="station-anchor-wrap">
                 <DreamDelivery />
               </div>
             </div>
+          </div>
+
+          {/* Storybook Spine & Bookmark Ribbon Transition (Inventions -> Origin Story) */}
+          <div className="transition-storybook-spine" aria-hidden="true">
+            <svg
+              className="storybook-spine-svg"
+              viewBox="0 0 1440 50"
+              fill="none"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Arched Fairytale Book Margin into Storybook Canvas */}
+              <path
+                d="M 0 50 L 0 25 Q 360 45 720 20 Q 1080 45 1440 25 L 1440 50 Z"
+                fill="var(--parchment-soft)"
+              />
+              {/* Rose Ribbon Center Bookmark Tab */}
+              <path
+                d="M 700 0 L 740 0 L 740 38 L 720 28 L 700 38 Z"
+                fill="var(--rose-sleepy)"
+                stroke="var(--berry-dusky)"
+                strokeWidth="1"
+              />
+              <circle cx="720" cy="14" r="3" fill="var(--gold-starlight)" />
+            </svg>
           </div>
         </section>
 
@@ -429,26 +400,56 @@ export default function HomePage() {
             ================================================================= */}
         <section
           id="origin-story"
-          className="section-shell-tint"
+          className="section-shell-storybook"
           aria-labelledby="origin-title"
         >
           <div className="site-container">
-            <header className="section-header-ink">
-              <div className="section-divider-ink" aria-hidden="true">
-                <span className="section-divider-line-ink" />
+            <header className="section-header-editorial">
+              <div className="section-divider-story" aria-hidden="true">
+                <span className="section-divider-line" />
                 <span>☾ · ✦ · ☽</span>
-                <span className="section-divider-line-ink" />
+                <span className="section-divider-line" />
               </div>
-              <p className="section-kicker-ink">Bedtime Journey</p>
-              <h2 id="origin-title" className="section-title-ink">
+              <p className="section-kicker">Bedtime Journey</p>
+              <h2 id="origin-title" className="section-title">
                 Origin of the Midnight Nursery
               </h2>
-              <p className="section-subtitle-ink">
+              <p className="section-subtitle">
                 How a curious skull baby with a starry nightcap came to engineer the dreams of the sleeping world.
               </p>
             </header>
 
             <OriginStory />
+          </div>
+
+          {/* Honey Timber Nursery Floorboard Transition (Origin Story -> Dream Room) */}
+          <div className="transition-timber-planks" aria-hidden="true">
+            <svg
+              className="timber-planks-svg"
+              viewBox="0 0 1440 45"
+              fill="none"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Alternating Honey Timber Nursery Planks */}
+              <rect x="0" y="0" width="1440" height="45" fill="var(--parchment-warm)" />
+              {/* Floorboard Plank Seams with Soft Amber Tone */}
+              <line x1="0" y1="15" x2="1440" y2="15" stroke="rgba(119, 56, 77, 0.16)" strokeWidth="1.5" />
+              <line x1="0" y1="30" x2="1440" y2="30" stroke="rgba(119, 56, 77, 0.16)" strokeWidth="1.5" />
+              <line x1="0" y1="44" x2="1440" y2="44" stroke="var(--ink-border)" strokeWidth="1" />
+              {/* Staggered Vertical Wood Plank Joints */}
+              <line x1="220" y1="0" x2="220" y2="15" stroke="rgba(119, 56, 77, 0.18)" strokeWidth="1" />
+              <line x1="580" y1="15" x2="580" y2="30" stroke="rgba(119, 56, 77, 0.18)" strokeWidth="1" />
+              <line x1="940" y1="0" x2="940" y2="15" stroke="rgba(119, 56, 77, 0.18)" strokeWidth="1" />
+              <line x1="1260" y1="30" x2="1260" y2="45" stroke="rgba(119, 56, 77, 0.18)" strokeWidth="1" />
+              <line x1="380" y1="30" x2="380" y2="45" stroke="rgba(119, 56, 77, 0.18)" strokeWidth="1" />
+              <line x1="820" y1="15" x2="820" y2="30" stroke="rgba(119, 56, 77, 0.18)" strokeWidth="1" />
+              {/* Tiny Brass Nail Heads */}
+              <circle cx="215" cy="7" r="1.5" fill="var(--gold-starlight)" opacity="0.8" />
+              <circle cx="575" cy="22" r="1.5" fill="var(--gold-starlight)" opacity="0.8" />
+              <circle cx="935" cy="7" r="1.5" fill="var(--gold-starlight)" opacity="0.8" />
+              <circle cx="1255" cy="37" r="1.5" fill="var(--gold-starlight)" opacity="0.8" />
+            </svg>
           </div>
         </section>
 
@@ -457,27 +458,51 @@ export default function HomePage() {
             ================================================================= */}
         <section
           id="dream-room"
-          className="section-shell-midnight"
+          className="section-shell-dreamroom"
           aria-labelledby="dream-room-title"
         >
           <div className="site-container">
-            <header className="section-header-gold">
-              <div className="section-divider-gold" aria-hidden="true">
-                <span className="section-divider-line-gold" />
+            <header className="section-header-editorial">
+              <div className="section-divider-story" aria-hidden="true">
+                <span className="section-divider-line" />
                 <span>✦ · · · ☾ · · · ✦</span>
-                <span className="section-divider-line-gold" />
+                <span className="section-divider-line" />
               </div>
-              <p className="section-kicker-gold">Nursery Quarters</p>
-              <h2 id="dream-room-title" className="section-title-gold">
+              <p className="section-kicker">Nursery Quarters</p>
+              <h2 id="dream-room-title" className="section-title">
                 Inside Pip&apos;s Dream Room
               </h2>
-              <p className="section-subtitle-gold">
+              <p className="section-subtitle">
                 An interactive bedtime diorama. Inspect the drafting desk, test the night window,
                 and search the floorboards for the nursery&apos;s oldest hidden secret.
               </p>
             </header>
 
             <DreamRoom />
+          </div>
+
+          {/* Storybook Endpaper Dusk Transition (Dream Room -> Footer) */}
+          <div className="transition-endpaper-border" aria-hidden="true">
+            <svg
+              className="endpaper-border-svg"
+              viewBox="0 0 1440 40"
+              fill="none"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              {/* Soft Endpaper Dusk Curve into Calming Storybook Footer */}
+              <path
+                d="M 0 40 L 0 16 Q 360 32 720 12 Q 1080 32 1440 16 L 1440 40 Z"
+                fill="var(--parchment-soft)"
+              />
+              <path
+                d="M 0 16 Q 360 32 720 12 Q 1080 32 1440 16"
+                stroke="var(--gold-starlight)"
+                strokeWidth="1.5"
+                strokeDasharray="4 8"
+                opacity="0.85"
+              />
+            </svg>
           </div>
         </section>
       </main>
@@ -495,8 +520,7 @@ export default function HomePage() {
               &ldquo;The stars are on duty, the dream delivery route is cleared, and the nursery nightlights are lit. Close your eyes; Pip will take care of the rest.&rdquo;
             </p>
             <div className="footer-pip-signature" aria-label="Pip's signature">
-              <span>Pip, Junior Dream Engineer</span>
-              <span className="sig-star" aria-hidden="true">✦</span>
+              <span>Pip ✧ Junior Dream Engineer</span>
             </div>
           </div>
 
@@ -504,10 +528,10 @@ export default function HomePage() {
             <div className="footer-col">
               <h4 className="footer-heading">Pip&apos;s Midnight Nursery</h4>
               <p className="footer-text">
-                An interactive character-driven dream workshop and portfolio created for the
+                An interactive character-driven dream workshop created for the
                 haX.baby &ldquo;Baby&apos;s First Website&rdquo; hackathon (Track 1: Pip the Skull Baby).
               </p>
-              <p className="footer-quote" style={{ fontStyle: "italic", color: "var(--moon-gold)", marginTop: "0.5rem" }}>
+              <p className="footer-quote">
                 &ldquo;Because every child deserves a little magic...&rdquo;
               </p>
             </div>

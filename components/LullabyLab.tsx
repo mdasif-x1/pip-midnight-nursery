@@ -80,7 +80,7 @@ const MELODIES: Melody[] = [
 ];
 
 export default function LullabyLab() {
-  const { isMuted } = useSound();
+  const { isMuted, playTick } = useSound();
   const [selectedMelodyId, setSelectedMelodyId] = useState<string>("starlight");
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [activeNote, setActiveNote] = useState<string | null>(null);
@@ -172,6 +172,7 @@ export default function LullabyLab() {
   };
 
   const handleTogglePlay = async () => {
+    playTick();
     if (isPlaying) {
       stopLullaby();
       return;
@@ -241,11 +242,13 @@ export default function LullabyLab() {
     if (e.key === "ArrowRight" || e.key === "ArrowDown") {
       e.preventDefault();
       const nextIdx = (index + 1) % MELODIES.length;
+      playTick();
       if (isPlaying) stopLullaby();
       setSelectedMelodyId(MELODIES[nextIdx].id);
     } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
       e.preventDefault();
       const prevIdx = (index - 1 + MELODIES.length) % MELODIES.length;
+      playTick();
       if (isPlaying) stopLullaby();
       setSelectedMelodyId(MELODIES[prevIdx].id);
     }
@@ -268,18 +271,18 @@ export default function LullabyLab() {
               xmlns="http://www.w3.org/2000/svg"
             >
               {/* Musical Staff 5 lines */}
-              <line x1="20" y1="30" x2="480" y2="30" stroke="rgba(181, 138, 82, 0.22)" strokeWidth="1" />
-              <line x1="20" y1="45" x2="480" y2="45" stroke="rgba(181, 138, 82, 0.22)" strokeWidth="1" />
-              <line x1="20" y1="60" x2="480" y2="60" stroke="rgba(181, 138, 82, 0.22)" strokeWidth="1" />
-              <line x1="20" y1="75" x2="480" y2="75" stroke="rgba(181, 138, 82, 0.22)" strokeWidth="1" />
-              <line x1="20" y1="90" x2="480" y2="90" stroke="rgba(181, 138, 82, 0.22)" strokeWidth="1" />
+              <line x1="20" y1="30" x2="480" y2="30" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+              <line x1="20" y1="45" x2="480" y2="45" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+              <line x1="20" y1="60" x2="480" y2="60" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+              <line x1="20" y1="75" x2="480" y2="75" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
+              <line x1="20" y1="90" x2="480" y2="90" stroke="rgba(119, 56, 77, 0.14)" strokeWidth="1" />
 
               {/* Decorative Clef & Notes */}
-              <text x="35" y="80" fill="rgba(181, 138, 82, 0.38)" fontSize="48" fontFamily="Georgia, serif">𝄞</text>
-              <text x="110" y="58" fill="rgba(217, 167, 166, 0.35)" fontSize="20" fontFamily="Georgia, serif">♩</text>
-              <text x="170" y="44" fill="rgba(181, 138, 82, 0.35)" fontSize="20" fontFamily="Georgia, serif">♪</text>
-              <text x="370" y="58" fill="rgba(217, 167, 166, 0.35)" fontSize="20" fontFamily="Georgia, serif">♫</text>
-              <text x="430" y="44" fill="rgba(181, 138, 82, 0.35)" fontSize="20" fontFamily="Georgia, serif">♬</text>
+              <text x="35" y="80" fill="rgba(119, 56, 77, 0.32)" fontSize="48" fontFamily="Georgia, serif">𝄞</text>
+              <text x="110" y="58" fill="rgba(221, 166, 176, 0.6)" fontSize="20" fontFamily="Georgia, serif">♩</text>
+              <text x="170" y="44" fill="rgba(215, 169, 91, 0.55)" fontSize="20" fontFamily="Georgia, serif">♪</text>
+              <text x="370" y="58" fill="rgba(221, 166, 176, 0.6)" fontSize="20" fontFamily="Georgia, serif">♫</text>
+              <text x="430" y="44" fill="rgba(215, 169, 91, 0.55)" fontSize="20" fontFamily="Georgia, serif">♬</text>
             </svg>
           </div>
 
@@ -331,7 +334,7 @@ export default function LullabyLab() {
               <path
                 d="M 10 16 Q 40 16 70 16 T 130 16 T 190 16 T 250 16 T 310 16 T 370 16 T 390 16"
                 className="wave-base-line"
-                stroke="rgba(181, 138, 82, 0.3)"
+                stroke="rgba(119, 56, 77, 0.2)"
                 strokeWidth="1.5"
                 strokeLinecap="round"
               />
@@ -339,7 +342,7 @@ export default function LullabyLab() {
                 <path
                   d="M 10 16 Q 40 4 70 28 T 130 6 T 190 26 T 250 8 T 310 24 T 370 10 T 390 16"
                   className="wave-active-line"
-                  stroke="#E89B48"
+                  stroke="var(--berry-dusky)"
                   strokeWidth="2"
                   strokeLinecap="round"
                 />
@@ -353,7 +356,7 @@ export default function LullabyLab() {
           <p className="bay-asset-caption">
             Project A · Official Asset: pip_lullaby_box.png
           </p>
-          <span className="bay-spec-label">Native 1024 × 924 · Web Audio API Pentatonic Synth</span>
+          <span className="bay-spec-label">Web Audio Pentatonic Synth · Non-Autoplay</span>
         </div>
       </div>
 
@@ -364,8 +367,8 @@ export default function LullabyLab() {
         </div>
 
         <p className="bay-description">
-          A music-box chime laboratory powered by the native Web Audio API. Hand-cranks
-          restorative sleep melodies and gentle pentatonic lullabies on demand.
+          A little music for the almost-asleep. Powered by the native Web Audio API, Pip&apos;s music-box
+          hand-cranks restorative sleep melodies and gentle pentatonic lullabies on demand.
         </p>
 
         {/* Melody Selector Chips */}
@@ -382,6 +385,7 @@ export default function LullabyLab() {
                   aria-checked={isSelected}
                   className={`melody-chip ${isSelected ? "melody-chip-active" : ""}`}
                   onClick={() => {
+                    playTick();
                     if (isPlaying) stopLullaby();
                     setSelectedMelodyId(m.id);
                   }}
@@ -403,7 +407,7 @@ export default function LullabyLab() {
         <div className="bay-action-row">
           <button
             type="button"
-            className={`btn ${isPlaying ? "btn-stop" : "btn-play"}`}
+            className={`btn ${isPlaying ? "btn-secondary" : "btn-primary"}`}
             onClick={handleTogglePlay}
             aria-label={isPlaying ? "Stop Music Box" : `Crank and play ${currentMelody.name}`}
           >
