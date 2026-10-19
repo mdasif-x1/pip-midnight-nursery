@@ -7,16 +7,34 @@ import OriginStory from "@/components/OriginStory";
 import DreamRoom from "@/components/DreamRoom";
 import SoundToggle from "@/components/SoundToggle";
 import SparkleTrail from "@/components/SparkleTrail";
+import HeroStardust from "@/components/HeroStardust";
+import HeroGatewayActions from "@/components/HeroGatewayActions";
+import NurseryWayfinder from "@/components/NurseryWayfinder";
+import CloudGatewayDivider from "@/components/CloudGatewayDivider";
+import PipCloudVoyage from "@/components/PipCloudVoyage";
 import DreamGuestbook from "@/components/DreamGuestbook";
+import {
+  StationBeacon,
+  ThresholdReceiver,
+  WorkshopFlightCorridor,
+  DeliveryDockingReceiver,
+} from "@/components/DreamCorridor";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 export default function HomePage() {
   return (
     <div className="page-wrapper">
+      {/* Pip's Cloud-Sailing Journey to the Dream Room */}
+      <PipCloudVoyage />
+
       {/* Whimsical Starlight Pointer Sparkle Trail (Early-Web Soul Side Quest) */}
       <SparkleTrail />
 
+      {/* Sector 7 Nursery Flight Route Wayfinder (Landmark Guide) */}
+      <NurseryWayfinder />
+
       {/* Floating Frosted Celestial Navigation */}
-      <header className="site-header">
+      <header className={`site-header ${visualStyles.siteHeaderFixed}`}>
         <div className="site-container">
           <nav className="nav-container" aria-label="Nursery Navigation">
             <a href="#dream-gate" className="brand-link">
@@ -24,34 +42,35 @@ export default function HomePage() {
               <span className="brand-title">Pip&apos;s Midnight Nursery</span>
             </a>
 
-            <div className="nav-center-strip" aria-hidden="true">
-              <span className="nav-shift-pill">✦ Sector 7 · Shift: 00:00–05:00</span>
-            </div>
-
-            <ul className="nav-links">
+            <ul className={`nav-links ${visualStyles.navLinksRefined}`}>
               <li>
-                <a href="#dream-gate" className="nav-item-link">
+                <a href="#dream-gate" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Dream Gate
                 </a>
               </li>
               <li>
-                <a href="#meet-pip" className="nav-item-link">
+                <a href="#meet-pip" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Field Journal
                 </a>
               </li>
               <li>
-                <a href="#inventions" className="nav-item-link">
+                <a href="#inventions" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Inventions
                 </a>
               </li>
               <li>
-                <a href="#origin-story" className="nav-item-link">
+                <a href="#origin-story" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Storybook
                 </a>
               </li>
               <li>
-                <a href="#dream-room" className="nav-item-link">
+                <a href="#dream-room" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Dream Room
+                </a>
+              </li>
+              <li>
+                <a href="#dream-guestbook" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
+                  Guestbook
                 </a>
               </li>
             </ul>
@@ -61,8 +80,11 @@ export default function HomePage() {
         </div>
       </header>
 
+      {/* Header height placeholder spacer to preserve content offset */}
+      <div className={visualStyles.headerSpacer} aria-hidden="true" />
+
       {/* Main Content Area */}
-      <main id="main-content">
+      <main id="main-content" className={visualStyles.mainContent}>
         {/* =================================================================
             1. THE DREAM GATE — PASTEL ENTRANCE TO PIP'S NURSERY
             ================================================================= */}
@@ -73,6 +95,7 @@ export default function HomePage() {
         >
           {/* Soft Pastel Horizon Glow & Gentle Constellations */}
           <div className="hero-atmosphere-backdrop" aria-hidden="true" />
+          <HeroStardust />
 
           {/* Gentle Glowing Crescent Moon in Soft Twilight Mist */}
           <div className="hero-crescent-moon" aria-hidden="true">
@@ -104,8 +127,9 @@ export default function HomePage() {
               <div className="hero-content">
                 <div className="hero-eyebrow-wrapper">
                   <span className="hero-eyebrow-pill">
-                    <span aria-hidden="true">✦</span> Junior Dream Engineer · Cloud Sector 7
+                    <span aria-hidden="true">✦</span> Junior Dream Engineer · Sector 7 (Shift: 00:00–05:00)
                   </span>
+                  <StationBeacon code="Station I · 00:00" name="Dream Gate" icon="✦" />
                 </div>
 
                 <div className="hero-storybook-plate">
@@ -126,55 +150,28 @@ export default function HomePage() {
                   </div>
                 </div>
 
-                {/* The Primary Actions */}
-                <div className="hero-actions">
-                  <a href="#inventions" className="btn btn-primary">
-                    <span>Explore Pip&apos;s Inventions</span>
-                    <span aria-hidden="true">→</span>
-                  </a>
-                  <a href="#dream-room" className="btn btn-secondary">
-                    <span aria-hidden="true">✦</span>
-                    <span>Enter Dream Room</span>
-                  </a>
-                  <a href="#meet-pip" className="btn btn-ghost">
-                    <span>Field Journal 📖</span>
-                  </a>
-                </div>
+                {/* The Primary Actions — Gateway Passage to Dream Landmarks */}
+                <HeroGatewayActions />
               </div>
 
               {/* Character Focal Diorama — Interactive Bedtime Pip */}
               <InteractivePip />
             </div>
 
-            {/* Subtle Storybook Scroll Invitation */}
-            <div className="hero-scroll-cue" aria-hidden="true">
-              <span className="scroll-cue-flourish">☾ · · ·</span>
-              <span className="scroll-cue-text">Turn the page to explore Pip&apos;s world</span>
-              <span className="scroll-cue-flourish">· · · ☽</span>
-            </div>
+            {/* Truthful Storybook Scroll Invitation */}
+            <a
+              href="#meet-pip"
+              className={`hero-scroll-cue ${visualStyles.heroScrollCueLink}`}
+              aria-label="Scroll down to explore Pip's Field Journal"
+            >
+              <span className="scroll-cue-flourish" aria-hidden="true">☾ · · ·</span>
+              <span className="scroll-cue-text">Scroll down to explore Pip&apos;s Field Journal</span>
+              <span className="scroll-cue-flourish" aria-hidden="true">· · · ☽ ↓</span>
+            </a>
           </div>
 
-          {/* Organic Layered Cloud Section Transition (Hero -> Meet Pip) */}
-          <div className="cloud-transition-divider" aria-hidden="true">
-            <svg
-              className="cloud-transition-svg"
-              viewBox="0 0 1440 70"
-              fill="none"
-              preserveAspectRatio="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Back Misty Lavender/Blue Cloud Layer */}
-              <path
-                d="M 0 70 L 0 38 Q 140 12 280 34 T 580 18 T 900 36 T 1200 16 T 1440 32 L 1440 70 Z"
-                fill="rgba(233, 217, 232, 0.55)"
-              />
-              {/* Front Warm Parchment Cloud Crests Flowing into Meet Pip */}
-              <path
-                d="M 0 70 L 0 46 C 160 18 320 54 480 28 C 640 8 800 48 960 24 C 1120 8 1280 44 1440 22 L 1440 70 Z"
-                fill="var(--parchment-warm)"
-              />
-            </svg>
-          </div>
+          {/* Organic Layered Cloud Section Transition (Hero -> Meet Pip) with Gateway Passage reaction */}
+          <CloudGatewayDivider />
         </section>
 
         {/* =================================================================
@@ -186,6 +183,9 @@ export default function HomePage() {
           aria-labelledby="meet-title"
         >
           <div className="site-container">
+            {/* Sector 7 Flight Path Threshold Receiver */}
+            <ThresholdReceiver stationCode="Station II · 01:15" stationName="Field Journal" />
+
             <header className="section-header-editorial">
               <div className="section-divider-story" aria-hidden="true">
                 <span className="section-divider-line" />
@@ -203,12 +203,12 @@ export default function HomePage() {
             </header>
 
             {/* The Two-Page Open Journal Spread */}
-            <div className="field-journal-spread">
+            <div className={`field-journal-spread ${visualStyles.journalSpreadDepth}`}>
               <div className="journal-spine-shadow" aria-hidden="true" />
 
               {/* Left Page: Official Portrait Plate with Room to Breathe */}
               <div className="journal-page journal-page-left">
-                <div className="portrait-plate-frame">
+                <div className={`portrait-plate-frame ${visualStyles.portraitAmberWash}`}>
                   <Image
                     src="/assets/pip_portrait.png"
                     alt="Official studio portrait of Pip wearing a starry bedtime nightcap and pink bow with warm amber glowing eye sockets"
@@ -332,66 +332,54 @@ export default function HomePage() {
             </header>
 
             <div className="workshop-showcase-grid">
-              {/* Top Row: Prominent Interactive Bays for Project A and Project B */}
-              <div className="workshop-interactive-bays">
-                {/* Project A: Interactive Web Audio Lullaby Lab */}
-                <div id="lab" className="station-anchor-wrap">
+              {/* Bilateral Flanking Workshop: Left (Exhibit 01 · Lullaby Workbench) | Center (Corridor Spine) | Right (Exhibit 02 · Nightlight Alcove) */}
+              <div className={visualStyles.workshopBilateralStage}>
+                {/* Left Flank: Project A — Interactive Web Audio Lullaby Lab */}
+                <div id="lab" className={`station-anchor-wrap ${visualStyles.lullabyRightFlank}`}>
                   <LullabyLab />
                 </div>
 
-                {/* Project B: Interactive Lighting Mood Nightlight Atelier */}
-                <div id="atelier" className="station-anchor-wrap">
+                {/* Center Flank: Persistent Starlight Flight Corridor Axis */}
+                <div className={visualStyles.corridorCenterFlank} aria-hidden="true">
+                  <WorkshopFlightCorridor />
+                </div>
+
+                {/* Right Flank: Project B — Interactive Lighting Mood Nightlight Atelier */}
+                <div id="atelier" className={`station-anchor-wrap ${visualStyles.atelierLeftFlank}`}>
                   <NightlightAtelier />
                 </div>
               </div>
 
-              {/* Subtle Environmental Continuity: Twilight Skyline Leading to Flight Route */}
-              <div className="transition-skyline-divider" aria-hidden="true">
-                <svg
-                  className="transition-skyline-svg"
-                  viewBox="0 0 1200 44"
-                  fill="none"
-                  preserveAspectRatio="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  {/* Distant chimney silhouettes and sleeping gables */}
-                  <path
-                    d="M 0 44 L 0 32 L 60 20 L 120 32 L 180 24 L 240 36 L 320 16 L 400 38 L 500 22 L 600 36 L 700 18 L 780 34 L 880 20 L 980 36 L 1080 18 L 1150 32 L 1200 26 L 1200 44 Z"
-                    fill="rgba(119, 56, 77, 0.08)"
-                  />
-                  <line x1="0" y1="43" x2="1200" y2="43" stroke="var(--ink-border)" strokeWidth="1" strokeDasharray="6 6" />
-                </svg>
-              </div>
+              {/* Central Docking Station Alignment: Corridor Receiver into Sector 7 Dispatch */}
+              <DeliveryDockingReceiver />
 
-              {/* Bottom Row: Full-width Interactive Flight Route Blueprint */}
-              <div id="delivery" className="station-anchor-wrap">
+              {/* Central Docking Bay: Full-width Interactive Flight Route Blueprint */}
+              <div id="delivery" className={`station-anchor-wrap ${visualStyles.deliveryCentralBay}`}>
                 <DreamDelivery />
               </div>
             </div>
           </div>
 
-          {/* Storybook Spine & Bookmark Ribbon Transition (Inventions -> Origin Story) */}
+          {/* Storybook Spine Transition (Inventions -> Origin Story) */}
           <div className="transition-storybook-spine" aria-hidden="true">
             <svg
               className="storybook-spine-svg"
-              viewBox="0 0 1440 50"
+              viewBox="0 0 1440 40"
               fill="none"
               preserveAspectRatio="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Arched Fairytale Book Margin into Storybook Canvas */}
+              {/* Gentle Arched Storybook Canvas Transition */}
               <path
-                d="M 0 50 L 0 25 Q 360 45 720 20 Q 1080 45 1440 25 L 1440 50 Z"
+                d="M 0 40 L 0 18 Q 360 36 720 14 Q 1080 36 1440 18 L 1440 40 Z"
                 fill="var(--parchment-soft)"
               />
-              {/* Rose Ribbon Center Bookmark Tab */}
               <path
-                d="M 700 0 L 740 0 L 740 38 L 720 28 L 700 38 Z"
-                fill="var(--rose-sleepy)"
-                stroke="var(--berry-dusky)"
-                strokeWidth="1"
+                d="M 0 18 Q 360 36 720 14 Q 1080 36 1440 18"
+                stroke="rgba(119, 56, 77, 0.18)"
+                strokeWidth="1.2"
+                strokeDasharray="4 6"
               />
-              <circle cx="720" cy="14" r="3" fill="var(--gold-starlight)" />
             </svg>
           </div>
         </section>
@@ -508,7 +496,7 @@ export default function HomePage() {
         </section>
 
         {/* =================================================================
-            6. BEDTIME WISH GUESTBOOK & DREAM REGISTRY (GUESTBOOK)
+            6. BEDTIME WISH GUESTBOOK & DREAM REGISTRY (STATION VI · 05:00)
             ================================================================= */}
         <DreamGuestbook />
       </main>
@@ -562,7 +550,7 @@ export default function HomePage() {
                 Character design and official artwork: <strong>haX.baby Track 1</strong>.
               </p>
               <p className="footer-text">
-                Engineering &amp; development: <strong>Md Asif</strong>.
+                Engineering &amp; Development — <strong>Pyrrhic Commit</strong>.
               </p>
               <p className="footer-text">
                 No horror elements. 100% gentle, cozy storybook canon.

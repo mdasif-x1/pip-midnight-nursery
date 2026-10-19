@@ -6,7 +6,7 @@ export const metadata: Metadata = {
   title: "Pip's Midnight Nursery — Junior Dream Engineer",
   description:
     "“I build the dreams you fall asleep inside.” Step into the moonlit nursery workshop of Pip the Skull Baby. An interactive storybook portfolio featuring lullaby chimes, dream lanterns, and delivery routes.",
-  authors: [{ name: "Md Asif" }],
+  authors: [{ name: "Pyrrhic Commit" }],
   keywords: [
     "Pip",
     "Pip the Skull Baby",

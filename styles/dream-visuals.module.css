@@ -1,0 +1,663 @@
+/* ==========================================================================
+   Dream Visuals — Cinematic & Storybook Section Enhancements (CSS Module)
+   Art Direction: 70% Cinematic Atmosphere + 30% Illustrated Storybook Charm
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Field Journal: Tangible Book Depth & Warm Portrait Illumination
+   -------------------------------------------------------------------------- */
+.journalSpreadDepth {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  box-shadow:
+    0 16px 36px rgba(56, 43, 42, 0.1),
+    3px 3px 0px var(--ink-brown, #382B2A),
+    inset 0 1px 3px rgba(255, 255, 255, 0.8) !important;
+}
+
+.portraitAmberWash {
+  position: relative;
+}
+
+.portraitAmberWash::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 110%;
+  height: 110%;
+  background: radial-gradient(circle, rgba(215, 169, 91, 0.3) 0%, rgba(242, 200, 121, 0.12) 45%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+  z-index: 0;
+  border-radius: var(--radius-md, 12px);
+}
+
+/* --------------------------------------------------------------------------
+   2. Lullaby Lab: Tactile Workbench Depth & Floating Harmonic Particles
+   -------------------------------------------------------------------------- */
+.workbenchStageDepth {
+  transform-style: preserve-3d;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.workbenchStageDepth:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(119, 56, 77, 0.12);
+}
+
+@keyframes harmonicParticleDrift {
+  0% {
+    opacity: 0;
+    transform: translateY(0px) scale(0.6) rotate(0deg);
+  }
+  30% {
+    opacity: 0.9;
+    transform: translateY(-14px) scale(1.1) rotate(10deg);
+  }
+  70% {
+    opacity: 0.85;
+    transform: translateY(-30px) scale(1) rotate(-8deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-46px) scale(0.7) rotate(15deg);
+  }
+}
+
+.harmonicParticle {
+  position: absolute;
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 1.15rem;
+  color: var(--gold-starlight, #D7A95B);
+  pointer-events: none;
+  z-index: 6;
+  text-shadow: 0 0 10px rgba(215, 169, 91, 0.7);
+  animation: harmonicParticleDrift 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --------------------------------------------------------------------------
+   3. Nightlight Atelier: Environmental Ambient Lighting Reflection
+   -------------------------------------------------------------------------- */
+.atelierAmbientContainer {
+  transition: box-shadow 0.6s ease, border-color 0.6s ease, background 0.6s ease !important;
+}
+
+/* --------------------------------------------------------------------------
+   4. Dream Delivery: Atmospheric Cloud Layer & Tactile Docket Card
+   -------------------------------------------------------------------------- */
+.deliveryDocketTactile {
+  box-shadow:
+    0 8px 24px rgba(56, 43, 42, 0.08),
+    2px 2px 0px var(--ink-brown, #382B2A) !important;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.deliveryDocketTactile:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 12px 28px rgba(56, 43, 42, 0.12),
+    3px 3px 0px var(--ink-brown, #382B2A) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. Origin Journey: Tasteful Storybook Page-Turn Transition
+   -------------------------------------------------------------------------- */
+@keyframes pageTurnLeaf {
+  0% {
+    opacity: 0.2;
+    transform: perspective(900px) rotateY(-4deg) translateX(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(900px) rotateY(0deg) translateX(0);
+  }
+}
+
+.pageTurnActive {
+  animation: pageTurnLeaf 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transform-style: preserve-3d;
+}
+
+/* --------------------------------------------------------------------------
+   6. Invention Workshop: Bilateral Flanking & Central Corridor Alignment
+   -------------------------------------------------------------------------- */
+.workshopBilateralStage {
+  display: grid;
+  grid-template-columns: 1fr clamp(44px, 5.5vw, 72px) 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.atelierLeftFlank {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  position: relative;
+}
+
+.lullabyRightFlank {
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  position: relative;
+}
+
+.corridorCenterFlank {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.deliveryCentralBay {
+  position: relative;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .workshopBilateralStage {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .corridorCenterFlank {
+    display: flex;
+    margin: 0.5rem 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility & Reduced Motion Overrides
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .workbenchStageDepth,
+  .deliveryDocketTactile {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .harmonicParticle,
+  .pageTurnActive {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+@media (pointer: coarse) {
+  .workbenchStageDepth:hover,
+  .deliveryDocketTactile:hover {
+    transform: none !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   7. Navigation Bar: No-Wrap & Compact Responsive Spacing
+   -------------------------------------------------------------------------- */
+.siteHeaderFixed {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 1000 !important;
+}
+
+.headerSpacer {
+  width: 100%;
+  height: calc(3.8rem + var(--space-xs, 0.5rem) * 2);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+@media (max-width: 480px) {
+  .headerSpacer {
+    height: calc(3.35rem + var(--space-2xs, 0.25rem) * 2);
+  }
+}
+
+.navLinksRefined {
+  align-items: center !important;
+  gap: clamp(0.25rem, 0.9vw, 0.75rem) !important;
+  flex-wrap: nowrap !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  overflow-x: auto;
+  /* Do NOT force display:flex here — globals.css hides links below 860px */
+}
+
+@media (min-width: 860px) {
+  .navLinksRefined {
+    display: flex !important;
+  }
+}
+
+
+.navItemLinkRefined {
+  white-space: nowrap !important;
+  font-size: clamp(0.76rem, 0.92vw, 0.86rem) !important;
+  padding: 0.35rem clamp(0.45rem, 0.7vw, 0.75rem) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  letter-spacing: 0.01em;
+}
+
+/* Ensure landmark sections inside main content scroll cleanly beneath the fixed navbar */
+.mainContent section {
+  scroll-margin-top: calc(3.8rem + var(--space-xs, 0.5rem) * 2 + 1rem);
+}
+
+@media (max-width: 480px) {
+  .mainContent section {
+    scroll-margin-top: calc(3.35rem + var(--space-2xs, 0.25rem) * 2 + 0.75rem);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Hero & Field Journal Spacing Normalization
+   -------------------------------------------------------------------------- */
+.heroScrollCueLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: clamp(1.25rem, 3vw, 2.25rem) auto 1.25rem auto;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-full, 9999px);
+  background: rgba(255, 248, 241, 0.95);
+  border: 1.5px solid rgba(119, 56, 77, 0.28);
+  color: var(--ink-brown, #382B2A);
+  text-decoration: none;
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(0.75rem, 1vw, 0.84rem);
+  font-weight: 600;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 8;
+  box-shadow: 0 4px 14px rgba(56, 43, 42, 0.1);
+}
+
+.heroScrollCueLink:hover {
+  background: var(--paper-nursery, #FFF8F1);
+  color: var(--berry-dusky, #77384D);
+  border-color: var(--berry-dusky, #77384D);
+  transform: translateY(2px);
+  box-shadow: 0 6px 18px rgba(119, 56, 77, 0.18);
+}
+
+.heroScrollCueLink:focus-visible {
+  outline: 2px solid var(--berry-dusky, #77384D);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Inventions Workshop: Artifact Details & Build Notes Spec Strip
+   -------------------------------------------------------------------------- */
+.artifactSpecStrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  padding: 0.55rem 0.85rem;
+  margin-top: 1rem;
+  border-radius: var(--radius-sm, 8px);
+  background: rgba(250, 244, 235, 0.9);
+  border: 1px dashed rgba(119, 56, 77, 0.28);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.725rem;
+  color: var(--ink-brown, #382B2A);
+}
+
+.artifactSpecLabel {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--berry-dusky, #77384D);
+}
+
+.artifactSpecPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full, 9999px);
+  background: #FFF8F1;
+  border: 1px solid rgba(56, 43, 42, 0.12);
+  color: var(--ink-brown, #382B2A);
+}
+
+.specFilename {
+  color: var(--berry-dusky, #77384D);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   10. High-Contrast Badges & Text Legibility
+   -------------------------------------------------------------------------- */
+.odometerHighContrast {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: var(--radius-full, 9999px) !important;
+  background: #FFF8F1 !important;
+  border: 1.5px solid var(--gold-starlight, #D7A95B) !important;
+  color: var(--ink-brown, #382B2A) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(56, 43, 42, 0.1) !important;
+}
+
+.odometerHighContrast .odometerLabel {
+  color: var(--berry-dusky, #77384D) !important;
+  font-weight: 600 !important;
+  font-size: 0.72rem !important;
+}
+
+.odometerHighContrast .odometerVal {
+  color: var(--ink-brown, #382B2A) !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. Storybook Boundary Controls
+   -------------------------------------------------------------------------- */
+.btnDisabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(0.5);
+}
+
+/* --------------------------------------------------------------------------
+   12. Invention Workshop: Curated Exhibits Design
+   -------------------------------------------------------------------------- */
+.exhibitCard {
+  background: var(--paper-nursery, #FFF8F1) !important;
+  border: 1.5px solid rgba(119, 56, 77, 0.22) !important;
+  border-radius: var(--radius-md, 12px) !important;
+  padding: clamp(1.25rem, 2.5vw, 1.75rem) !important;
+  box-shadow: 0 10px 32px rgba(56, 43, 42, 0.08), 2px 2px 0px var(--ink-brown, #382B2A) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1.15rem !important;
+  height: 100% !important;
+  position: relative;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.exhibitHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.exhibitBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--berry-dusky, #77384D);
+  font-weight: 700;
+}
+
+.exhibitTitle {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: clamp(1.55rem, 2.3vw, 2rem);
+  color: var(--ink-brown, #382B2A);
+  margin: 0;
+  line-height: 1.18;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.exhibitDescription {
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 0.92rem;
+  color: var(--ink-muted, #5A4745);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.exhibitStageFrame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  min-height: 250px;
+  max-height: 310px;
+  border-radius: var(--radius-sm, 8px);
+  overflow: hidden;
+  border: 1.5px solid rgba(119, 56, 77, 0.18);
+  background: #FFFFFF;
+  box-shadow: inset 0 2px 14px rgba(56, 43, 42, 0.05);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.exhibitControlsGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding-top: 0.25rem;
+}
+
+.controlsSectionLabel {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--berry-dusky, #77384D);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.exhibitCylinderGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 0.6rem;
+}
+
+.cylinderCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.25rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: var(--radius-sm, 8px);
+  background: #FFFFFF;
+  border: 1.5px solid rgba(56, 43, 42, 0.14);
+  color: var(--ink-brown, #382B2A);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-align: left;
+  position: relative;
+}
+
+.cylinderCard:hover {
+  border-color: var(--berry-dusky, #77384D);
+  background: #FFFDF9;
+  transform: translateY(-2px);
+}
+
+.cylinderCardActive {
+  background: #FFF8F1 !important;
+  border-color: var(--gold-starlight, #D7A95B) !important;
+  box-shadow: 0 4px 14px rgba(215, 169, 91, 0.22), 0 1px 3px rgba(119, 56, 77, 0.12) !important;
+  transform: translateY(-2px);
+}
+
+.cylinderNum {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.675rem;
+  text-transform: uppercase;
+  color: var(--berry-dusky, #77384D);
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+.cylinderName {
+  font-family: var(--font-serif, Georgia, serif);
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--ink-brown, #382B2A);
+  margin: 0;
+}
+
+.cylinderTagline {
+  font-size: 0.75rem;
+  color: var(--ink-muted, #7A6664);
+}
+
+.selectedMelodyQuote {
+  font-family: var(--font-serif, Georgia, serif);
+  font-style: italic;
+  font-size: 0.86rem;
+  color: var(--berry-dusky, #77384D);
+  margin: 0;
+  line-height: 1.4;
+  padding: 0.4rem 0.65rem;
+  background: rgba(250, 244, 235, 0.7);
+  border-left: 2px solid var(--gold-starlight, #D7A95B);
+  border-radius: 0 var(--radius-xs, 4px) var(--radius-xs, 4px) 0;
+}
+
+.exhibitActionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.playbackStatusNote {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.73rem;
+  color: var(--ink-muted, #6B5553);
+}
+
+.exhibitMoodGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+}
+
+.moodButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: var(--radius-sm, 8px);
+  background: #FFFFFF;
+  border: 1.5px solid rgba(56, 43, 42, 0.14);
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--ink-brown, #382B2A);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.moodButton:hover {
+  border-color: var(--berry-dusky, #77384D);
+  background: #FFFDF9;
+  transform: translateY(-2px);
+}
+
+.moodButtonActive {
+  background: #FFF8F1 !important;
+  border-color: var(--gold-starlight, #D7A95B) !important;
+  box-shadow: 0 4px 12px rgba(215, 169, 91, 0.2) !important;
+  color: #2A1C16 !important;
+  font-weight: 700 !important;
+  transform: translateY(-2px);
+}
+
+.dimmerSwitchRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  background: rgba(250, 244, 235, 0.8);
+  padding: 0.45rem 0.75rem;
+  border-radius: var(--radius-sm, 8px);
+  border: 1px solid rgba(119, 56, 77, 0.15);
+}
+
+.dimmerButtons {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.dimmerButton {
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-full, 9999px);
+  background: #FFFFFF;
+  border: 1px solid rgba(56, 43, 42, 0.14);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--ink-brown, #382B2A);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dimmerButton:hover {
+  border-color: var(--berry-dusky, #77384D);
+}
+
+.dimmerButtonActive {
+  background: var(--berry-dusky, #77384D) !important;
+  color: #FFFFFF !important;
+  border-color: var(--berry-dusky, #77384D) !important;
+}
+
+.activeFeedbackNote {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.74rem;
+  color: var(--berry-dusky, #77384D);
+  padding: 0.35rem 0.65rem;
+  background: rgba(250, 244, 235, 0.7);
+  border-left: 2px solid var(--gold-starlight, #D7A95B);
+  border-radius: 0 var(--radius-xs, 4px) var(--radius-xs, 4px) 0;
+}
+
+.specimenFooter {
+  margin-top: auto;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(119, 56, 77, 0.22);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.72rem;
+  color: var(--ink-muted, #6B5553);
+  line-height: 1.45;
+}
+
+.specimenFooter strong {
+  color: var(--berry-dusky, #77384D);
+}
+
+@media (max-width: 520px) {
+  .exhibitMoodGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .dimmerSwitchRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

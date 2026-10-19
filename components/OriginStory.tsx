@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSound } from "@/lib/SoundContext";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 interface StoryScene {
   id: number;
@@ -293,25 +294,34 @@ export default function OriginStory() {
 
   const current = SCENES[activeChapterIndex];
 
+  const isFirstChapter = activeChapterIndex === 0;
+  const isLastChapter = activeChapterIndex === SCENES.length - 1;
+
   const handleNext = () => {
+    if (isLastChapter) return;
     playTick();
-    setActiveChapterIndex((prev) => (prev + 1) % SCENES.length);
+    setActiveChapterIndex((prev) => Math.min(prev + 1, SCENES.length - 1));
   };
 
   const handlePrev = () => {
+    if (isFirstChapter) return;
     playTick();
-    setActiveChapterIndex((prev) => (prev - 1 + SCENES.length) % SCENES.length);
+    setActiveChapterIndex((prev) => Math.max(prev - 1, 0));
   };
 
   const handleTabKeyDown = (e: React.KeyboardEvent, index: number) => {
     if (e.key === "ArrowRight") {
       e.preventDefault();
-      playTick();
-      setActiveChapterIndex((index + 1) % SCENES.length);
+      if (index < SCENES.length - 1) {
+        playTick();
+        setActiveChapterIndex(index + 1);
+      }
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
-      playTick();
-      setActiveChapterIndex((index - 1 + SCENES.length) % SCENES.length);
+      if (index > 0) {
+        playTick();
+        setActiveChapterIndex(index - 1);
+      }
     } else if (e.key === "Home") {
       e.preventDefault();
       playTick();
@@ -328,9 +338,10 @@ export default function OriginStory() {
       {/* Main Illustrated Scene Stage */}
       <div
         id="origin-scene-panel"
+        key={current.id}
         role="tabpanel"
         aria-labelledby={`origin-chapter-tab-${current.id}`}
-        className="story-scene-display"
+        className={`story-scene-display ${visualStyles.pageTurnActive}`}
         aria-live="polite"
       >
         <div className="story-illustration-frame">
@@ -360,8 +371,9 @@ export default function OriginStory() {
           <div className="story-navigation-row">
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className={`btn btn-secondary btn-sm ${isFirstChapter ? visualStyles.btnDisabled : ""}`}
               onClick={handlePrev}
+              disabled={isFirstChapter}
               aria-label="Previous Chapter"
             >
               <span>← Previous Chapter</span>
@@ -373,8 +385,9 @@ export default function OriginStory() {
 
             <button
               type="button"
-              className="btn btn-secondary btn-sm"
+              className={`btn btn-secondary btn-sm ${isLastChapter ? visualStyles.btnDisabled : ""}`}
               onClick={handleNext}
+              disabled={isLastChapter}
               aria-label="Next Chapter"
             >
               <span>Next Chapter →</span>
@@ -387,8 +400,9 @@ export default function OriginStory() {
       <div className="story-pagination-bar" role="toolbar" aria-label="Story chapter quick navigation">
         <button
           type="button"
-          className="story-nav-arrow"
+          className={`story-nav-arrow ${isFirstChapter ? visualStyles.btnDisabled : ""}`}
           onClick={handlePrev}
+          disabled={isFirstChapter}
           aria-label="Previous chapter"
         >
           <span aria-hidden="true">←</span>
@@ -403,8 +417,9 @@ export default function OriginStory() {
         </div>
         <button
           type="button"
-          className="story-nav-arrow"
+          className={`story-nav-arrow ${isLastChapter ? visualStyles.btnDisabled : ""}`}
           onClick={handleNext}
+          disabled={isLastChapter}
           aria-label="Next chapter"
         >
           <span aria-hidden="true">→</span>

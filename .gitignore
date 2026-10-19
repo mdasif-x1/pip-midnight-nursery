@@ -50,3 +50,6 @@ desktop.ini
 *.njsproj
 *.sln
 *.sw?
+
+# Git worktrees
+.worktrees/

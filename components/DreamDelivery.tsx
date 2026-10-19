@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSound } from "@/lib/SoundContext";
+import visualStyles from "@/styles/dream-visuals.module.css";
 
 interface Waypoint {
   id: string;
@@ -107,6 +108,12 @@ export default function DreamDelivery() {
             <path
               d="M 210 90 C 230 75 260 75 280 90 C 300 70 340 70 360 90 C 380 75 400 80 410 95 L 410 130 L 210 130 Z"
               fill="rgba(198, 217, 232, 0.18)"
+            />
+
+            {/* Soft Ambient Flight Mist Layer */}
+            <path
+              d="M 0 175 Q 80 152 160 170 T 320 162 T 400 175 L 400 200 L 0 200 Z"
+              fill="rgba(233, 217, 232, 0.14)"
             />
 
             {/* Village Back Layer: Distant Gables */}
@@ -248,11 +255,11 @@ export default function DreamDelivery() {
         </div>
         <div className="bay-stage-caption-row">
           <p className="bay-asset-caption">
-            Project C · Click waypoint nodes on map or selector buttons below
+            Plate III · Sector 7 Airmail Flight Route &amp; Rooftops
           </p>
-          <div className="delivery-odometer-tag" aria-label="Official Nursery Ledger">
-            <span className="odometer-label">Official Nursery Ledger:</span>
-            <strong className="odometer-val">1,204 Parcels Cleared (Sector 7 Registry)</strong>
+          <div className={`${visualStyles.odometerHighContrast}`} aria-label="Official Nursery Ledger">
+            <span className={visualStyles.odometerLabel}>Official Nursery Ledger:</span>
+            <strong className={visualStyles.odometerVal}>1,204 Parcels Cleared (Sector 7 Registry)</strong>
           </div>
         </div>
       </div>
@@ -298,7 +305,7 @@ export default function DreamDelivery() {
           id={`waypoint-panel-${active.id}`}
           role="tabpanel"
           aria-labelledby={`waypoint-tab-${active.id}`}
-          className="dispatch-docket-card"
+          className={`dispatch-docket-card ${visualStyles.deliveryDocketTactile}`}
         >
           <div className="docket-header-line">
             <span className="docket-coords">{active.coordinates}</span>
@@ -318,6 +325,23 @@ export default function DreamDelivery() {
             <span className="docket-stamp">✦ MIDNIGHT AIRMAIL · VERIFIED ✦</span>
             <span className="docket-signature">Courier: Pip (Junior Dream Engineer)</span>
           </div>
+        </div>
+
+        {/* Compact Build Notes & Artifact Details Panel */}
+        <div className={visualStyles.artifactSpecStrip} aria-label="Project C Build Details">
+          <span className={visualStyles.artifactSpecLabel}>Artifact Specs:</span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Route:</span>
+            <strong>Sector 7 Cloud Docks → Rooftops</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Registry:</span>
+            <strong>1,204 Delivered</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Navigation:</span>
+            <strong>Interactive Map &amp; Blueprint</strong>
+          </span>
         </div>
       </div>
     </div>

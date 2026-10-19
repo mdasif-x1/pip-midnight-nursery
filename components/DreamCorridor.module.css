@@ -1,0 +1,315 @@
+/* ==========================================================================
+   Central Dream Corridor — Persistent Starlight Flight Route (CSS Module)
+   Art Direction: 70% Cinematic Atmosphere + 30% Illustrated Storybook Charm
+   ========================================================================== */
+
+/* The Continuous Central Path Track */
+.corridorTrack {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: clamp(48px, 6vw, 76px);
+  pointer-events: none;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+}
+
+/* Atmospheric Cloud Mist River (Underlayer) */
+.mistRibbon {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  background: linear-gradient(
+    180deg,
+    rgba(233, 217, 232, 0.45) 0%,
+    rgba(242, 200, 121, 0.18) 25%,
+    rgba(221, 166, 176, 0.22) 50%,
+    rgba(215, 169, 91, 0.22) 75%,
+    rgba(233, 217, 232, 0.35) 100%
+  );
+  filter: blur(24px);
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Organic Constellation Guide Line (Midlayer) */
+.pathSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+.constellationStroke {
+  stroke: var(--gold-starlight, #D7A95B);
+  stroke-width: 1.8px;
+  stroke-dasharray: 5 10;
+  stroke-linecap: round;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 6px rgba(215, 169, 91, 0.5));
+}
+
+.starlightNode {
+  fill: #FFF9EE;
+  stroke: var(--gold-starlight, #D7A95B);
+  stroke-width: 1.5px;
+  filter: drop-shadow(0 0 8px rgba(255, 235, 160, 0.8));
+}
+
+/* Station Landmark Beacon Pill */
+.stationBeacon {
+  position: relative;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(255, 252, 247, 0.92);
+  border: 1.2px solid rgba(215, 169, 91, 0.55);
+  border-radius: 999px;
+  box-shadow:
+    0 4px 14px rgba(56, 43, 42, 0.08),
+    0 0 10px rgba(215, 169, 91, 0.25);
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #5A3E31;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.beaconStar {
+  color: var(--gold-starlight, #D7A95B);
+  font-size: 0.8rem;
+}
+
+.beaconCoord {
+  color: #77384D;
+  font-weight: 700;
+}
+
+/* Hero Departure Dock Alignment */
+.heroRunwayDock {
+  position: relative;
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none;
+}
+
+.runwayMotesLine {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--gold-starlight, #D7A95B);
+  font-size: 0.8rem;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 6px rgba(215, 169, 91, 0.6));
+}
+
+.runwayPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: rgba(255, 250, 240, 0.88);
+  border: 1px dashed rgba(215, 169, 91, 0.6);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-family: var(--font-cinzel), Georgia, serif;
+  color: #5A3E31;
+  letter-spacing: 0.04em;
+}
+
+/* Transition Notch Aperture */
+.gatewayPassAperture {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.apertureRing {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(215, 169, 91, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(255, 248, 230, 0.8) 0%, transparent 70%);
+  color: var(--gold-starlight, #D7A95B);
+  font-size: 0.85rem;
+  animation: ringPulse 4s ease-in-out infinite alternate;
+}
+
+@keyframes ringPulse {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  100% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 8px rgba(215, 169, 91, 0.8)); }
+}
+
+/* Threshold Receiver Seam for Field Journal */
+.thresholdSeam {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 1rem 0 1.5rem;
+  pointer-events: none;
+}
+
+.thresholdLine {
+  width: 2px;
+  height: 36px;
+  background: linear-gradient(180deg, rgba(215, 169, 91, 0.8) 0%, rgba(215, 169, 91, 0.1) 100%);
+  border-radius: 1px;
+}
+
+/* Workshop Center Corridor Spine */
+.workshopCenterCorridor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+  padding: 0.5rem 0;
+  width: 100%;
+}
+
+.workshopCorridorPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: rgba(255, 252, 247, 0.94);
+  border: 1.2px solid rgba(215, 169, 91, 0.6);
+  border-radius: 999px;
+  box-shadow:
+    0 4px 14px rgba(56, 43, 42, 0.08),
+    0 0 10px rgba(215, 169, 91, 0.25);
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #5A3E31;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+
+.workshopCorridorCoord {
+  color: #77384D;
+  font-weight: 700;
+}
+
+.corridorDescentLine {
+  flex: 1;
+  width: 40px;
+  min-height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workshopPathSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.corridorDescentMotes {
+  color: var(--gold-starlight, #D7A95B);
+  font-size: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 6px rgba(215, 169, 91, 0.5));
+}
+
+/* Delivery Docking Receiver */
+.deliveryDockingSeam {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  margin: 1.5rem auto 1.2rem;
+  pointer-events: none;
+}
+
+.dockingRing {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(215, 169, 91, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(255, 248, 230, 0.9) 0%, transparent 70%);
+  color: var(--gold-starlight, #D7A95B);
+  font-size: 0.8rem;
+  animation: ringPulse 4s ease-in-out infinite alternate;
+}
+
+.dockingTextPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 12px;
+  background: rgba(255, 250, 240, 0.92);
+  border: 1px dashed rgba(215, 169, 91, 0.6);
+  border-radius: 999px;
+  font-size: 0.68rem;
+  font-family: var(--font-cinzel), Georgia, serif;
+  color: #5A3E31;
+  letter-spacing: 0.04em;
+}
+
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .constellationStroke {
+    stroke-dasharray: none !important;
+  }
+  .apertureRing {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Mobile & Tablet Adaptation */
+@media (max-width: 1024px) {
+  .corridorTrack {
+    left: 50%;
+    width: 44px;
+  }
+  .mistRibbon {
+    width: 90px;
+  }
+  .stationBeacon {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+}

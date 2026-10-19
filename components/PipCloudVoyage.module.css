@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Pip's Cloud-Sailing Journey to the Dream Room (CSS Module)
+   Art Direction: 70% Cinematic Dream Atmosphere + 30% Illustrated Storybook
+   ========================================================================== */
+
+.voyageOverlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+/* Atmospheric Drifting Sky Clouds (Parallax Depth) */
+.parallaxCloud {
+  position: absolute;
+  pointer-events: none;
+  border-radius: 999px;
+  filter: blur(28px);
+  will-change: transform, opacity;
+}
+
+.cloudLayerFar {
+  width: 520px;
+  height: 180px;
+  background: radial-gradient(ellipse at center, rgba(230, 218, 245, 0.35) 0%, rgba(200, 185, 230, 0.12) 65%, transparent 100%);
+  top: 15%;
+  animation: driftFar 3.2s linear forwards;
+}
+
+.cloudLayerMid {
+  width: 420px;
+  height: 140px;
+  background: radial-gradient(ellipse at center, rgba(255, 248, 235, 0.42) 0%, rgba(240, 225, 215, 0.15) 60%, transparent 100%);
+  top: 25%;
+  animation: driftMid 2.8s linear forwards;
+}
+
+.cloudLayerNear {
+  width: 320px;
+  height: 110px;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.5) 0%, rgba(235, 225, 248, 0.18) 70%, transparent 100%);
+  top: 35%;
+  animation: driftNear 2.2s linear forwards;
+}
+
+@keyframes driftFar {
+  0% { transform: translateX(80vw); opacity: 0; }
+  20% { opacity: 0.6; }
+  80% { opacity: 0.6; }
+  100% { transform: translateX(-30vw); opacity: 0; }
+}
+
+@keyframes driftMid {
+  0% { transform: translateX(90vw); opacity: 0; }
+  25% { opacity: 0.75; }
+  80% { opacity: 0.75; }
+  100% { transform: translateX(-40vw); opacity: 0; }
+}
+
+@keyframes driftNear {
+  0% { transform: translateX(100vw); opacity: 0; }
+  30% { opacity: 0.85; }
+  75% { opacity: 0.85; }
+  100% { transform: translateX(-50vw); opacity: 0; }
+}
+
+/* The Flying Cloud-Sailing Vessel Container */
+.vesselWrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transform-origin: center bottom;
+  will-change: transform;
+  filter: drop-shadow(0 14px 28px rgba(35, 25, 45, 0.35));
+}
+
+.vesselInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Character Image Container */
+.pipCharacterWrap {
+  position: relative;
+  width: 220px;
+  height: 268px;
+  z-index: 3;
+  transform-origin: 50% 80%;
+  animation: pipSailingBob 1.6s ease-in-out infinite alternate;
+}
+
+@media (max-width: 640px) {
+  .pipCharacterWrap {
+    width: 160px;
+    height: 195px;
+  }
+}
+
+.pipImage {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* Gentle Sailing Bob Keyframes */
+@keyframes pipSailingBob {
+  0% {
+    transform: translateY(0px) rotate(-1.5deg);
+  }
+  100% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+/* Fluffy Volumetric Billowing Cloud Vessel Underneath Pip */
+.cloudCradle {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 290px;
+  height: 110px;
+  z-index: 4;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 14px rgba(215, 169, 91, 0.45));
+}
+
+@media (max-width: 640px) {
+  .cloudCradle {
+    width: 210px;
+    height: 80px;
+    bottom: -16px;
+  }
+}
+
+.cloudSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Cloud Underside Hearth Shadow */
+.cloudShadowPuff {
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 240px;
+  height: 38px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(38, 22, 45, 0.45) 0%, rgba(38, 22, 45, 0.15) 60%, transparent 100%);
+  filter: blur(8px);
+  z-index: 1;
+}
+
+/* Restrained Golden Stardust Wake Trail */
+.stardustTrail {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.trailSpark {
+  position: absolute;
+  color: var(--gold-starlight, #E5C378);
+  font-size: 1.15rem;
+  line-height: 1;
+  text-shadow: 0 0 8px rgba(255, 235, 160, 0.8), 0 0 16px rgba(215, 169, 91, 0.6);
+  pointer-events: none;
+  animation: sparkFade 0.65s ease-out forwards;
+}
+
+@keyframes sparkFade {
+  0% {
+    transform: translate(0, 0) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-36px, 18px) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* In-Flight Bedtime Speech Bubble */
+.voyageSpeechBubble {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 252, 247, 0.94);
+  border: 1.5px solid rgba(215, 169, 91, 0.6);
+  border-radius: 999px;
+  padding: 6px 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow:
+    0 8px 24px rgba(45, 30, 48, 0.22),
+    0 0 12px rgba(255, 236, 179, 0.5);
+  white-space: nowrap;
+  z-index: 6;
+  animation: speechFloat 1.8s ease-in-out infinite alternate;
+}
+
+.speechStar {
+  color: var(--gold-starlight, #E5C378);
+  font-size: 0.9rem;
+  animation: starSpin 3s linear infinite;
+}
+
+.speechText {
+  font-family: var(--font-cinzel), Georgia, serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #382B2A;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.speechTail {
+  position: absolute;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(255, 252, 247, 0.94);
+}
+
+@keyframes speechFloat {
+  0% { transform: translateX(-50%) translateY(0); }
+  100% { transform: translateX(-50%) translateY(-4px); }
+}
+
+@keyframes starSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Landing Touchdown Starlight Burst */
+.landingBurst {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 160px;
+  height: 80px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.burstRay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  font-size: 1.3rem;
+  color: #FFF2C6;
+  text-shadow: 0 0 10px rgba(255, 220, 100, 0.9);
+  animation: rayRadiate 0.6s ease-out forwards;
+}
+
+@keyframes rayRadiate {
+  0% {
+    transform: translate(-50%, -50%) scale(0.4);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(1.4);
+    opacity: 0;
+  }
+}
