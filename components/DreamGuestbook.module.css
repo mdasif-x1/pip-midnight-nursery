@@ -91,13 +91,114 @@
   background-color: #FFF3CD;
   color: #856404;
   border: 1px solid #FFEEBA;
-  border-radius: 8px;
-  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
   margin-bottom: 2rem;
-  font-size: 0.9rem;
+  font-size: 0.92rem;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.warningHeaderRow {
+  display: flex;
+  align-items: flex-start;
   gap: 0.6rem;
+  line-height: 1.45;
+}
+
+.warningHeaderRow strong {
+  font-weight: 700;
+  color: #664d03;
+}
+
+.recoveryBox {
+  margin-top: 0.25rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed rgba(133, 100, 4, 0.25);
+}
+
+.recoveryPrompt {
+  font-size: 0.86rem;
+  color: #664d03;
+  margin-bottom: 0.6rem;
+}
+
+.recoveryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  background-color: #FFFFFF;
+  border: 1.5px solid #856404;
+  border-radius: 6px;
+  color: #856404;
+  font-family: var(--font-sans, sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.recoveryBtn:hover {
+  background-color: #FFF8E1;
+  border-color: #664d03;
+}
+
+.confirmResetDialog {
+  background-color: #FFFDF5;
+  border: 1.5px solid #D39E00;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.confirmWarningText {
+  font-size: 0.86rem;
+  color: #721C24;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.confirmBtnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.confirmDangerBtn {
+  padding: 0.45rem 0.9rem;
+  background-color: #C82333;
+  color: #FFFFFF;
+  border: 1px solid #BD2130;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.confirmDangerBtn:hover {
+  background-color: #A71D2A;
+}
+
+.cancelResetBtn {
+  padding: 0.45rem 0.85rem;
+  background-color: transparent;
+  color: #5A3E31;
+  border: 1px solid #CED4DA;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cancelResetBtn:hover {
+  background-color: #E2E6EA;
 }
 
 /* Layout Grid: Form + Entries */

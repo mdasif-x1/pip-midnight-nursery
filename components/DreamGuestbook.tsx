@@ -63,6 +63,8 @@ function toSafeISOString(ts: number): string | undefined {
   }
 }
 
+type StorageStatus = "ready" | "corrupted" | "unsupported_version" | "unavailable";
+
 export default function DreamGuestbook() {
   const [entries, setEntries] = useState<GuestbookEntry[]>([]);
   const [name, setName] = useState<string>("");
@@ -71,6 +73,8 @@ export default function DreamGuestbook() {
   const [messageError, setMessageError] = useState<string | null>(null);
   const [statusMessage, setStatusMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
+  const [storageStatus, setStorageStatus] = useState<StorageStatus>("ready");
+  const [showResetConfirm, setShowResetConfirm] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [isHydrated, setIsHydrated] = useState<boolean>(false);
 
@@ -81,59 +85,94 @@ export default function DreamGuestbook() {
     setIsHydrated(true);
     try {
       if (typeof window === "undefined" || !window.localStorage) {
+        setStorageStatus("unavailable");
         setStorageWarning("Browser storage is not available. Wishes cannot be saved on this device.");
         return;
       }
       const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) {
+      if (raw === null) {
+        // First-time visitor: storage is clean and ready
+        setStorageStatus("ready");
         setEntries([]);
         return;
       }
+
       let parsed: unknown;
       try {
         parsed = JSON.parse(raw);
       } catch {
-        setStorageWarning("Existing guestbook data was corrupted or malformed. Preserving stored text without overwriting.");
+        setStorageStatus("corrupted");
+        setStorageWarning("Existing guestbook data was corrupted or malformed. Submissions are paused to protect the raw payload on this device.");
         return;
       }
 
-      if (
-        parsed &&
-        typeof parsed === "object" &&
-        "version" in parsed &&
-        (parsed as StoredPayload).version === 1 &&
-        "entries" in parsed &&
-        Array.isArray((parsed as StoredPayload).entries)
-      ) {
-        // Validate each entry structure thoroughly
-        const validEntries: GuestbookEntry[] = (parsed as StoredPayload).entries
-          .filter(
-            (item): item is GuestbookEntry =>
-              Boolean(
-                item &&
-                typeof item === "object" &&
-                typeof item.id === "string" &&
-                item.id.length > 0 &&
-                typeof item.name === "string" &&
-                item.name.length > 0 &&
-                typeof item.message === "string" &&
-                item.message.length > 0 &&
-                typeof item.timestamp === "number" &&
-                Number.isFinite(item.timestamp) &&
-                !isNaN(item.timestamp)
-              )
-          )
-          .slice(0, MAX_ENTRIES);
-
-        setEntries(validEntries);
-      } else {
-        // Malformed or different version - do not erase, display warning
-        setStorageWarning("Existing guestbook data uses an unsupported version. Preserving stored entries.");
+      if (!parsed || typeof parsed !== "object") {
+        setStorageStatus("corrupted");
+        setStorageWarning("Existing guestbook data is not in a valid format. Submissions are paused to protect the stored payload.");
+        return;
       }
+
+      const payload = parsed as Partial<StoredPayload>;
+      if (typeof payload.version !== "number" || payload.version !== 1) {
+        setStorageStatus("unsupported_version");
+        setStorageWarning(`Existing guestbook data uses an unsupported schema version (${payload.version ?? "unknown"}). Submissions are paused to prevent overwriting your data.`);
+        return;
+      }
+
+      if (!Array.isArray(payload.entries)) {
+        setStorageStatus("corrupted");
+        setStorageWarning("Existing guestbook entries list is malformed. Submissions are paused to protect the stored payload.");
+        return;
+      }
+
+      // Validate each entry structure thoroughly
+      const validEntries: GuestbookEntry[] = payload.entries
+        .filter(
+          (item): item is GuestbookEntry =>
+            Boolean(
+              item &&
+              typeof item === "object" &&
+              typeof item.id === "string" &&
+              item.id.trim().length > 0 &&
+              typeof item.name === "string" &&
+              item.name.trim().length > 0 &&
+              typeof item.message === "string" &&
+              item.message.trim().length > 0 &&
+              typeof item.timestamp === "number" &&
+              Number.isFinite(item.timestamp) &&
+              !isNaN(item.timestamp)
+            )
+        )
+        .slice(0, MAX_ENTRIES);
+
+      setStorageStatus("ready");
+      setEntries(validEntries);
     } catch {
-      setStorageWarning("Unable to read from local storage on this browser.");
+      setStorageStatus("unavailable");
+      setStorageWarning("Unable to access local storage on this browser.");
     }
   }, []);
+
+  const handleConfirmReset = () => {
+    try {
+      if (typeof window !== "undefined" && window.localStorage) {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+      setEntries([]);
+      setStorageStatus("ready");
+      setStorageWarning(null);
+      setShowResetConfirm(false);
+      setStatusMessage({
+        type: "success",
+        text: "✦ Guestbook storage has been safely reset. You can now tuck in new bedtime wishes.",
+      });
+    } catch {
+      setStatusMessage({
+        type: "error",
+        text: "Unable to clear local storage on this browser.",
+      });
+    }
+  };
 
   const validateForm = (): boolean => {
     let isValid = true;
@@ -172,6 +211,14 @@ export default function DreamGuestbook() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return;
+
+    if (storageStatus !== "ready") {
+      setStatusMessage({
+        type: "error",
+        text: "Submissions are paused because existing stored guestbook data cannot be safely read. Please reset storage below to start fresh on this device.",
+      });
+      return;
+    }
 
     if (!validateForm()) {
       setStatusMessage({ type: "error", text: "Please correct the errors in your wish before tucking it in." });
@@ -255,8 +302,51 @@ export default function DreamGuestbook() {
         {/* Storage Warning if local storage fails */}
         {storageWarning && (
           <div className={styles.storageWarningBanner} role="alert">
-            <span aria-hidden="true">⚠️</span>
-            <span>{storageWarning}</span>
+            <div className={styles.warningHeaderRow}>
+              <span aria-hidden="true">⚠️</span>
+              <div>
+                <strong>Storage Notice: </strong>
+                <span>{storageWarning}</span>
+              </div>
+            </div>
+            {(storageStatus === "corrupted" || storageStatus === "unsupported_version") && (
+              <div className={styles.recoveryBox}>
+                <p className={styles.recoveryPrompt}>
+                  Your raw storage payload has been preserved intact and was not overwritten. If you want to start fresh in this browser, you may reset the guestbook storage.
+                </p>
+                {!showResetConfirm ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowResetConfirm(true)}
+                    className={styles.recoveryBtn}
+                  >
+                    Reset Guestbook on This Device
+                  </button>
+                ) : (
+                  <div className={styles.confirmResetDialog} role="region" aria-label="Reset confirmation">
+                    <p className={styles.confirmWarningText}>
+                      Are you sure? This will permanently erase any saved wishes from this browser and reset storage to a fresh state.
+                    </p>
+                    <div className={styles.confirmBtnRow}>
+                      <button
+                        type="button"
+                        onClick={handleConfirmReset}
+                        className={styles.confirmDangerBtn}
+                      >
+                        Yes, Reset Storage
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setShowResetConfirm(false)}
+                        className={styles.cancelResetBtn}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         )}
 
@@ -344,8 +434,10 @@ export default function DreamGuestbook() {
               {/* Submit CTA */}
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || storageStatus !== "ready"}
                 className={styles.submitBtn}
+                title={storageStatus !== "ready" ? "Submissions are paused to protect stored data" : undefined}
+                aria-disabled={isSubmitting || storageStatus !== "ready"}
               >
                 <span>Tuck My Wish Into the Book ✦</span>
               </button>
