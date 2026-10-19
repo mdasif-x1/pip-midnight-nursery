@@ -169,7 +169,7 @@ export default function NightlightAtelier() {
         {/* Dedicated Caption Row Below Frame */}
         <div className="bay-stage-caption-row">
           <p className="bay-asset-caption">
-            Project B · Official Asset: pip_dream_lantern.png
+            Plate II · Luminous Crescent Dream Lantern
           </p>
           <div className="lantern-atmosphere-plaque">
             <span className="plaque-dot" style={{ backgroundColor: current.starColor }} />
@@ -260,6 +260,27 @@ export default function NightlightAtelier() {
           <strong className="status-value">
             {current.label} Luminescence · {glowIntensity === "soft" ? "Soft Glow" : glowIntensity === "medium" ? "Bedtime Radiant" : "Full Starlight"}
           </strong>
+        </div>
+
+        {/* Compact Build Notes & Artifact Details Panel */}
+        <div className={visualStyles.artifactSpecStrip} aria-label="Project B Build Details">
+          <span className={visualStyles.artifactSpecLabel}>Artifact Specs:</span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Asset:</span>
+            <code className={visualStyles.specFilename}>pip_dream_lantern.png</code>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Atmosphere:</span>
+            <strong>2200K Warm Hearthlight</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Dimmer:</span>
+            <strong>3 Responsive Levels</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Motion:</span>
+            <strong>Reduced-Motion Safe</strong>
+          </span>
         </div>
       </div>
     </div>

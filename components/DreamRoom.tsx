@@ -369,6 +369,12 @@ export default function DreamRoom() {
                 <circle cx="350" cy="150" r="14" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
                 <circle cx="350" cy="150" r="10" fill="#77384D" />
                 <text x="350" y="154" fill="#FFF8F1" fontSize="11" textAnchor="middle" fontWeight="bold">✦</text>
+
+                {/* Persistent Readable Hotspot Label */}
+                <g className={styles.hotspotLabelPill}>
+                  <rect x="296" y="172" width="108" height="20" rx="10" className={styles.hotspotLabelRect} />
+                  <text x="350" y="186" textAnchor="middle" className={styles.hotspotLabelText}>☾ Moonlit Window</text>
+                </g>
               </g>
 
               {/* =================================================================
@@ -412,6 +418,12 @@ export default function DreamRoom() {
                 <circle cx="555" cy="237" r="13" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
                 <circle cx="555" cy="237" r="9" fill="#77384D" />
                 <text x="555" y="241" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
+
+                {/* Persistent Readable Hotspot Label */}
+                <g className={styles.hotspotLabelPill}>
+                  <rect x="502" y="258" width="106" height="20" rx="10" className={styles.hotspotLabelRect} />
+                  <text x="555" y="272" textAnchor="middle" className={styles.hotspotLabelText}>🕯️ Star-Oil Lamp</text>
+                </g>
               </g>
 
               {/* =================================================================
@@ -462,6 +474,12 @@ export default function DreamRoom() {
                 <circle cx="150" cy="225" r="13" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
                 <circle cx="150" cy="225" r="9" fill="#77384D" />
                 <text x="150" y="229" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
+
+                {/* Persistent Readable Hotspot Label */}
+                <g className={styles.hotspotLabelPill}>
+                  <rect x="96" y="246" width="108" height="20" rx="10" className={styles.hotspotLabelRect} />
+                  <text x="150" y="260" textAnchor="middle" className={styles.hotspotLabelText}>☁️ Cloud Hammock</text>
+                </g>
               </g>
 
               {/* =================================================================
@@ -502,6 +520,12 @@ export default function DreamRoom() {
                 <circle cx="130" cy="312" r="13" fill="#FFF8F1" stroke="#77384D" strokeWidth="2.5" />
                 <circle cx="130" cy="312" r="9" fill="#77384D" />
                 <text x="130" y="316" fill="#FFF8F1" fontSize="10" textAnchor="middle" fontWeight="bold">✦</text>
+
+                {/* Persistent Readable Hotspot Label */}
+                <g className={styles.hotspotLabelPill}>
+                  <rect x="76" y="334" width="108" height="20" rx="10" className={styles.hotspotLabelRect} />
+                  <text x="130" y="348" textAnchor="middle" className={styles.hotspotLabelText}>📐 Drafting Desk</text>
+                </g>
               </g>
 
               {/* =================================================================
@@ -576,7 +600,7 @@ export default function DreamRoom() {
             id="room-easter-egg-panel"
             role="tabpanel"
             aria-labelledby="hotspot-tab-secret"
-            className="easter-egg-banner-card certificate-card"
+            className={`easter-egg-banner-card certificate-card ${styles.secretCharterBanner}`}
           >
             <div className="certificate-border-ornament" aria-hidden="true">
               <span>✦</span>
@@ -638,21 +662,7 @@ export default function DreamRoom() {
             className="inspection-content-box"
           >
             {easterEggFound && (
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.4rem",
-                  padding: "0.25rem 0.5rem",
-                  borderRadius: "var(--radius-xs)",
-                  backgroundColor: "rgba(181, 138, 82, 0.15)",
-                  border: "1px dashed var(--antique-gold)",
-                  fontSize: "0.725rem",
-                  fontFamily: "var(--font-mono)",
-                  color: "var(--antique-gold-light)",
-                  marginBottom: "0.25rem",
-                }}
-              >
+              <div className={styles.secretJarBadgeContrast}>
                 <span>✦ Secret Star Jar Unlocked (Floorboard active)</span>
               </div>
             )}

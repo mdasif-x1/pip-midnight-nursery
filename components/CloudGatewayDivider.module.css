@@ -41,20 +41,6 @@
   display: block;
 }
 
-.portalLabel {
-  font-family: var(--font-cinzel), Georgia, serif;
-  font-size: 11px;
-  font-weight: 600;
-  fill: var(--gold-starlight, #D7A95B);
-  letter-spacing: 0.08em;
-  user-select: none;
-}
-
-@media (max-width: 640px) {
-  .portalLabel {
-    display: none;
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
   .cloudDiving {

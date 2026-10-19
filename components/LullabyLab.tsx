@@ -357,9 +357,9 @@ export default function LullabyLab() {
         {/* Dedicated Caption Row Below Frame */}
         <div className="bay-stage-caption-row">
           <p className="bay-asset-caption">
-            Project A · Official Asset: pip_lullaby_box.png
+            Plate I · Handcrafted Music Box &amp; Winding Key
           </p>
-          <span className="bay-spec-label">Web Audio Pentatonic Synth · Non-Autoplay</span>
+          <span className="bay-spec-label">Web Audio Pentatonic Synth</span>
         </div>
       </div>
 
@@ -424,6 +424,27 @@ export default function LullabyLab() {
               : isPlaying
               ? "Chamber resonant..."
               : "Ready to crank (No autoplay)"}
+          </span>
+        </div>
+
+        {/* Compact Build Notes & Artifact Details Panel */}
+        <div className={visualStyles.artifactSpecStrip} aria-label="Project A Build Details">
+          <span className={visualStyles.artifactSpecLabel}>Artifact Specs:</span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Asset:</span>
+            <code className={visualStyles.specFilename}>pip_lullaby_box.png</code>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Engine:</span>
+            <strong>Web Audio Synth</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Tuning:</span>
+            <strong>C Pentatonic</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Playback:</span>
+            <strong>Non-Autoplay Safe</strong>
           </span>
         </div>
       </div>

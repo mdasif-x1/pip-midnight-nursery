@@ -32,8 +32,8 @@ Step into a dreamy, pastel fairytale nursery high above the chimney tops where P
 - **Track:** Track 1 — Pip the Skull Baby
 - **Challenge Brief:** [https://hax.baby/baby-problem](https://hax.baby/baby-problem)
 - **Event Hub:** [https://hax.baby/first-website](https://hax.baby/first-website)
-- **Developer & Designer:** Md Asif ([@mdasif-x1](https://github.com/mdasif-x1))
-- **Team Collaboration:** `mdasif-x1` & `mohdasif-v1`
+- **Engineering & Development:** Pyrrhic Commit
+- **Team Collaboration:** `mdasif-x1` & `mohdasif-v1` (Team Pyrrhic Commit)
 - **Core Principle:** An authentic, whimsical storybook world celebrating early-web personality, handcrafted detail, tactile sound, and zero dark patterns.
 
 ---

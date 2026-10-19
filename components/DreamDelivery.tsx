@@ -255,11 +255,11 @@ export default function DreamDelivery() {
         </div>
         <div className="bay-stage-caption-row">
           <p className="bay-asset-caption">
-            Project C · Click waypoint nodes on map or selector buttons below
+            Plate III · Sector 7 Airmail Flight Route &amp; Rooftops
           </p>
-          <div className="delivery-odometer-tag" aria-label="Official Nursery Ledger">
-            <span className="odometer-label">Official Nursery Ledger:</span>
-            <strong className="odometer-val">1,204 Parcels Cleared (Sector 7 Registry)</strong>
+          <div className={`${visualStyles.odometerHighContrast}`} aria-label="Official Nursery Ledger">
+            <span className={visualStyles.odometerLabel}>Official Nursery Ledger:</span>
+            <strong className={visualStyles.odometerVal}>1,204 Parcels Cleared (Sector 7 Registry)</strong>
           </div>
         </div>
       </div>
@@ -325,6 +325,23 @@ export default function DreamDelivery() {
             <span className="docket-stamp">✦ MIDNIGHT AIRMAIL · VERIFIED ✦</span>
             <span className="docket-signature">Courier: Pip (Junior Dream Engineer)</span>
           </div>
+        </div>
+
+        {/* Compact Build Notes & Artifact Details Panel */}
+        <div className={visualStyles.artifactSpecStrip} aria-label="Project C Build Details">
+          <span className={visualStyles.artifactSpecLabel}>Artifact Specs:</span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Route:</span>
+            <strong>Sector 7 Cloud Docks → Rooftops</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Registry:</span>
+            <strong>1,204 Delivered</strong>
+          </span>
+          <span className={visualStyles.artifactSpecPill}>
+            <span>Navigation:</span>
+            <strong>Interactive Map &amp; Blueprint</strong>
+          </span>
         </div>
       </div>
     </div>

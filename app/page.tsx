@@ -42,38 +42,34 @@ export default function HomePage() {
               <span className="brand-title">Pip&apos;s Midnight Nursery</span>
             </a>
 
-            <div className="nav-center-strip" aria-hidden="true">
-              <span className="nav-shift-pill">✦ Sector 7 · Shift: 00:00–05:00</span>
-            </div>
-
-            <ul className="nav-links">
+            <ul className={`nav-links ${visualStyles.navLinksRefined}`}>
               <li>
-                <a href="#dream-gate" className="nav-item-link">
+                <a href="#dream-gate" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Dream Gate
                 </a>
               </li>
               <li>
-                <a href="#meet-pip" className="nav-item-link">
+                <a href="#meet-pip" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Field Journal
                 </a>
               </li>
               <li>
-                <a href="#inventions" className="nav-item-link">
+                <a href="#inventions" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Inventions
                 </a>
               </li>
               <li>
-                <a href="#origin-story" className="nav-item-link">
+                <a href="#origin-story" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Storybook
                 </a>
               </li>
               <li>
-                <a href="#dream-room" className="nav-item-link">
+                <a href="#dream-room" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Dream Room
                 </a>
               </li>
               <li>
-                <a href="#dream-guestbook" className="nav-item-link">
+                <a href="#dream-guestbook" className={`nav-item-link ${visualStyles.navItemLinkRefined}`}>
                   Guestbook
                 </a>
               </li>
@@ -128,7 +124,7 @@ export default function HomePage() {
               <div className="hero-content">
                 <div className="hero-eyebrow-wrapper">
                   <span className="hero-eyebrow-pill">
-                    <span aria-hidden="true">✦</span> Junior Dream Engineer · Cloud Sector 7
+                    <span aria-hidden="true">✦</span> Junior Dream Engineer · Sector 7 (Shift: 00:00–05:00)
                   </span>
                   <StationBeacon code="Station I · 00:00" name="Dream Gate" icon="✦" />
                 </div>
@@ -159,12 +155,16 @@ export default function HomePage() {
               <InteractivePip />
             </div>
 
-            {/* Subtle Storybook Scroll Invitation */}
-            <div className="hero-scroll-cue" aria-hidden="true">
-              <span className="scroll-cue-flourish">☾ · · ·</span>
-              <span className="scroll-cue-text">Turn the page to explore Pip&apos;s world</span>
-              <span className="scroll-cue-flourish">· · · ☽</span>
-            </div>
+            {/* Truthful Storybook Scroll Invitation */}
+            <a
+              href="#meet-pip"
+              className={`hero-scroll-cue ${visualStyles.heroScrollCueLink}`}
+              aria-label="Scroll down to explore Pip's Field Journal"
+            >
+              <span className="scroll-cue-flourish" aria-hidden="true">☾ · · ·</span>
+              <span className="scroll-cue-text">Scroll down to explore Pip&apos;s Field Journal</span>
+              <span className="scroll-cue-flourish" aria-hidden="true">· · · ☽ ↓</span>
+            </a>
           </div>
 
           {/* Organic Layered Cloud Section Transition (Hero -> Meet Pip) with Gateway Passage reaction */}
@@ -357,28 +357,26 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Storybook Spine & Bookmark Ribbon Transition (Inventions -> Origin Story) */}
+          {/* Storybook Spine Transition (Inventions -> Origin Story) */}
           <div className="transition-storybook-spine" aria-hidden="true">
             <svg
               className="storybook-spine-svg"
-              viewBox="0 0 1440 50"
+              viewBox="0 0 1440 40"
               fill="none"
               preserveAspectRatio="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              {/* Arched Fairytale Book Margin into Storybook Canvas */}
+              {/* Gentle Arched Storybook Canvas Transition */}
               <path
-                d="M 0 50 L 0 25 Q 360 45 720 20 Q 1080 45 1440 25 L 1440 50 Z"
+                d="M 0 40 L 0 18 Q 360 36 720 14 Q 1080 36 1440 18 L 1440 40 Z"
                 fill="var(--parchment-soft)"
               />
-              {/* Rose Ribbon Center Bookmark Tab */}
               <path
-                d="M 700 0 L 740 0 L 740 38 L 720 28 L 700 38 Z"
-                fill="var(--rose-sleepy)"
-                stroke="var(--berry-dusky)"
-                strokeWidth="1"
+                d="M 0 18 Q 360 36 720 14 Q 1080 36 1440 18"
+                stroke="rgba(119, 56, 77, 0.18)"
+                strokeWidth="1.2"
+                strokeDasharray="4 6"
               />
-              <circle cx="720" cy="14" r="3" fill="var(--gold-starlight)" />
             </svg>
           </div>
         </section>
@@ -549,7 +547,7 @@ export default function HomePage() {
                 Character design and official artwork: <strong>haX.baby Track 1</strong>.
               </p>
               <p className="footer-text">
-                Engineering &amp; development: <strong>Md Asif</strong>.
+                Engineering &amp; Development — <strong>Pyrrhic Commit</strong>.
               </p>
               <p className="footer-text">
                 No horror elements. 100% gentle, cozy storybook canon.

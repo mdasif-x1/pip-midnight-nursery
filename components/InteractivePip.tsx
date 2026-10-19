@@ -174,14 +174,17 @@ export default function InteractivePip() {
           aria-label="Say hello to Pip the Skull Baby. Click to see his sleepy bedtime reaction."
           title="Click Pip to say hello!"
         >
-          {/* In-Character Bedtime Speech Bubble */}
-          {isReacting && (
-            <div className="pip-speech-bubble" role="status" aria-live="polite">
-              <span className="bubble-star" aria-hidden="true">✦</span>
-              <p className="bubble-text">{whisper}</p>
-              <div className="bubble-tail" aria-hidden="true" />
-            </div>
-          )}
+          {/* Anchored In-Character Bedtime Speech Bubble & Interaction Greeting */}
+          <div
+            className={`${styles.pipSpeechBox} ${isReacting ? styles.pipSpeechActive : ""}`}
+            role="status"
+            aria-live="polite"
+          >
+            <span className={styles.pipSpeechStar} aria-hidden="true">✦</span>
+            <p className={styles.pipSpeechText}>
+              {isReacting ? whisper : "Tap Pip to say hello ✧"}
+            </p>
+          </div>
 
           {/* Stardust Burst Particles when Clicked */}
           {isReacting && !isGliding && (
@@ -217,12 +220,6 @@ export default function InteractivePip() {
               className="character-image"
               sizes="(max-width: 640px) 280px, (max-width: 1024px) 380px, 448px"
             />
-          </div>
-
-          {/* Subtle Interactive Hint Pill */}
-          <div className="pip-tap-hint" aria-hidden="true">
-            <span className="hint-glyph">✦</span>
-            <span className="hint-text">Tap Pip to say hello</span>
           </div>
         </div>
       </div>

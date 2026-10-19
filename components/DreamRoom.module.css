@@ -155,6 +155,79 @@
   animation: starBadgePulse 2.8s ease-in-out infinite;
 }
 
+/* Hotspot SVG Label Pills — Readable on Selected, Hover, and Touch */
+.hotspotLabelPill {
+  pointer-events: none;
+  opacity: 0.88;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.hotspotBadge:hover .hotspotLabelPill,
+.hotspotBadge:focus-visible .hotspotLabelPill,
+.hotspotSelected .hotspotLabelPill {
+  opacity: 1 !important;
+}
+
+.hotspotLabelRect {
+  fill: #FFF8F1;
+  stroke: #77384D;
+  stroke-width: 1.2px;
+  filter: drop-shadow(0 2px 5px rgba(56, 43, 42, 0.25));
+}
+
+.hotspotLabelText {
+  fill: #382B2A;
+  font-family: var(--font-sans, system-ui, sans-serif);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.hotspotSelected .hotspotLabelRect {
+  fill: #F2C879;
+  stroke: #77384D;
+  stroke-width: 1.8px;
+}
+
+.hotspotSelected .hotspotLabelText {
+  fill: #2A1C16;
+  font-weight: 800;
+}
+
+/* Secret Floorboard & Charter High-Contrast Overrides */
+.secretCharterBanner {
+  background: #FFFDF9 !important;
+  color: #382B2A !important;
+  border: 2px solid var(--gold-starlight, #D7A95B) !important;
+  box-shadow: 0 8px 30px rgba(56, 43, 42, 0.18) !important;
+}
+
+.secretCharterHeading {
+  color: var(--berry-dusky, #77384D) !important;
+  font-weight: 800 !important;
+}
+
+.secretCharterText {
+  color: #382B2A !important;
+  line-height: 1.6 !important;
+}
+
+.secretJarBadgeContrast {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: var(--radius-xs, 4px) !important;
+  background-color: #FFF8F1 !important;
+  border: 1.5px solid var(--gold-starlight, #D7A95B) !important;
+  font-size: 0.76rem !important;
+  font-family: var(--font-mono, monospace) !important;
+  color: var(--ink-brown, #382B2A) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(56, 43, 42, 0.08) !important;
+  margin-bottom: 0.5rem !important;
+}
+
 /* Secret Floorboard Tile */
 .easterEggTile {
   cursor: pointer;

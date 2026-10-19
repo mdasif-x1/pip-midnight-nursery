@@ -196,3 +196,142 @@
     transform: none !important;
   }
 }
+
+/* --------------------------------------------------------------------------
+   7. Navigation Bar: No-Wrap & Compact Responsive Spacing
+   -------------------------------------------------------------------------- */
+.navLinksRefined {
+  display: flex !important;
+  align-items: center !important;
+  gap: clamp(0.25rem, 0.9vw, 0.75rem) !important;
+  flex-wrap: nowrap !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.navItemLinkRefined {
+  white-space: nowrap !important;
+  font-size: clamp(0.76rem, 0.92vw, 0.86rem) !important;
+  padding: 0.35rem clamp(0.45rem, 0.7vw, 0.75rem) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  letter-spacing: 0.01em;
+}
+
+/* --------------------------------------------------------------------------
+   8. Hero & Field Journal Spacing Normalization
+   -------------------------------------------------------------------------- */
+.heroScrollCueLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: clamp(1.25rem, 3vw, 2.25rem) auto 1.25rem auto;
+  padding: 0.55rem 1.25rem;
+  border-radius: var(--radius-full, 9999px);
+  background: rgba(255, 248, 241, 0.95);
+  border: 1.5px solid rgba(119, 56, 77, 0.28);
+  color: var(--ink-brown, #382B2A);
+  text-decoration: none;
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(0.75rem, 1vw, 0.84rem);
+  font-weight: 600;
+  transition: all 0.25s ease;
+  cursor: pointer;
+  position: relative;
+  z-index: 8;
+  box-shadow: 0 4px 14px rgba(56, 43, 42, 0.1);
+}
+
+.heroScrollCueLink:hover {
+  background: var(--paper-nursery, #FFF8F1);
+  color: var(--berry-dusky, #77384D);
+  border-color: var(--berry-dusky, #77384D);
+  transform: translateY(2px);
+  box-shadow: 0 6px 18px rgba(119, 56, 77, 0.18);
+}
+
+.heroScrollCueLink:focus-visible {
+  outline: 2px solid var(--berry-dusky, #77384D);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   9. Inventions Workshop: Artifact Details & Build Notes Spec Strip
+   -------------------------------------------------------------------------- */
+.artifactSpecStrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  padding: 0.55rem 0.85rem;
+  margin-top: 1rem;
+  border-radius: var(--radius-sm, 8px);
+  background: rgba(250, 244, 235, 0.9);
+  border: 1px dashed rgba(119, 56, 77, 0.28);
+  font-family: var(--font-mono, monospace);
+  font-size: 0.725rem;
+  color: var(--ink-brown, #382B2A);
+}
+
+.artifactSpecLabel {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--berry-dusky, #77384D);
+}
+
+.artifactSpecPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: var(--radius-full, 9999px);
+  background: #FFF8F1;
+  border: 1px solid rgba(56, 43, 42, 0.12);
+  color: var(--ink-brown, #382B2A);
+}
+
+.specFilename {
+  color: var(--berry-dusky, #77384D);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   10. High-Contrast Badges & Text Legibility
+   -------------------------------------------------------------------------- */
+.odometerHighContrast {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.45rem !important;
+  padding: 0.35rem 0.75rem !important;
+  border-radius: var(--radius-full, 9999px) !important;
+  background: #FFF8F1 !important;
+  border: 1.5px solid var(--gold-starlight, #D7A95B) !important;
+  color: var(--ink-brown, #382B2A) !important;
+  font-weight: 700 !important;
+  box-shadow: 0 2px 6px rgba(56, 43, 42, 0.1) !important;
+}
+
+.odometerHighContrast .odometerLabel {
+  color: var(--berry-dusky, #77384D) !important;
+  font-weight: 600 !important;
+  font-size: 0.72rem !important;
+}
+
+.odometerHighContrast .odometerVal {
+  color: var(--ink-brown, #382B2A) !important;
+  font-weight: 800 !important;
+  font-size: 0.78rem !important;
+}
+
+/* --------------------------------------------------------------------------
+   11. Storybook Boundary Controls
+   -------------------------------------------------------------------------- */
+.btnDisabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  filter: grayscale(0.5);
+}

@@ -68,15 +68,6 @@ export default function CloudGatewayDivider() {
         <circle cx="720" cy="44" r="3.5" fill="#FFEAA7" filter="drop-shadow(0 0 6px #E5C378)" />
         <circle cx="704" cy="56" r="2" fill="#E5C378" opacity="0.8" />
         <circle cx="736" cy="56" r="2" fill="#E5C378" opacity="0.8" />
-        <text
-          x="720"
-          y="26"
-          textAnchor="middle"
-          className={styles.portalLabel}
-          opacity="0.92"
-        >
-          ✦ SECTOR 7 GATEWAY PASS ✦
-        </text>
       </svg>
     </div>
   );
