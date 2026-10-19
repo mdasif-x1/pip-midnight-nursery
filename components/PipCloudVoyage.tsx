@@ -105,7 +105,7 @@ export default function PipCloudVoyage() {
       let lastStationStep = "";
 
       const animateVoyage = (currentTime: number) => {
-        const elapsed = currentTime - startTime;
+        const elapsed = Math.max(0, currentTime - startTime);
         const progress = Math.min(1, elapsed / duration);
 
         // 1. Take-off phase (0% - 18%): Pip gently lifts and cloud swells underneath

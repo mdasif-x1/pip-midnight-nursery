@@ -34,7 +34,7 @@ export default function HomePage() {
       <NurseryWayfinder />
 
       {/* Floating Frosted Celestial Navigation */}
-      <header className="site-header">
+      <header className={`site-header ${visualStyles.siteHeaderFixed}`}>
         <div className="site-container">
           <nav className="nav-container" aria-label="Nursery Navigation">
             <a href="#dream-gate" className="brand-link">
@@ -80,8 +80,11 @@ export default function HomePage() {
         </div>
       </header>
 
+      {/* Header height placeholder spacer to preserve content offset */}
+      <div className={visualStyles.headerSpacer} aria-hidden="true" />
+
       {/* Main Content Area */}
-      <main id="main-content">
+      <main id="main-content" className={visualStyles.mainContent}>
         {/* =================================================================
             1. THE DREAM GATE — PASTEL ENTRANCE TO PIP'S NURSERY
             ================================================================= */}
