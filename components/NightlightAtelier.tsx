@@ -26,7 +26,7 @@ const MOODS: Mood[] = [
     badgeText: "Hearth Amber · 2200K",
     surroundingsNote: "Illumination: Soft amber star-oil flame warming the chamber.",
     lightPoolColor: "rgba(233, 159, 79, 0.22)",
-    starColor: "#ddb686ff",
+    starColor: "#DDB686",
     alcoveStroke: "rgba(121, 103, 86, 0.4)",
   },
   {
@@ -55,11 +55,26 @@ const MOODS: Mood[] = [
 
 export default function NightlightAtelier() {
   const [selectedMood, setSelectedMood] = useState<MoodKey>("amber");
+  const [glowIntensity, setGlowIntensity] = useState<"soft" | "medium" | "luminous">("medium");
 
   const current = MOODS.find((m) => m.key === selectedMood) || MOODS[0];
 
+  const intensityMultiplier = glowIntensity === "soft" ? 0.6 : glowIntensity === "luminous" ? 1.4 : 1.0;
+
+  const handleChipKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      const nextIdx = (index + 1) % MOODS.length;
+      setSelectedMood(MOODS[nextIdx].key);
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const prevIdx = (index - 1 + MOODS.length) % MOODS.length;
+      setSelectedMood(MOODS[prevIdx].key);
+    }
+  };
+
   return (
-    <div className={`workshop-bay-atelier ${current.glowClass}`}>
+    <div className={`workshop-bay-atelier ${current.glowClass} glow-level-${glowIntensity}`}>
       {/* Miniature Lighting Chamber Stage */}
       <div className="bay-visual-stage">
         <div className={`lighting-chamber-stage ${current.glowClass}-chamber`}>
@@ -67,7 +82,8 @@ export default function NightlightAtelier() {
           <div
             className="chamber-light-pool"
             style={{
-              background: `radial-gradient(circle at 50% 50%, ${current.lightPoolColor} 0%, transparent 72%)`,
+              background: `radial-gradient(circle at 50% 50%, ${current.lightPoolColor} 0%, transparent ${Math.round(72 * intensityMultiplier)}%)`,
+              opacity: intensityMultiplier,
             }}
             aria-hidden="true"
           />
@@ -164,7 +180,7 @@ export default function NightlightAtelier() {
             role="radiogroup"
             aria-label="Nightlight Atmosphere Moods"
           >
-            {MOODS.map((m) => {
+            {MOODS.map((m, idx) => {
               const isSelected = m.key === selectedMood;
               return (
                 <button
@@ -176,12 +192,38 @@ export default function NightlightAtelier() {
                     isSelected ? "mood-chip-active" : ""
                   }`}
                   onClick={() => setSelectedMood(m.key)}
+                  onKeyDown={(e) => handleChipKeyDown(e, idx)}
                 >
-                  <span className="chip-bullet">{isSelected ? "✦" : "·"}</span>
+                  <span
+                    className="mood-swatch-dot"
+                    style={{
+                      backgroundColor: m.starColor,
+                      boxShadow: isSelected ? `0 0 10px ${m.starColor}` : "none",
+                    }}
+                    aria-hidden="true"
+                  />
                   <span>{m.label}</span>
                 </button>
               );
             })}
+          </div>
+
+          {/* Lantern Dimmer Level Switch */}
+          <div className="lantern-dimmer-row">
+            <span className="dimmer-label">Lantern Dimmer:</span>
+            <div className="dimmer-buttons" role="group" aria-label="Lantern Dimmer Level">
+              {(["soft", "medium", "luminous"] as const).map((lvl) => (
+                <button
+                  key={lvl}
+                  type="button"
+                  className={`dimmer-btn ${glowIntensity === lvl ? "dimmer-btn-active" : ""}`}
+                  onClick={() => setGlowIntensity(lvl)}
+                  aria-pressed={glowIntensity === lvl}
+                >
+                  <span>{lvl === "soft" ? "Soft (40%)" : lvl === "medium" ? "Bedtime (75%)" : "Luminous (100%)"}</span>
+                </button>
+              ))}
+            </div>
           </div>
 
           <div className="mood-description-box">
@@ -192,7 +234,9 @@ export default function NightlightAtelier() {
 
         <div className="atelier-status-footer">
           <span className="status-label">Active Chamber Atmosphere:</span>
-          <strong className="status-value">{current.label} Luminescence</strong>
+          <strong className="status-value">
+            {current.label} Luminescence · {glowIntensity === "soft" ? "Soft Glow" : glowIntensity === "medium" ? "Bedtime Radiant" : "Full Starlight"}
+          </strong>
         </div>
       </div>
     </div>

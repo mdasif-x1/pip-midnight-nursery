@@ -6,6 +6,8 @@ interface StoryScene {
   id: number;
   chapter: string;
   title: string;
+  subtitle: string;
+  icon: string;
   eyebrow: string;
   narrative: string;
   quote: string;
@@ -18,6 +20,8 @@ const SCENES: StoryScene[] = [
     id: 1,
     chapter: "Chapter I",
     title: "The Fallen Star",
+    subtitle: "The Little Cloud & Star",
+    icon: "☁️",
     eyebrow: "Midnight Meadow · 00:04",
     narrative:
       "Pip was wandering through a quiet meadow when a tiny fallen star tumbled down from the Milky Way. It landed gently in a patch of soft clover, humming a lonesome little tune. Pip picked it up, blew away the star dust, and listened closely.",
@@ -96,6 +100,8 @@ const SCENES: StoryScene[] = [
     id: 2,
     chapter: "Chapter II",
     title: "The First Dream",
+    subtitle: "Spun in Cloud Cotton",
+    icon: "☾",
     eyebrow: "Cloud Workshop · 01:15",
     narrative:
       "Pip carried the humming star up to Cloud Sector 7. Using two silver knitting pins and freshly fluffed cloud cotton, Pip wrapped the star until its glow turned soft and drowsy. When held near the ear, it spun sweet images of warm honey and floating feathers.",
@@ -148,6 +154,8 @@ const SCENES: StoryScene[] = [
     id: 3,
     chapter: "Chapter III",
     title: "The Night Whispers",
+    subtitle: "Woodland Bedtime Visitors",
+    icon: "🦉",
     eyebrow: "Nursery Windowsill · 02:40",
     narrative:
       "Word traveled through the nocturnal branches. A sleepy moon owl with insomnia fluttered to Pip's window, followed by mother badgers whose kits would not sleep. Each whispered their bedtime troubles into Pip's ear, and Pip promised to craft a remedy for all of them.",
@@ -195,6 +203,8 @@ const SCENES: StoryScene[] = [
     id: 4,
     chapter: "Chapter IV",
     title: "The Midnight Nursery",
+    subtitle: "A Dreamer's Calling",
+    icon: "✨",
     eyebrow: "Grand Opening · 04:00",
     narrative:
       "By 4:00 AM, the dream workshop was humming. Pip organized the music boxes in the Lullaby Lab, filled the dream lanterns with starlight in the Nightlight Atelier, and mapped flight paths across the chimney rooftops. Pip tied on the pink bow and smiled: the Midnight Nursery was open.",
@@ -256,30 +266,32 @@ export default function OriginStory() {
     setActiveChapterIndex((prev) => (prev - 1 + SCENES.length) % SCENES.length);
   };
 
+  const handleTabKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      setActiveChapterIndex((index + 1) % SCENES.length);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      setActiveChapterIndex((index - 1 + SCENES.length) % SCENES.length);
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setActiveChapterIndex(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setActiveChapterIndex(SCENES.length - 1);
+    }
+  };
+
   return (
     <div className="origin-story-theatre">
-      {/* Chapter Selection Bar */}
-      <div className="story-chapter-tabs" role="tablist" aria-label="Origin Chapters">
-        {SCENES.map((s, idx) => {
-          const isActive = idx === activeChapterIndex;
-          return (
-            <button
-              key={s.id}
-              type="button"
-              role="tab"
-              aria-selected={isActive}
-              className={`chapter-tab-btn ${isActive ? "chapter-tab-active" : ""}`}
-              onClick={() => setActiveChapterIndex(idx)}
-            >
-              <span className="tab-chapter-tag">{s.chapter}</span>
-              <span className="tab-title-text">{s.title}</span>
-            </button>
-          );
-        })}
-      </div>
-
       {/* Main Illustrated Scene Stage */}
-      <div className="story-scene-display" aria-live="polite">
+      <div
+        id="origin-scene-panel"
+        role="tabpanel"
+        aria-labelledby={`origin-chapter-tab-${current.id}`}
+        className="story-scene-display"
+        aria-live="polite"
+      >
         <div className="story-illustration-frame">
           {current.renderIllustration()}
           <div className="story-frame-marginalia">
@@ -291,7 +303,9 @@ export default function OriginStory() {
         {/* Story Prose & Editorial Manuscript */}
         <div className="story-prose-dossier">
           <div className="story-prose-header">
-            <span className="story-chapter-eyebrow">{current.chapter} · Origin Story</span>
+            <span className="story-chapter-eyebrow">
+              {current.chapter} · {current.subtitle}
+            </span>
             <h3 className="story-chapter-title">{current.title}</h3>
           </div>
 
@@ -326,6 +340,72 @@ export default function OriginStory() {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Pagination Dot Cluster & Quick Arrow Controls */}
+      <div className="story-pagination-bar" role="toolbar" aria-label="Story chapter quick navigation">
+        <button
+          type="button"
+          className="story-nav-arrow"
+          onClick={handlePrev}
+          aria-label="Previous chapter"
+        >
+          <span aria-hidden="true">←</span>
+        </button>
+        <div className="story-dots-cluster" aria-hidden="true">
+          {SCENES.map((_, i) => (
+            <span
+              key={i}
+              className={`story-dot ${i === activeChapterIndex ? "story-dot-active" : ""}`}
+            />
+          ))}
+        </div>
+        <button
+          type="button"
+          className="story-nav-arrow"
+          onClick={handleNext}
+          aria-label="Next chapter"
+        >
+          <span aria-hidden="true">→</span>
+        </button>
+      </div>
+
+      {/* 4 Illustrated Bedtime Chapter Cards (Matching Reference Panel 2) */}
+      <div
+        className="story-chapter-cards-grid"
+        role="tablist"
+        aria-label="Origin Chapters"
+      >
+        {SCENES.map((s, idx) => {
+          const isActive = idx === activeChapterIndex;
+          return (
+            <button
+              key={s.id}
+              id={`origin-chapter-tab-${s.id}`}
+              type="button"
+              role="tab"
+              aria-selected={isActive}
+              aria-controls="origin-scene-panel"
+              className={`story-chapter-card ${isActive ? "chapter-card-active" : ""}`}
+              onClick={() => setActiveChapterIndex(idx)}
+              onKeyDown={(e) => handleTabKeyDown(e, idx)}
+            >
+              <div className="chapter-card-badge" aria-hidden="true">
+                <span className="chapter-card-icon">{s.icon}</span>
+              </div>
+              <div className="chapter-card-details">
+                <span className="chapter-card-num">{s.chapter}</span>
+                <strong className="chapter-card-name">{s.title}</strong>
+                <span className="chapter-card-sub">{s.subtitle}</span>
+              </div>
+              {isActive && (
+                <span className="chapter-active-sparkle" aria-hidden="true">
+                  ✦
+                </span>
+              )}
+            </button>
+          );
+        })}
       </div>
     </div>
   );

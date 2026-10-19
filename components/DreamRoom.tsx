@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSound } from "@/lib/SoundContext";
 
 interface RoomHotspot {
@@ -52,21 +52,42 @@ export default function DreamRoom() {
   const [selectedHotspot, setSelectedHotspot] = useState<string>("window");
   const [windowSkyMode, setWindowSkyMode] = useState<"stars" | "meteors" | "clouds">("stars");
   const [easterEggFound, setEasterEggFound] = useState<boolean>(false);
-  const [easterEggNotification, setEasterEggNotification] = useState<string | null>(null);
+  const [showingEasterEgg, setShowingEasterEgg] = useState<boolean>(false);
 
-  const activeHotspot = HOTSPOTS.find((h) => h.id === selectedHotspot);
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const activeHotspot = HOTSPOTS.find((h) => h.id === selectedHotspot) || HOTSPOTS[0];
+
+  // Cleanup audio context on unmount
+  useEffect(() => {
+    return () => {
+      if (audioCtxRef.current && audioCtxRef.current.state !== "closed") {
+        audioCtxRef.current.close().catch(() => {});
+      }
+    };
+  }, []);
+
+  const handleSelectHotspot = (id: string) => {
+    setSelectedHotspot(id);
+    setShowingEasterEgg(false);
+  };
 
   // Play a special chime when the secret Easter egg is unlocked
   const handleEasterEggClick = async () => {
     setEasterEggFound(true);
-    setEasterEggNotification("✦ SECRET UNLOCKED: Pip's Hidden Star Jar Discovered!");
+    setShowingEasterEgg(true);
 
     if (!isMuted) {
       try {
-        const AudioCtxClass =
-          window.AudioContext ||
-          (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-        const ctx = new AudioCtxClass();
+        let ctx = audioCtxRef.current;
+        if (!ctx || ctx.state === "closed") {
+          const AudioCtxClass =
+            window.AudioContext ||
+            (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+          ctx = new AudioCtxClass();
+          audioCtxRef.current = ctx;
+        }
+
         if (ctx.state === "suspended") {
           await ctx.resume();
         }
@@ -78,6 +99,7 @@ export default function DreamRoom() {
         const now = ctx.currentTime + 0.05;
         const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5]; // C5, E5, G5, C6, E6
         notes.forEach((freq, i) => {
+          if (!ctx) return;
           const osc = ctx.createOscillator();
           const gain = ctx.createGain();
           osc.type = "sine";
@@ -94,12 +116,6 @@ export default function DreamRoom() {
           osc.start(noteStart);
           osc.stop(noteStart + 0.65);
         });
-
-        setTimeout(() => {
-          if (ctx.state !== "closed") {
-            ctx.close().catch(() => {});
-          }
-        }, 1800);
       } catch {
         // audio context unavailable
       }
@@ -112,6 +128,27 @@ export default function DreamRoom() {
       if (prev === "meteors") return "clouds";
       return "stars";
     });
+  };
+
+  const handleTabKeyDown = (e: React.KeyboardEvent, index: number) => {
+    const total = HOTSPOTS.length + (easterEggFound ? 1 : 0);
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const nextIdx = (index + 1) % total;
+      if (nextIdx < HOTSPOTS.length) {
+        handleSelectHotspot(HOTSPOTS[nextIdx].id);
+      } else {
+        setShowingEasterEgg(true);
+      }
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prevIdx = (index - 1 + total) % total;
+      if (prevIdx < HOTSPOTS.length) {
+        handleSelectHotspot(HOTSPOTS[prevIdx].id);
+      } else {
+        setShowingEasterEgg(true);
+      }
+    }
   };
 
   return (
@@ -146,13 +183,17 @@ export default function DreamRoom() {
                 OBJECT 1: THE MOONLIT NURSERY WINDOW (INTERACTIVE HOTSPOT)
                 ================================================================= */}
             <g
-              className={`room-hotspot-group ${selectedHotspot === "window" ? "hotspot-selected" : ""}`}
-              onClick={() => setSelectedHotspot("window")}
+              className={`room-hotspot-group ${selectedHotspot === "window" && !showingEasterEgg ? "hotspot-selected" : ""}`}
+              onClick={() => handleSelectHotspot("window")}
               tabIndex={0}
               role="button"
               aria-label="Inspect Moonlit Observatory Window"
+              aria-pressed={selectedHotspot === "window" && !showingEasterEgg}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setSelectedHotspot("window");
+                if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === " ") e.preventDefault();
+                  handleSelectHotspot("window");
+                }
               }}
             >
               {/* Window Frame */}
@@ -199,13 +240,17 @@ export default function DreamRoom() {
                 OBJECT 2: STAR-OIL LAMP / NIGHTSTAND (INTERACTIVE HOTSPOT)
                 ================================================================= */}
             <g
-              className={`room-hotspot-group ${selectedHotspot === "lantern" ? "hotspot-selected" : ""}`}
-              onClick={() => setSelectedHotspot("lantern")}
+              className={`room-hotspot-group ${selectedHotspot === "lantern" && !showingEasterEgg ? "hotspot-selected" : ""}`}
+              onClick={() => handleSelectHotspot("lantern")}
               tabIndex={0}
               role="button"
               aria-label="Inspect Star-Oil Lantern"
+              aria-pressed={selectedHotspot === "lantern" && !showingEasterEgg}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setSelectedHotspot("lantern");
+                if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === " ") e.preventDefault();
+                  handleSelectHotspot("lantern");
+                }
               }}
             >
               {/* Stand Table */}
@@ -227,13 +272,17 @@ export default function DreamRoom() {
                 OBJECT 3: SUSPENDED CLOUD HAMMOCK / CRADLE
                 ================================================================= */}
             <g
-              className={`room-hotspot-group ${selectedHotspot === "cloudbed" ? "hotspot-selected" : ""}`}
-              onClick={() => setSelectedHotspot("cloudbed")}
+              className={`room-hotspot-group ${selectedHotspot === "cloudbed" && !showingEasterEgg ? "hotspot-selected" : ""}`}
+              onClick={() => handleSelectHotspot("cloudbed")}
               tabIndex={0}
               role="button"
               aria-label="Inspect Cloud Cradle Hammock"
+              aria-pressed={selectedHotspot === "cloudbed" && !showingEasterEgg}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setSelectedHotspot("cloudbed");
+                if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === " ") e.preventDefault();
+                  handleSelectHotspot("cloudbed");
+                }
               }}
             >
               {/* Suspension Ropes */}
@@ -260,13 +309,17 @@ export default function DreamRoom() {
                 OBJECT 4: DRAFTING WORKBENCH TABLE
                 ================================================================= */}
             <g
-              className={`room-hotspot-group ${selectedHotspot === "workbench" ? "hotspot-selected" : ""}`}
-              onClick={() => setSelectedHotspot("workbench")}
+              className={`room-hotspot-group ${selectedHotspot === "workbench" && !showingEasterEgg ? "hotspot-selected" : ""}`}
+              onClick={() => handleSelectHotspot("workbench")}
               tabIndex={0}
               role="button"
               aria-label="Inspect Dream Drafting Workbench"
+              aria-pressed={selectedHotspot === "workbench" && !showingEasterEgg}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") setSelectedHotspot("workbench");
+                if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === " ") e.preventDefault();
+                  handleSelectHotspot("workbench");
+                }
               }}
             >
               {/* Desk Surface */}
@@ -299,11 +352,15 @@ export default function DreamRoom() {
               role="button"
               aria-label={
                 easterEggFound
-                  ? "Secret Starlight Stash (Discovered)"
+                  ? "Secret Starlight Stash (Discovered - Click to inspect)"
                   : "A curiously loose wooden floorboard with a tiny brass star"
               }
+              aria-pressed={showingEasterEgg}
               onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") handleEasterEggClick();
+                if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === " ") e.preventDefault();
+                  handleEasterEggClick();
+                }
               }}
             >
               <rect
@@ -349,32 +406,91 @@ export default function DreamRoom() {
 
       {/* Inspection Dossier Card */}
       <div className="room-inspection-dossier" aria-live="polite">
-        {easterEggFound && (
-          <div className="easter-egg-banner-card">
+        {showingEasterEgg ? (
+          <div
+            id="room-easter-egg-panel"
+            role="tabpanel"
+            aria-labelledby="hotspot-tab-secret"
+            className="easter-egg-banner-card certificate-card"
+          >
+            <div className="certificate-border-ornament" aria-hidden="true">
+              <span>✦</span>
+              <span className="ornament-line" />
+              <span>☾ · DIPLOMA OF THE BELFRY · ☽</span>
+              <span className="ornament-line" />
+              <span>✦</span>
+            </div>
+
             <div className="egg-badge-header">
               <span className="egg-star-icon">✦</span>
-              <strong className="egg-title">Pip&apos;s Secret Starlight Stash (Easter Egg Found!)</strong>
+              <strong className="egg-title">Honorary Junior Dream Engineer (Easter Egg Discovered!)</strong>
               <span className="egg-star-icon">✦</span>
             </div>
-            <p className="egg-message">
-              &ldquo;You found my secret floorboard! In this glass jar is the very first spark that spun
-              into the Midnight Nursery. When a dream gets tough, I hold it up to my eye sockets.
-              You are now an <strong>Official Honorary Dream Engineer</strong>!&rdquo;
-            </p>
-            <div className="egg-credentials-line">
-              <span>Nursery Clearance: Level 7 · Secret Badge #001</span>
-              <span>Canon Guardrail: 100% Gentle · 0% Scary</span>
-            </div>
-          </div>
-        )}
 
-        {activeHotspot && !easterEggNotification && (
+            <p className="egg-message">
+              &ldquo;You found my secret floorboard! Under this loose timber rests the very first spark
+              that spun into the Midnight Nursery. When a dream gets tough, I hold this jar up to my eye sockets.
+              By order of Cloud Sector 7, you are hereby granted full nursery exploration clearance!&rdquo;
+            </p>
+
+            <div className="certificate-credentials-grid">
+              <div className="credential-item">
+                <span className="cred-label">Nursery Rank:</span>
+                <strong className="cred-val">Honorary Engineer · Level 7</strong>
+              </div>
+              <div className="credential-item">
+                <span className="cred-label">Secret Badge:</span>
+                <strong className="cred-val">#001 Star Stash</strong>
+              </div>
+              <div className="credential-item">
+                <span className="cred-label">Canon Guardrail:</span>
+                <strong className="cred-val">100% Gentle · 0% Scary</strong>
+              </div>
+            </div>
+
+            <div className="certificate-seal-row">
+              <div className="certificate-wax-seal" aria-hidden="true">
+                <span>✦</span>
+                <span className="seal-text">NURSERY SEAL</span>
+              </div>
+              <span className="certificate-signer">Signed: <em>Pip (with a tiny bone pen)</em></span>
+            </div>
+
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              style={{ alignSelf: "flex-start", marginTop: "0.5rem" }}
+              onClick={() => setShowingEasterEgg(false)}
+            >
+              <span>← Return to Prop Inspection</span>
+            </button>
+          </div>
+        ) : (
           <div
             id={`room-hotspot-panel-${activeHotspot.id}`}
             role="tabpanel"
             aria-labelledby={`hotspot-tab-${activeHotspot.id}`}
             className="inspection-content-box"
           >
+            {easterEggFound && (
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.4rem",
+                  padding: "0.25rem 0.5rem",
+                  borderRadius: "var(--radius-xs)",
+                  backgroundColor: "rgba(181, 138, 82, 0.15)",
+                  border: "1px dashed var(--antique-gold)",
+                  fontSize: "0.725rem",
+                  fontFamily: "var(--font-mono)",
+                  color: "var(--antique-gold-light)",
+                  marginBottom: "0.25rem",
+                }}
+              >
+                <span>✦ Secret Star Jar Unlocked (Floorboard active)</span>
+              </div>
+            )}
             <div className="inspection-header">
               <span className="inspection-tag">Nursery Prop #{activeHotspot.id.toUpperCase()}</span>
               <h4 className="inspection-title">
@@ -390,8 +506,8 @@ export default function DreamRoom() {
 
         {/* Hotspot Quick-Tabs for Keyboard Navigation */}
         <div className="hotspot-tabs-row" role="tablist" aria-label="Nursery Hotspots">
-          {HOTSPOTS.map((h) => {
-            const isSelected = h.id === selectedHotspot;
+          {HOTSPOTS.map((h, idx) => {
+            const isSelected = h.id === selectedHotspot && !showingEasterEgg;
             return (
               <button
                 key={h.id}
@@ -401,16 +517,29 @@ export default function DreamRoom() {
                 aria-selected={isSelected}
                 aria-controls={`room-hotspot-panel-${h.id}`}
                 className={`hotspot-tab-pill ${isSelected ? "hotspot-tab-active" : ""}`}
-                onClick={() => {
-                  setSelectedHotspot(h.id);
-                  setEasterEggNotification(null);
-                }}
+                onClick={() => handleSelectHotspot(h.id)}
+                onKeyDown={(e) => handleTabKeyDown(e, idx)}
               >
                 <span>{h.icon}</span>
                 <span>{h.name}</span>
               </button>
             );
           })}
+          {easterEggFound && (
+            <button
+              id="hotspot-tab-secret"
+              type="button"
+              role="tab"
+              aria-selected={showingEasterEgg}
+              aria-controls="room-easter-egg-panel"
+              className={`hotspot-tab-pill ${showingEasterEgg ? "hotspot-tab-active" : ""}`}
+              onClick={() => setShowingEasterEgg(true)}
+              onKeyDown={(e) => handleTabKeyDown(e, HOTSPOTS.length)}
+            >
+              <span>✦</span>
+              <span>Secret Star Jar</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

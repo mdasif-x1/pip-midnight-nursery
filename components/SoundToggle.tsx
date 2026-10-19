@@ -10,16 +10,16 @@ export default function SoundToggle() {
       type="button"
       onClick={toggleMute}
       className={`header-sound-btn ${isMuted ? "sound-btn-muted" : "sound-btn-active"}`}
-      aria-label={isMuted ? "Unmute nursery sound effects" : "Mute nursery sound effects"}
+      aria-label={isMuted ? "Enable nursery lullaby chimes" : "Mute nursery lullaby chimes"}
       aria-pressed={!isMuted}
-      title={isMuted ? "Sound: Muted (Click to enable)" : "Sound: Enabled (Click to mute)"}
+      title={isMuted ? "Chimes: Quiet (Click to enable sound)" : "Chimes: Resonant (Click for quiet mode)"}
     >
       <span className="sound-icon-indicator" aria-hidden="true">
-        {isMuted ? "🔇" : "🔔"}
+        {isMuted ? "☾" : "♬"}
       </span>
       <span className="sound-text-label">
-        <span className="sound-text-prefix">Sound: </span>
-        <span className="sound-text-state">{isMuted ? "Off" : "On"}</span>
+        <span className="sound-text-prefix">Chimes: </span>
+        <span className="sound-text-state">{isMuted ? "Quiet" : "On"}</span>
       </span>
       <span
         className={`sound-status-dot ${isMuted ? "dot-muted" : "dot-live"}`}

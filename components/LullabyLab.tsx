@@ -13,6 +13,7 @@ interface MelodyNote {
 interface Melody {
   id: string;
   name: string;
+  tagline: string;
   description: string;
   notes: MelodyNote[];
 }
@@ -21,6 +22,7 @@ const MELODIES: Melody[] = [
   {
     id: "starlight",
     name: "Starlight Chime",
+    tagline: "Dreamy Flow",
     description: "A gentle descending celestial lullaby for resting heavy eyes.",
     notes: [
       { note: "E5", freq: 659.25, duration: 0.4 },
@@ -40,6 +42,7 @@ const MELODIES: Melody[] = [
   {
     id: "slumber",
     name: "Velvet Slumber",
+    tagline: "Starry Night",
     description: "Slow, reassuring cradle chimes evoking warm flannel blankets.",
     notes: [
       { note: "G5", freq: 783.99, duration: 0.45 },
@@ -58,6 +61,7 @@ const MELODIES: Melody[] = [
   {
     id: "waltz",
     name: "Cloud Waltz",
+    tagline: "Cloud Drift",
     description: "A whimsical music-box chime played when floating across rooftops.",
     notes: [
       { note: "C5", freq: 523.25, duration: 0.4 },
@@ -233,6 +237,20 @@ export default function LullabyLab() {
   const currentMelody =
     MELODIES.find((m) => m.id === selectedMelodyId) || MELODIES[0];
 
+  const handleMelodyKeyDown = (e: React.KeyboardEvent, index: number) => {
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      e.preventDefault();
+      const nextIdx = (index + 1) % MELODIES.length;
+      if (isPlaying) stopLullaby();
+      setSelectedMelodyId(MELODIES[nextIdx].id);
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      e.preventDefault();
+      const prevIdx = (index - 1 + MELODIES.length) % MELODIES.length;
+      if (isPlaying) stopLullaby();
+      setSelectedMelodyId(MELODIES[prevIdx].id);
+    }
+  };
+
   return (
     <div className="workshop-bay-lab">
       {/* Illustrated Music Workbench Stage */}
@@ -281,9 +299,25 @@ export default function LullabyLab() {
               alt="Handcrafted wooden music box with golden winding key and floating star chimes"
               width={480}
               height={433}
-              className="workbench-artwork"
+              className={`workbench-artwork ${isPlaying ? "artwork-playing" : ""}`}
               priority={false}
             />
+
+            {/* Floating Musical Notes when Playing */}
+            {isPlaying && (
+              <div className="music-box-floating-notes" aria-hidden="true">
+                <span className="floating-note note-1">{activeNote || "♩"}</span>
+                <span className="floating-note note-2">✦</span>
+                <span className="floating-note note-3">♪</span>
+                <span className="floating-note note-4">✧</span>
+              </div>
+            )}
+          </div>
+
+          {/* Mechanical Winding Status Pill */}
+          <div className={`music-box-crank-indicator ${isPlaying ? "crank-active" : ""}`} aria-hidden="true">
+            <span className="crank-key">⚙</span>
+            <span className="crank-label">{isPlaying ? "Brass Spring Unwinding..." : "Spring Wound · Ready"}</span>
           </div>
 
           {/* Bottom Oscillating Soundwave Ribbon */}
@@ -319,7 +353,7 @@ export default function LullabyLab() {
           <p className="bay-asset-caption">
             Project A · Official Asset: pip_lullaby_box.png
           </p>
-          <span className="bay-spec-label">Native 1024 × 924 · Web Audio API</span>
+          <span className="bay-spec-label">Native 1024 × 924 · Web Audio API Pentatonic Synth</span>
         </div>
       </div>
 
@@ -338,7 +372,7 @@ export default function LullabyLab() {
         <div className="melody-selector-group">
           <span className="selector-label">Choose Melody:</span>
           <div className="melody-chips" role="radiogroup" aria-label="Lullaby Melodies">
-            {MELODIES.map((m) => {
+            {MELODIES.map((m, idx) => {
               const isSelected = m.id === selectedMelodyId;
               return (
                 <button
@@ -351,9 +385,13 @@ export default function LullabyLab() {
                     if (isPlaying) stopLullaby();
                     setSelectedMelodyId(m.id);
                   }}
+                  onKeyDown={(e) => handleMelodyKeyDown(e, idx)}
                 >
-                  <span className="chip-bullet">{isSelected ? "✦" : "·"}</span>
-                  <span>{m.name}</span>
+                  <span className="melody-chip-num">
+                    Cylinder {["I", "II", "III"][idx] || idx + 1} · {["120 BPM", "92 BPM", "108 BPM"][idx] || "Pentatonic"}
+                  </span>
+                  <strong className="melody-chip-name">{m.name}</strong>
+                  <span className="melody-chip-tagline">{m.tagline}</span>
                 </button>
               );
             })}
@@ -367,10 +405,10 @@ export default function LullabyLab() {
             type="button"
             className={`btn ${isPlaying ? "btn-stop" : "btn-play"}`}
             onClick={handleTogglePlay}
-            aria-label={isPlaying ? "Stop Lullaby" : `Play ${currentMelody.name}`}
+            aria-label={isPlaying ? "Stop Music Box" : `Crank and play ${currentMelody.name}`}
           >
             <span aria-hidden="true">{isPlaying ? "■" : "▶"}</span>
-            <span>{isPlaying ? "Stop Lullaby" : `Play ${currentMelody.name}`}</span>
+            <span>{isPlaying ? "Stop Music Box" : `Crank & Play ${currentMelody.name} ✦`}</span>
           </button>
 
           <span className="playback-status-note">
